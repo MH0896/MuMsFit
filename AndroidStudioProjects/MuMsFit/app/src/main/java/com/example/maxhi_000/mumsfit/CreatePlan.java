@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ public class CreatePlan extends AppCompatActivity {
 
     final Context context = this;
 
-    private String namePlan;
+    String namePlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +32,6 @@ public class CreatePlan extends AppCompatActivity {
         Bundle params = getIntent().getExtras();
         this.namePlan = params.getString("param");
 
-        //TextView text = (TextView) findViewById(R.id.planName);
-        //text.setText(this.namePlan);
         setTitle(this.namePlan);
 
         createGUI();
@@ -43,33 +42,32 @@ public class CreatePlan extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                // set title
                 alertDialogBuilder.setTitle("Speichern");
-
-                // set dialog message
                 alertDialogBuilder
                         .setMessage("Wollen Sie den Plan speichern?\nDer Plan kann später noch bearbeitet werden.")
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SQLiteDatabase db;
-                                db = openOrCreateDatabase(
-                                        getNamePlan()+".db"
-                                        , SQLiteDatabase.CREATE_IF_NECESSARY
-                                        , null
-                                );
-                                db.setVersion(1);
-                                db.setLocale(Locale.getDefault());
-                                //db.setLockingEnabled(true);
+                                SQLiteDatabase db = null;
+                                try {
+                                    db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
-                                final String CREATE_TABLE_EXERCISES =
-                                        "CREATE TABLE tbl_exercises ("
-                                                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                                                + "exercise_name TEXT"
-                                                + "start_weight REAL"
-                                                + "reps TEXT)" + ";";
+                                    TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
 
-                                db.execSQL(CREATE_TABLE_EXERCISES);
+                                    dataSource.open();
+                                    String CREATE_NEW_TABLE = "CREATE TABLE " + namePlan +
+                                            "(" + "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                                            "exercise" + " TEXT NOT NULL, " +
+                                            "reps" + " STRING NOT NULL,"+
+                                            "start_weight" + "REAL NOT NULL);";
+                                    db.execSQL(CREATE_NEW_TABLE);
+                                    dataSource.close();
+                                }finally {
+                                    if (db != null)
+                                        db.close();
+                                }
+
+
 
                                 Intent i = new Intent(CreatePlan.this, MainActivity.class);
                                 startActivity(i);
@@ -78,16 +76,11 @@ public class CreatePlan extends AppCompatActivity {
                         })
                         .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
                                 dialog.cancel();
                             }
                         });
 
-                // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
                 alertDialog.show();
             }
         });
@@ -104,10 +97,7 @@ public class CreatePlan extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
-        // set title
         alertDialogBuilder.setTitle("Abbrechen");
-
-        // set dialog message
         alertDialogBuilder
                 .setMessage("Plan anlegen wirklich beenden? \nAlle Änderungen gehen verloren")
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -120,16 +110,11 @@ public class CreatePlan extends AppCompatActivity {
                 })
                 .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
                         dialog.cancel();
                     }
                 });
 
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
     }
 
