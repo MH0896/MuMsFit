@@ -3,6 +3,8 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -32,25 +34,41 @@ public class MainActivity extends AppCompatActivity {
     final Context context = this;
     private String eingabe;
 
+    private TrainPlanDataSource dataSource;
+
+    ArrayList<String> arrTblNames = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
-//das ist ein beispiel und das stinkt
-        List plansList = new ArrayList<String>();
-        for (int i = 0; i < 10; i++)
-        {
-            plansList.add("plan"+i);
+
+        SQLiteDatabase db = null;
+        try {
+            db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            dataSource = new TrainPlanDataSource(context);
+            dataSource.open();
+
+            Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+
+            if (c.moveToFirst()) {
+                c.moveToNext();
+                c.moveToNext();
+                c.moveToNext();
+                while (!c.isAfterLast()) {
+                    arrTblNames.add(c.getString(c.getColumnIndex("name")));
+                    c.moveToNext();
+                }
+            }
+            dataSource.close();
+
+            final ListView ViewPlan = (ListView) findViewById(R.id.viewPlans);
+            ListAdapter adapter = new CustomListAdapter(MainActivity.this, R.layout.custom_list, arrTblNames);
+            ViewPlan.setAdapter(adapter);
+        }finally {
+            if (db != null)
+                db.close();
         }
-      //  ListAdapter adapter = new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_list_item_1,plansList);
-        final ListView ViewPlan = (ListView) findViewById(R.id.viewPlans);
-
-      //  ViewPlan.setAdapter(adapter);
-
-        ListAdapter adapter = new CustomListAdapter(MainActivity.this , R.layout.custom_list , plansList);
-        ViewPlan.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,42 +77,77 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                // set title
                 alertDialogBuilder.setTitle("Neuen Plan anlegen");
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 alertDialogBuilder.setView(input);
 
-                // set dialog message
                 alertDialogBuilder
                         .setMessage("Name Ihres Planes:")
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 eingabe = input.getText().toString();
-                                Bundle temp = new Bundle();
-                                temp.putString("param", eingabe);
-                                Intent i = new Intent(MainActivity.this, CreatePlan.class);
-                                i.putExtras(temp);
-                                startActivity(i);
-                                finish();
+                                boolean exists = false;
+                                SQLiteDatabase db = null;
+                                try {
+                                    db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                                    dataSource = new TrainPlanDataSource(context);
+                                    dataSource.open();
+
+                                    Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+
+                                    if (c.moveToFirst()) {
+                                        c.moveToNext();
+                                        c.moveToNext();
+                                        c.moveToNext();
+                                        while (!c.isAfterLast()) {
+                                            if(eingabe.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))){
+                                                exists = true;
+                                            }
+                                            c.moveToNext();
+                                        }
+                                    }
+                                    dataSource.close();
+                                }finally {
+                                    if (db != null)
+                                        db.close();
+                                }
+
+                                if(!exists) {
+                                    Bundle temp = new Bundle();
+                                    temp.putString("param", eingabe);
+                                    Intent i = new Intent(MainActivity.this, CreatePlan.class);
+                                    i.putExtras(temp);
+                                    startActivity(i);
+                                    finish();
+                                }else{
+                                    Toast.makeText(context, "Name schon vergeben. Bitte wählen Sie einen anderen!", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, just close
-                                // the dialog box and do nothing
                                 dialog.cancel();
                             }
                         });
 
-                // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
                 alertDialog.show();
             }
         });
+    }
+
+    private void showAllListEntries() {
+        List<TrainPlan> tpList = dataSource.getAllTrainPlan();
+
+        ArrayAdapter<TrainPlan> shoppingMemoArrayAdapter = new ArrayAdapter<> (
+                this,
+                android.R.layout.simple_list_item_multiple_choice,
+                tpList);
+
+        ListView shoppingMemosListView = (ListView) findViewById(R.id.viewPlans);
+        shoppingMemosListView.setAdapter(shoppingMemoArrayAdapter);
     }
 
     @Override
