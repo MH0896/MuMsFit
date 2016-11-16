@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -13,15 +14,24 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.ActionMode;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,9 +44,16 @@ public class MainActivity extends AppCompatActivity {
     final Context context = this;
     private String eingabe;
 
+    private CustomListAdapter adapter;
+
     private TrainPlanDataSource dataSource;
 
     ArrayList<String> arrTblNames = new ArrayList<String>();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +80,77 @@ public class MainActivity extends AppCompatActivity {
             dataSource.close();
 
             final ListView ViewPlan = (ListView) findViewById(R.id.viewPlans);
-            ListAdapter adapter = new CustomListAdapter(MainActivity.this, R.layout.custom_list, arrTblNames);
+            adapter = new CustomListAdapter(MainActivity.this, R.layout.custom_list, R.id.textView, arrTblNames);
             ViewPlan.setAdapter(adapter);
-        }finally {
+
+            ViewPlan.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+
+            ViewPlan.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+                private int nr = 0;
+
+                @Override
+                public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    return false;
+                }
+
+                @Override
+                public void onDestroyActionMode(ActionMode mode) {
+                    adapter.clearSelection();
+                }
+
+                @Override
+                public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                    // TODO Auto-generated method stub
+
+                    nr = 0;
+                    MenuInflater inflater = getMenuInflater();
+                    inflater.inflate(R.menu.contextual_menu, menu);
+                    return true;
+                }
+
+                @Override
+                public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                    // TODO Auto-generated method stub
+                    switch (item.getItemId()) {
+
+                        case R.id.item_delete:
+                            nr = 0;
+                            adapter.clearSelection();
+                            mode.finish();
+                            return true;
+                    }
+                    return false;
+                }
+
+                @Override
+                public void onItemCheckedStateChanged(ActionMode mode, int position,
+                                                      long id, boolean checked) {
+                    // TODO Auto-generated method stub
+                    if (checked) {
+                        nr++;
+                        adapter.setNewSelection(position, checked);
+                    } else {
+                        nr--;
+                        adapter.removeSelection(position);
+                    }
+                    mode.setTitle(nr + " selected");
+
+                }
+            });
+
+            ViewPlan.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+                @Override
+                public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                               int position, long arg3) {
+                    // TODO Auto-generated method stub
+
+                    ViewPlan.setItemChecked(position, !adapter.isPositionChecked(position));
+                    return false;
+                }
+            });
+        } finally {
             if (db != null)
                 db.close();
         }
@@ -102,26 +187,26 @@ public class MainActivity extends AppCompatActivity {
                                         c.moveToNext();
                                         c.moveToNext();
                                         while (!c.isAfterLast()) {
-                                            if(eingabe.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))){
+                                            if (eingabe.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))) {
                                                 exists = true;
                                             }
                                             c.moveToNext();
                                         }
                                     }
                                     dataSource.close();
-                                }finally {
+                                } finally {
                                     if (db != null)
                                         db.close();
                                 }
 
-                                if(!exists) {
+                                if (!exists) {
                                     Bundle temp = new Bundle();
                                     temp.putString("param", eingabe);
                                     Intent i = new Intent(MainActivity.this, CreatePlan.class);
                                     i.putExtras(temp);
                                     startActivity(i);
                                     finish();
-                                }else{
+                                } else {
                                     Toast.makeText(context, "Name schon vergeben. Bitte wählen Sie einen anderen!", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -136,18 +221,10 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-    }
 
-    private void showAllListEntries() {
-        List<TrainPlan> tpList = dataSource.getAllTrainPlan();
-
-        ArrayAdapter<TrainPlan> shoppingMemoArrayAdapter = new ArrayAdapter<> (
-                this,
-                android.R.layout.simple_list_item_multiple_choice,
-                tpList);
-
-        ListView shoppingMemosListView = (ListView) findViewById(R.id.viewPlans);
-        shoppingMemosListView.setAdapter(shoppingMemoArrayAdapter);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -176,8 +253,8 @@ public class MainActivity extends AppCompatActivity {
     private static int zeit = 2000;
 
     @Override
-    public void onBackPressed(){
-        if(canClose){
+    public void onBackPressed() {
+        if (canClose) {
             super.onBackPressed();
             return;
         }
@@ -190,8 +267,44 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 canClose = false;
             }
-        },zeit);
+        }, zeit);
 
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Main Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }
 
