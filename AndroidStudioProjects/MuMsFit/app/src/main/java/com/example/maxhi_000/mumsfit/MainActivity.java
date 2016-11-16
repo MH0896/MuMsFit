@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
-
+            boolean max = true;
             Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
             if (c.moveToFirst()) {
