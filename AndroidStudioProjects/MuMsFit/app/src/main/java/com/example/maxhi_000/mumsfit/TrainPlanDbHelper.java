@@ -20,12 +20,14 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_Exercise = "exercise";
     public static final String COLUMN_REPS = "reps";
     public static final String COLUMN_START_WEIGHT = "start_weight";
+    public static final String COLUMN_SPLIT = "split";
 
     public String SQL_CREATE = "CREATE TABLE " + TABLE_PLAN +
             "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_Exercise + " TEXT NOT NULL, " +
             COLUMN_REPS + " STRING NOT NULL,"+
-            COLUMN_START_WEIGHT + "REAL NOT NULL);";
+            COLUMN_START_WEIGHT + "REAL NOT NULL,"+
+            COLUMN_SPLIT + "TEXT NOT NULL);";
 
     public TrainPlanDbHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);

@@ -8,12 +8,14 @@ public class TrainPlan {
     private String exercise;
     private String reps;
     private double start_weight;
+    private String split;
 
-    public TrainPlan(String exercise, String reps, double start_weight, long id) {
+    public TrainPlan(String exercise, String reps, double start_weight, String split, long id) {
         this.id = id;
         this.exercise = exercise;
         this.reps = reps;
         this.start_weight = start_weight;
+        this.split = split;
     }
 
     @Override
@@ -51,5 +53,13 @@ public class TrainPlan {
 
     public void setStart_weight(double start_weight) {
         this.start_weight = start_weight;
+    }
+
+    public String getSplit() {
+        return split;
+    }
+
+    public void setSplit(String split) {
+        this.split = split;
     }
 }

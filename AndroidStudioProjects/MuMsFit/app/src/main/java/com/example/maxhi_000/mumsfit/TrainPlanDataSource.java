@@ -22,7 +22,8 @@ public class TrainPlanDataSource {
             TrainPlanDbHelper.COLUMN_ID,
             TrainPlanDbHelper.COLUMN_Exercise,
             TrainPlanDbHelper.COLUMN_REPS,
-            TrainPlanDbHelper.COLUMN_START_WEIGHT
+            TrainPlanDbHelper.COLUMN_START_WEIGHT,
+            TrainPlanDbHelper.COLUMN_SPLIT
     };
 
     public TrainPlanDataSource(Context context) {
@@ -41,11 +42,12 @@ public class TrainPlanDataSource {
         Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
-    public TrainPlan createTrainPlan(String exercise, String reps, double start_weight){
+    public TrainPlan createTrainPlan(String exercise, String reps, double start_weight, String split){
         ContentValues values = new ContentValues();
         values.put(TrainPlanDbHelper.COLUMN_Exercise, exercise);
         values.put(TrainPlanDbHelper.COLUMN_REPS, reps);
         values.put(TrainPlanDbHelper.COLUMN_START_WEIGHT, start_weight);
+        values.put(TrainPlanDbHelper.COLUMN_SPLIT, split);
 
         long insertId = database.insert(TrainPlanDbHelper.TABLE_PLAN, null, values);
 
@@ -63,13 +65,15 @@ public class TrainPlanDataSource {
         int idExercise = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_Exercise);
         int idReps = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_REPS);
         int idStart_weight = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_START_WEIGHT);
+        int idSplit = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_SPLIT);
 
         String exercise = cursor.getString(idExercise);
         String reps = cursor.getString(idReps);
         double start_weight = cursor.getDouble(idStart_weight);
         long id = cursor.getLong(idIndex);
+        String split = cursor.getString(idSplit);
 
-        TrainPlan plan = new TrainPlan(exercise, reps, start_weight, id);
+        TrainPlan plan = new TrainPlan(exercise, reps, start_weight, split, id);
         return plan;
     }
 
