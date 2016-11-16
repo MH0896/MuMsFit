@@ -42,14 +42,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        boolean test = false;
-        test = true;
+
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
-//testdfvfdvff
+
             Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
             if (c.moveToFirst()) {
@@ -137,18 +136,6 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
-    }
-
-    private void showAllListEntries() {
-        List<TrainPlan> tpList = dataSource.getAllTrainPlan();
-
-        ArrayAdapter<TrainPlan> shoppingMemoArrayAdapter = new ArrayAdapter<> (
-                this,
-                android.R.layout.simple_list_item_multiple_choice,
-                tpList);
-
-        ListView shoppingMemosListView = (ListView) findViewById(R.id.viewPlans);
-        shoppingMemosListView.setAdapter(shoppingMemoArrayAdapter);
     }
 
     @Override

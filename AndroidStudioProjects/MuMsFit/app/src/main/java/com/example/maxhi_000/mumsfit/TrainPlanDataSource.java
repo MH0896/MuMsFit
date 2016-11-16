@@ -19,11 +19,11 @@ public class TrainPlanDataSource {
 
 
     private String[] columns = {
-            TrainPlanDbHelper.COLUMN_ID,
-            TrainPlanDbHelper.COLUMN_Exercise,
-            TrainPlanDbHelper.COLUMN_REPS,
-            TrainPlanDbHelper.COLUMN_START_WEIGHT,
-            TrainPlanDbHelper.COLUMN_SPLIT
+            TrainPlanDbHelper.COLUMN_Id,
+            TrainPlanDbHelper.COLUMN_PLAN,
+            TrainPlanDbHelper.COLUMN_TRAININGS,
+            TrainPlanDbHelper.COLUMN_DATE_CREATE,
+            TrainPlanDbHelper.COLUMN_DATE_CREATE
     };
 
     public TrainPlanDataSource(Context context) {
@@ -42,57 +42,39 @@ public class TrainPlanDataSource {
         Log.d(LOG_TAG, "Datenbank mit Hilfe des DbHelpers geschlossen.");
     }
 
-    public TrainPlan createTrainPlan(String exercise, String reps, double start_weight, String split){
+ /*   public TrainPlan createTrainPlan(String plan, int trainings, String date_create, String date_last){
         ContentValues values = new ContentValues();
-        values.put(TrainPlanDbHelper.COLUMN_Exercise, exercise);
-        values.put(TrainPlanDbHelper.COLUMN_REPS, reps);
-        values.put(TrainPlanDbHelper.COLUMN_START_WEIGHT, start_weight);
-        values.put(TrainPlanDbHelper.COLUMN_SPLIT, split);
+        values.put(TrainPlanDbHelper.COLUMN_PLAN, plan);
+        values.put(TrainPlanDbHelper.COLUMN_TRAININGS, trainings);
+        values.put(TrainPlanDbHelper.COLUMN_DATE_CREATE, date_create);
+        values.put(TrainPlanDbHelper.COLUMN_DATE_LAST, date_last);
 
-        long insertId = database.insert(TrainPlanDbHelper.TABLE_PLAN, null, values);
+        long insertId = database.insert(TrainPlanDbHelper.TABLE_DETAILS, null, values);
 
-        Cursor cursor = database.query(TrainPlanDbHelper.TABLE_PLAN, columns,
-                TrainPlanDbHelper.COLUMN_ID + "=" + insertId, null, null, null, null);
+        Cursor cursor = database.query(TrainPlanDbHelper.TABLE_DETAILS, columns,
+                TrainPlanDbHelper.COLUMN_Id + "=" + insertId, null, null, null, null);
         cursor.moveToFirst();
         TrainPlan trainingsPlan = cursorToTrainPlan(cursor);
         cursor.close();
 
         return trainingsPlan;
-    }
+    } */
 
     private TrainPlan cursorToTrainPlan(Cursor cursor) {
-        int idIndex = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_ID);
-        int idExercise = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_Exercise);
-        int idReps = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_REPS);
-        int idStart_weight = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_START_WEIGHT);
-        int idSplit = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_SPLIT);
+        int idIndex = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_Id);
+        int idPlan = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_PLAN);
+        int idTrainings = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_TRAININGS);
+        int idDate_create = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_DATE_CREATE);
+        int idDate_last = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_DATE_LAST);
 
-        String exercise = cursor.getString(idExercise);
-        String reps = cursor.getString(idReps);
-        double start_weight = cursor.getDouble(idStart_weight);
+        String plan = cursor.getString(idPlan);
+        Integer trainings = cursor.getInt(idTrainings);
+        String date_create = cursor.getString(idDate_create);
         long id = cursor.getLong(idIndex);
-        String split = cursor.getString(idSplit);
+        String date_last = cursor.getString(idDate_last);
 
-        TrainPlan plan = new TrainPlan(exercise, reps, start_weight, split, id);
-        return plan;
-    }
-
-    public List<TrainPlan> getAllTrainPlan(){
-        List<TrainPlan> tpList = new ArrayList<>();
-
-        Cursor cursor = database.query(TrainPlanDbHelper.TABLE_PLAN, columns,
-                null, null, null, null, null);
-
-        cursor.moveToFirst();
-        TrainPlan tempPlan;
-        while(!cursor.isAfterLast()){
-            tempPlan = cursorToTrainPlan(cursor);
-            tpList.add(tempPlan);
-            cursor.moveToNext();
-        }
-
-        cursor.close();
-        return tpList;
+        TrainPlan tempplan = new TrainPlan(plan, trainings, date_create, date_last, id);
+        return tempplan;
     }
 
 }
