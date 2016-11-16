@@ -42,13 +42,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        boolean test = false;
+        test = true;
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
-//test
+//testdfvfdvff
             Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
             if (c.moveToFirst()) {
