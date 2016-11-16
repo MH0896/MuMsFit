@@ -5,22 +5,22 @@ package com.example.maxhi_000.mumsfit;
 public class TrainPlan {
 
     private long id;
-    private String exercise;
-    private String reps;
-    private double start_weight;
-    private String split;
+    private String plan;
+    private int trainings;
+    private String date_create;
+    private String date_last;
 
-    public TrainPlan(String exercise, String reps, double start_weight, String split, long id) {
+    public TrainPlan(String plan, int trainings, String date_create, String date_last, long id) {
         this.id = id;
-        this.exercise = exercise;
-        this.reps = reps;
-        this.start_weight = start_weight;
-        this.split = split;
+        this.plan = plan;
+        this.trainings = trainings;
+        this.date_create = date_create;
+        this.date_last = date_last;
     }
 
     @Override
     public String toString(){
-        return this.reps + " times " + this.exercise + " with a weight of " + this.start_weight;
+        return "Plan " + this.plan + ": \nErstellt: " + this.date_create + "\nLast Workout: " + this.date_last + "\n" + this.trainings + " mal durchgeführt";
     }
 
     public long getId() {
@@ -31,35 +31,35 @@ public class TrainPlan {
         this.id = id;
     }
 
-    public String getExercise() {
-        return exercise;
+    public String getPlan() {
+        return plan;
     }
 
-    public void setExercise(String exercise) {
-        this.exercise = exercise;
+    public void setPlan(String plan) {
+        this.plan = plan;
     }
 
-    public String getReps() {
-        return reps;
+    public int getTrainings() {
+        return trainings;
     }
 
-    public void setReps(String reps) {
-        this.reps = reps;
+    public void setTrainings(int trainings) {
+        this.trainings = trainings;
     }
 
-    public double getStart_weight() {
-        return start_weight;
+    public String getDate_create() {
+        return date_create;
     }
 
-    public void setStart_weight(double start_weight) {
-        this.start_weight = start_weight;
+    public void setDate_create(String date_create) {
+        this.date_create = date_create;
     }
 
-    public String getSplit() {
-        return split;
+    public String getDate_last() {
+        return date_last;
     }
 
-    public void setSplit(String split) {
-        this.split = split;
+    public void setDate_last(String date_last) {
+        this.date_last = date_last;
     }
 }

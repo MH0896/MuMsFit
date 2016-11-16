@@ -59,9 +59,11 @@ public class CreatePlan extends AppCompatActivity {
                                     String CREATE_NEW_TABLE = "CREATE TABLE " + namePlan +
                                             "(" + "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                             "exercise" + " TEXT NOT NULL, " +
-                                            "reps" + " STRING NOT NULL,"+
-                                            "start_weight" + "REAL NOT NULL);";
+                                            "reps" + " TEXT NOT NULL, "+
+                                            "start_weight" + " REAL NOT NULL);";
                                     db.execSQL(CREATE_NEW_TABLE);
+
+                                    // db.execSQL("INSERT INTO " + TABLE_DETAILS+ "(NAME, A, B, SCALEFACTOR, FEASTING ) VALUES ('Everest 1830',6377276.30,6356075.4,0.9996,500000)");
                                     dataSource.close();
                                 }finally {
                                     if (db != null)

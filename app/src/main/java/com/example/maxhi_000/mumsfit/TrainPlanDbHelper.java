@@ -14,20 +14,20 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "plans.db";
     public static final int DB_VERSION = 1;
 
-    public static String TABLE_PLAN = "testPlan";
+    public static final String COLUMN_Id = "_id";
+    public static final String COLUMN_PLAN = "plan";
+    public static final String COLUMN_TRAININGS = "trainings";
+    public static final String COLUMN_DATE_CREATE = "date_create";
+    public static final String COLUMN_DATE_LAST = "date_last";
 
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_Exercise = "exercise";
-    public static final String COLUMN_REPS = "reps";
-    public static final String COLUMN_START_WEIGHT = "start_weight";
-    public static final String COLUMN_SPLIT = "split";
+    public static final String TABLE_DETAILS = "details";
 
-    public String SQL_CREATE = "CREATE TABLE " + TABLE_PLAN +
-            "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            COLUMN_Exercise + " TEXT NOT NULL, " +
-            COLUMN_REPS + " STRING NOT NULL,"+
-            COLUMN_START_WEIGHT + "REAL NOT NULL,"+
-            COLUMN_SPLIT + "TEXT NOT NULL);";
+    public String SQL_CREATE = "CREATE TABLE " + TABLE_DETAILS +
+            "(" + COLUMN_Id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            COLUMN_PLAN + " TEXT NOT NULL, " +
+            COLUMN_TRAININGS + " INTEGER NOT NULL,"+
+            COLUMN_DATE_CREATE + " TEXT NOT NULL,"+
+            COLUMN_DATE_LAST + " TEXT NOT NULL);";
 
     public TrainPlanDbHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
