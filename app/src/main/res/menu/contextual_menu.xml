@@ -1,10 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/item_select_all"
+        android:icon="?attr/actionModeSelectAllDrawable"
+        android:showAsAction="ifRoom|withText"
+        android:title="Select All"
+        android:titleCondensed="Select All">
+    </item>
+
+    <item
+        android:id="@+id/item_share"
+        android:icon="@android:drawable/ic_menu_share"
+        android:showAsAction="ifRoom|withText"
+        android:title="Share"
+        android:titleCondensed="Share">
+    </item>
+
+    <item
+        android:id="@+id/item_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:showAsAction="always"
+        android:title="Edit"
+        android:titleCondensed="Edit">
+    </item>
+
+    <item
+        android:id="@+id/item_details"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:showAsAction="always"
+        android:title="Details"
+        android:titleCondensed="Details">
+    </item>
+
+    <item
+        android:id="@+id/item_analyze"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:showAsAction="ifRoom|withText"
+        android:title="Analyze"
+        android:titleCondensed="Analyze">
+    </item>
 
     <item
         android:id="@+id/item_delete"
         android:icon="@android:drawable/ic_menu_delete"
-        android:showAsAction="ifRoom|withText"
+        android:showAsAction="always"
         android:title="Delete"
         android:titleCondensed="Delete">
     </item>

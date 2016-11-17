@@ -25,8 +25,8 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
     public String SQL_CREATE = "CREATE TABLE " + TABLE_DETAILS +
             "(" + COLUMN_Id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_PLAN + " TEXT NOT NULL, " +
-            COLUMN_TRAININGS + " INTEGER NOT NULL,"+
-            COLUMN_DATE_CREATE + " TEXT NOT NULL,"+
+            COLUMN_TRAININGS + " INTEGER NOT NULL, "+
+            COLUMN_DATE_CREATE + " TEXT NOT NULL, "+
             COLUMN_DATE_LAST + " TEXT NOT NULL);";
 
     public TrainPlanDbHelper(Context context){

@@ -3,6 +3,7 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -16,19 +17,17 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
     private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
     private Context mContext;
-    private int id;
-    private List<String> items ;
+    private int countChecked;
 
     public CustomListAdapter(Context context,int resource, int textViewResourceId , List<String> list )
     {
         super(context, resource, textViewResourceId, list);
         mContext = context;
-        id = textViewResourceId;
-        items = list ;
     }
 
     public void setNewSelection(int position, boolean value) {
         mSelection.put(position, value);
+        countChecked = position;
         notifyDataSetChanged();
     }
 
@@ -60,6 +59,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         if (mSelection.get(position) != null) {
             v.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
         }
+
         return v;
     }
 }

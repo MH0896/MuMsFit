@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//why?!?!??!?!?!?
+
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
@@ -91,6 +91,31 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                    MenuItem item;
+                    if (nr == 1){
+                        item = menu.findItem(R.id.item_delete);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_share);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_select_all);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_edit);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_details);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_analyze);
+                        item.setVisible(true);
+                        return true;
+                    } else if(nr > 1) {
+                        item = menu.findItem(R.id.item_details);
+                        item.setVisible(false);
+                        item = menu.findItem(R.id.item_analyze);
+                        item.setVisible(false);
+                        item = menu.findItem(R.id.item_edit);
+                        item.setVisible(false);
+                        return true;
+                    }
+
                     return false;
                 }
 
@@ -112,13 +137,45 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     // TODO Auto-generated method stub
+                    //if hier Einfügen!!! (nr > 0)
                     switch (item.getItemId()) {
-
                         case R.id.item_delete:
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
+                            Toast.makeText(context, "Delete", Toast.LENGTH_LONG).show();
                             return true;
+                        case R.id.item_analyze:
+                            nr = 0;
+                            adapter.clearSelection();
+                            mode.finish();
+                            Toast.makeText(context, "Analyze", Toast.LENGTH_LONG).show();
+                            return true;
+                        case R.id.item_details:
+                            nr = 0;
+                            adapter.clearSelection();
+                            mode.finish();
+                            Toast.makeText(context, "Details", Toast.LENGTH_LONG).show();
+                            return true;
+                        case R.id.item_edit:
+                            nr = 0;
+                            adapter.clearSelection();
+                            mode.finish();
+                            Toast.makeText(context, "Edit", Toast.LENGTH_LONG).show();
+                            return true;
+                        case R.id.item_select_all:
+                            nr = 0;
+                            adapter.clearSelection();
+                            mode.finish();
+                            Toast.makeText(context, "Select All", Toast.LENGTH_LONG).show();
+                            return true;
+                        case R.id.item_share:
+                            nr = 0;
+                            adapter.clearSelection();
+                            mode.finish();
+                            Toast.makeText(context, "Share", Toast.LENGTH_LONG).show();
+                            return true;
+
                     }
                     return false;
                 }
@@ -135,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
                         adapter.removeSelection(position);
                     }
                     mode.setTitle(nr + " selected");
+
+                    mode.invalidate();
 
                 }
             });
@@ -229,23 +288,34 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.contextual_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
+        /*switch(item.getItemId()){
+            case R.id.item_delete:
+                Toast.makeText(context,"Delete",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.item_analyze:
+                Toast.makeText(context,"Analyze",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.item_details:
+                Toast.makeText(context,"Details",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.item_edit:
+                Toast.makeText(context,"Edit",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.item_select_all:
+                Toast.makeText(context,"Select All",Toast.LENGTH_LONG).show();
+                return true;
+            case R.id.item_share:
+                Toast.makeText(context,"Share",Toast.LENGTH_LONG).show();
+                return true;
+            default:
         }*/
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -307,4 +377,3 @@ public class MainActivity extends AppCompatActivity {
         client.disconnect();
     }
 }
-

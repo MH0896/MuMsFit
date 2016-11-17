@@ -4,18 +4,34 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.CoordinatorLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/readyButton"
-            android:layout_width="76dp"
-            android:layout_height="69dp"
+            android:layout_width="56dp"
+            android:layout_height="61dp"
             android:layout_gravity="bottom|end"
-            android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@android:drawable/ic_menu_save"
             app:backgroundTint="?attr/colorBackgroundFloating"
-            app:rippleColor="@android:color/background_dark" />
-    </android.support.design.widget.CoordinatorLayout>
+            app:rippleColor="@android:color/background_dark"
+            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="28dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/linear"
+            android:weightSum="1">
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </LinearLayout>
