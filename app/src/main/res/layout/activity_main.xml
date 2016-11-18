@@ -18,7 +18,7 @@
     <include layout="@layout/content_main" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/addPlan"
         android:layout_width="88dp"
         android:layout_height="75dp"
         android:layout_gravity="bottom|end"

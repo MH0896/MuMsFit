@@ -7,27 +7,20 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import static android.R.interpolator.linear;
 
 public class CreatePlan extends AppCompatActivity {
 
@@ -40,6 +33,7 @@ public class CreatePlan extends AppCompatActivity {
     List<String> reps = new ArrayList<String>();
     List<String> start_weight = new ArrayList<String>();
     List<String> e_split = new ArrayList<String>();
+    String currentPlan = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,10 +141,10 @@ public class CreatePlan extends AppCompatActivity {
         });
     }
 
-    public void createExerciseButton(){
+    public void createExerciseButton(String t_plan){
         Button exerciseButton = new Button(this);
         exerciseButton.setText("Übung hinzufügen");
-
+        final String temp_plan = t_plan;
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         ll.addView(exerciseButton, lp);
@@ -161,24 +155,35 @@ public class CreatePlan extends AppCompatActivity {
 
                 alertDialogBuilder.setTitle("Trainingstag hinzufügen");
 
+                LinearLayout layout = new LinearLayout(context);
+                layout.setOrientation(LinearLayout.VERTICAL);
+
                 final EditText e_name = new EditText(context);
+                e_name.setHint("Name");
                 e_name.setInputType(InputType.TYPE_CLASS_TEXT);
-                alertDialogBuilder.setView(e_name);
+                layout.addView(e_name);
 
                 final EditText e_reps = new EditText(context);
+                e_reps.setHint("Wiederholungen");
                 e_reps.setInputType(InputType.TYPE_CLASS_TEXT);
-                alertDialogBuilder.setView(e_name);
+                layout.addView(e_reps);
 
                 final EditText e_sw = new EditText(context);
-                e_name.setInputType(InputType.TYPE_CLASS_TEXT);
-                alertDialogBuilder.setView(e_name);
+                e_sw.setHint("Startgewicht");
+                e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
+                layout.addView(e_sw);
+
+                alertDialogBuilder.setView(layout);
 
                 alertDialogBuilder
                         .setMessage("Neue Übung:")
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                splits.add(e_name.getText().toString());
+                                e_split.add(temp_plan);
+                                exercise.add(e_name.getText().toString());
+                                reps.add(e_reps.getText().toString());
+                                start_weight.add(e_sw.getText().toString());
                                 redrawGUI();
                                 dialog.cancel();
                             }
@@ -195,6 +200,24 @@ public class CreatePlan extends AppCompatActivity {
         });
     }
 
+    public void createDeleteButton(final int toDel){
+        Button delete = new Button(this);
+        delete.setText("X");
+
+        LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ll.addView(delete, lp);
+        delete.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                exercise.remove(toDel);
+                reps.remove(toDel);
+                start_weight.remove(toDel);
+                e_split.remove(toDel);
+                redrawGUI();
+            }
+        });
+    }
+
     public void redrawGUI(){
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
         if(((LinearLayout) ll).getChildCount() > 0)
@@ -204,8 +227,28 @@ public class CreatePlan extends AppCompatActivity {
             TextView textView = new TextView(this);
             textView.setText(splits.get(i));
             ll.addView(textView);
+            currentPlan = splits.get(i);
 
             //insert exercises here..
+            for(int j = 0; j < exercise.size(); j++){
+                if(currentPlan.equals(e_split.get(j))){
+                    TextView exerView = new TextView(this);
+                    String toShow = exercise.get(j) + " Reps: " + reps.get(j) + " Startgewicht: " + start_weight.get(j);
+                    exerView.setText(toShow);
+                    ll.addView(exerView);
+
+                    createDeleteButton(j);
+
+                    View v = new View(this);
+                    v.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            2
+                    ));
+                    v.setBackgroundColor(Color.parseColor("#B3B3B3"));
+                    ll.addView(v);
+                }
+            }
+            createExerciseButton(currentPlan);
 
             View v = new View(this);
             v.setLayoutParams(new LinearLayout.LayoutParams(
