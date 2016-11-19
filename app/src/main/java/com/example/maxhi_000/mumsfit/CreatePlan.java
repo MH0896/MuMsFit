@@ -10,12 +10,17 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,10 +77,16 @@ public class CreatePlan extends AppCompatActivity {
                                             "(" + "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                             "exercise" + " TEXT NOT NULL, " +
                                             "reps" + " TEXT NOT NULL, "+
-                                            "start_weight" + " REAL NOT NULL);";
+                                            "start_weight" + " TEXT NOT NULL, " +
+                                            "split" + " TEXT NOT NULL);";
                                     db.execSQL(CREATE_NEW_TABLE);
                                     String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
                                     db.execSQL("INSERT INTO " + TrainPlanDbHelper.TABLE_DETAILS + " (plan, trainings, date_create, date_last) VALUES ('"+forDB+"' , 0,'"+date+"', '-')");
+
+                                    for(int i  = 0; i < exercise.size(); i++){
+                                        db.execSQL("INSERT INTO " + namePlan + " (exercise, reps, start_weight, split) VALUES ('"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
+                                    }
+
                                     dataSource.close();
                                 }finally {
                                     if (db != null)
@@ -124,9 +135,15 @@ public class CreatePlan extends AppCompatActivity {
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                splits.add(input.getText().toString());
-                                redrawGUI();
-                                dialog.cancel();
+                                String eingabe = input.getText().toString().toUpperCase();
+                                String returned = checkEingabe(eingabe);
+                                if(returned == null){
+                                    Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
+                                }else {
+                                    splits.add(eingabe);
+                                    redrawGUI();
+                                    dialog.cancel();
+                                }
                             }
                         })
                         .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
@@ -153,7 +170,7 @@ public class CreatePlan extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Trainingstag hinzufügen");
+                alertDialogBuilder.setTitle("Übung hinzufügen");
 
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
@@ -200,13 +217,15 @@ public class CreatePlan extends AppCompatActivity {
         });
     }
 
-    public void createDeleteButton(final int toDel){
-        Button delete = new Button(this);
-        delete.setText("X");
+    public void createDeleteButton(final int toDel, LinearLayout tempLL){
+        TextView delete = new TextView(this);
+        String sourceString = "<b>X</b>";
+        delete.setText(Html.fromHtml(sourceString));
+        delete.setGravity(Gravity.LEFT);
+        delete.setPadding(5,1,5,1);
+        delete.setTextSize(pxFromDp(12, context));
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ll.addView(delete, lp);
+        tempLL.addView(delete);
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 exercise.remove(toDel);
@@ -218,26 +237,67 @@ public class CreatePlan extends AppCompatActivity {
         });
     }
 
+    public void createSplitDelete(final int splitDel, LinearLayout deleteLL){
+        TextView deleteS = new TextView(this);
+        String sourceString = "<b>X</b>";
+        deleteS.setText(Html.fromHtml(sourceString));
+        deleteS.setGravity(Gravity.LEFT);
+        deleteS.setPadding(5,1,5,1);
+        deleteS.setTextSize(pxFromDp(12, context));
+
+        deleteLL.addView(deleteS);
+        deleteS.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                splits.remove(splitDel);
+                redrawGUI();
+            }
+        });
+    }
+
     public void redrawGUI(){
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
         if(((LinearLayout) ll).getChildCount() > 0)
             ((LinearLayout) ll).removeAllViews();
 
         for(int i = 0; i < splits.size(); i++){
-            TextView textView = new TextView(this);
-            textView.setText(splits.get(i));
-            ll.addView(textView);
             currentPlan = splits.get(i);
+            boolean toTest = true;
+            int k = 0;
+            while(k < exercise.size() && toTest){
+                if(currentPlan.equals((e_split.get(k)))){
+                    toTest = false;
+                }
+                k++;
+            }
+            if(toTest){
+                LinearLayout deleteLL = new LinearLayout(this);
+                createSplitDelete(i, deleteLL);
+                TextView textView = new TextView(this);
+                String sourceString = "<b>" + splits.get(i) + "</b>";
+                textView.setText(Html.fromHtml(sourceString));
+                textView.setPadding(8, 5, 16, 2);
+                deleteLL.addView(textView);
+                ll.addView(deleteLL);
+            }else {
+                TextView textView = new TextView(this);
+                String sourceString = "<b>" + splits.get(i) + "</b>";
+                textView.setText(Html.fromHtml(sourceString));
+                textView.setPadding(16, 5, 16, 2);
+                ll.addView(textView);
+            }
+            LinearLayout tempLL = null;
 
-            //insert exercises here..
             for(int j = 0; j < exercise.size(); j++){
+                tempLL = new LinearLayout(this);
                 if(currentPlan.equals(e_split.get(j))){
+                    createDeleteButton(j, tempLL);
                     TextView exerView = new TextView(this);
+                    exerView.setPadding(10,2,10,2);
+
                     String toShow = exercise.get(j) + " Reps: " + reps.get(j) + " Startgewicht: " + start_weight.get(j);
                     exerView.setText(toShow);
-                    ll.addView(exerView);
-
-                    createDeleteButton(j);
+                    tempLL.addView(exerView);
+                    ll.addView(tempLL);
 
                     View v = new View(this);
                     v.setLayoutParams(new LinearLayout.LayoutParams(
@@ -290,12 +350,20 @@ public class CreatePlan extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public String getNamePlan() {
-        return namePlan;
+    public static float pxFromDp(float dp, Context mContext) {
+        return dp * mContext.getResources().getDisplayMetrics().density;
     }
 
-    public void setNamePlan(String namePlan) {
-        this.namePlan = namePlan;
+    public String checkEingabe(String input){
+        if(input.isEmpty()){
+            return null;
+        }
+        String newInput = input.trim();
+        if(newInput == "" || newInput.isEmpty()){
+            return null;
+        }
+
+        return newInput;
     }
 
 }

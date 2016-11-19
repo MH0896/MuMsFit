@@ -140,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            Toast.makeText(context, "Details", Toast.LENGTH_LONG).show();
                             return true;
                         case R.id.item_edit:
                             nr = 0;
