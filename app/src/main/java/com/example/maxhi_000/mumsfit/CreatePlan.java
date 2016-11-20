@@ -129,6 +129,7 @@ public class CreatePlan extends AppCompatActivity {
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 alertDialogBuilder.setView(input);
+                input.setId(R.id.calabash);
 
                 alertDialogBuilder
                         .setMessage("Name des Trainingstages:")
@@ -178,16 +179,19 @@ public class CreatePlan extends AppCompatActivity {
                 final EditText e_name = new EditText(context);
                 e_name.setHint("Name");
                 e_name.setInputType(InputType.TYPE_CLASS_TEXT);
+                e_name.setId(R.id.c_name);
                 layout.addView(e_name);
 
                 final EditText e_reps = new EditText(context);
                 e_reps.setHint("Wiederholungen");
                 e_reps.setInputType(InputType.TYPE_CLASS_TEXT);
+                e_reps.setId(R.id.c_reps);
                 layout.addView(e_reps);
 
                 final EditText e_sw = new EditText(context);
                 e_sw.setHint("Startgewicht");
                 e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
+                e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
 
                 alertDialogBuilder.setView(layout);
@@ -224,6 +228,7 @@ public class CreatePlan extends AppCompatActivity {
         delete.setGravity(Gravity.LEFT);
         delete.setPadding(5,1,5,1);
         delete.setTextSize(pxFromDp(12, context));
+        delete.setId(R.id.d_exer);
 
         tempLL.addView(delete);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -244,6 +249,7 @@ public class CreatePlan extends AppCompatActivity {
         deleteS.setGravity(Gravity.LEFT);
         deleteS.setPadding(5,1,5,1);
         deleteS.setTextSize(pxFromDp(12, context));
+        deleteS.setId(R.id.d_split);
 
         deleteLL.addView(deleteS);
         deleteS.setOnClickListener(new View.OnClickListener() {

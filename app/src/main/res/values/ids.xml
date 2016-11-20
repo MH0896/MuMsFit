@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="calabash" type="id"/>
+    <item name="c_name" type="id"/>
+    <item name="c_reps" type="id"/>
+    <item name="c_sw" type="id"/>
+    <item name="d_split" type="id"/>
+    <item name="d_exer" type="id"/>
+
+</resources>

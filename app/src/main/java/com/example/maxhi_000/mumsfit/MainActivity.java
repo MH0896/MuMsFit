@@ -18,8 +18,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -206,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 alertDialogBuilder.setTitle("Neuen Plan anlegen");
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
+                input.setId(R.id.calabash);
                 alertDialogBuilder.setView(input);
 
                 alertDialogBuilder
