@@ -53,7 +53,7 @@ public class TrainPlanDataSource {
         return trainingsPlan;
     } */
 
-    private TrainPlan cursorToTrainPlan(Cursor cursor) {
+  /*  private TrainPlan cursorToTrainPlan(Cursor cursor) {
         int idIndex = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_Id);
         int idPlan = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_PLAN);
         int idTrainings = cursor.getColumnIndex(TrainPlanDbHelper.COLUMN_TRAININGS);
@@ -68,6 +68,6 @@ public class TrainPlanDataSource {
 
         TrainPlan tempplan = new TrainPlan(plan, trainings, date_create, date_last, id);
         return tempplan;
-    }
+    }*/
 
 }
