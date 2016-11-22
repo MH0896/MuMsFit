@@ -81,7 +81,7 @@ public class CreatePlan extends AppCompatActivity {
                                             "split" + " TEXT NOT NULL);";
                                     db.execSQL(CREATE_NEW_TABLE);
                                     String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-                                    db.execSQL("INSERT INTO " + TrainPlanDbHelper.TABLE_DETAILS + " (plan, trainings, date_create, date_last) VALUES ('"+forDB+"' , 0,'"+date+"', '-')");
+                                    db.execSQL("INSERT INTO details (plan, trainings, date_create, date_last) VALUES ('"+forDB+"' , 0,'"+date+"', '-')");
 
                                     for(int i  = 0; i < exercise.size(); i++){
                                         db.execSQL("INSERT INTO " + namePlan + " (exercise, reps, start_weight, split) VALUES ('"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
@@ -228,7 +228,6 @@ public class CreatePlan extends AppCompatActivity {
         delete.setGravity(Gravity.LEFT);
         delete.setPadding(5,1,5,1);
         delete.setTextSize(pxFromDp(12, context));
-        delete.setId(R.id.d_exer);
 
         tempLL.addView(delete);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -249,7 +248,6 @@ public class CreatePlan extends AppCompatActivity {
         deleteS.setGravity(Gravity.LEFT);
         deleteS.setPadding(5,1,5,1);
         deleteS.setTextSize(pxFromDp(12, context));
-        deleteS.setId(R.id.d_split);
 
         deleteLL.addView(deleteS);
         deleteS.setOnClickListener(new View.OnClickListener() {
