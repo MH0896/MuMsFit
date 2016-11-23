@@ -17,8 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class CreatePlan extends AppCompatActivity {
+public class CreatePlanActivity extends AppCompatActivity {
 
     final Context context = this;
 
@@ -95,7 +93,7 @@ public class CreatePlan extends AppCompatActivity {
 
 
 
-                                Intent i = new Intent(CreatePlan.this, MainActivity.class);
+                                Intent i = new Intent(CreatePlanActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
                             }
@@ -227,7 +225,7 @@ public class CreatePlan extends AppCompatActivity {
         delete.setText(Html.fromHtml(sourceString));
         delete.setGravity(Gravity.LEFT);
         delete.setPadding(5,1,5,1);
-        delete.setTextSize(pxFromDp(12, context));
+        delete.setTextSize(pxFromDp(9, context));
 
         tempLL.addView(delete);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -247,7 +245,7 @@ public class CreatePlan extends AppCompatActivity {
         deleteS.setText(Html.fromHtml(sourceString));
         deleteS.setGravity(Gravity.LEFT);
         deleteS.setPadding(5,1,5,1);
-        deleteS.setTextSize(pxFromDp(12, context));
+        deleteS.setTextSize(pxFromDp(11, context));
 
         deleteLL.addView(deleteS);
         deleteS.setOnClickListener(new View.OnClickListener() {
@@ -339,7 +337,7 @@ public class CreatePlan extends AppCompatActivity {
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent i = new Intent(CreatePlan.this, MainActivity.class);
+                        Intent i = new Intent(CreatePlanActivity.this, MainActivity.class);
                         startActivity(i);
                         finish();
                     }

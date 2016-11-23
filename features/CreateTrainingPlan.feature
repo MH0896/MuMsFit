@@ -1,5 +1,5 @@
 Feature: Create Training Plan
-#feature
+
   Scenario: As a valid user I can create a blank training plan
     When I press "addPlan"
     And I enter text "testPlan" into field with id "calabash"

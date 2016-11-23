@@ -18,11 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private TrainPlanDataSource dataSource;
 
     ArrayList<String> arrTblNames = new ArrayList<String>();
+    ArrayList<Integer> selected = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +73,21 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
                     MenuItem item;
-                    if (nr == 1){
+                    if(nr == 1 && arrTblNames.size()==1){
+                        item = menu.findItem(R.id.item_delete);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_share);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_select_all);
+                        item.setVisible(false);
+                        item = menu.findItem(R.id.item_edit);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_details);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_analyze);
+                        item.setVisible(true);
+                    }
+                    else if (nr == 1){
                         item = menu.findItem(R.id.item_delete);
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_share);
@@ -106,6 +118,16 @@ public class MainActivity extends AppCompatActivity {
                     }else if(nr == arrTblNames.size()){
                         item = menu.findItem(R.id.item_select_all);
                         item.setVisible(false);
+                        item = menu.findItem(R.id.item_details);
+                        item.setVisible(false);
+                        item = menu.findItem(R.id.item_analyze);
+                        item.setVisible(false);
+                        item = menu.findItem(R.id.item_edit);
+                        item.setVisible(false);
+                        item = menu.findItem(R.id.item_delete);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_share);
+                        item.setVisible(true);
                         return true;
                     }
                     return false;
@@ -128,42 +150,44 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.item_delete:
+                            DeleteClick(selected);
                             nr = 0;
-                            adapter.clearSelection();
                             mode.finish();
-                            Toast.makeText(context, "Delete", Toast.LENGTH_LONG).show();
                             return true;
                         case R.id.item_analyze:
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            Toast.makeText(context, "Analyze", Toast.LENGTH_LONG).show();
+                            AnalyzeClick(selected);
+                            selected.clear();
                             return true;
                         case R.id.item_details:
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
+                            DetailsClick(selected);
+                            selected.clear();
                             return true;
                         case R.id.item_edit:
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            Toast.makeText(context, "Edit", Toast.LENGTH_LONG).show();
+                            EditClick(selected);
+                            selected.clear();
                             return true;
                         case R.id.item_select_all:
                             for (int i=0; i < ViewPlan.getAdapter().getCount(); i++) {
                                 ViewPlan.setItemChecked(i, true);
                                 nr = i + 1;
                             }
-                            Toast.makeText(context, "Select All", Toast.LENGTH_LONG).show();
                             return true;
                         case R.id.item_share:
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            Toast.makeText(context, "Share", Toast.LENGTH_LONG).show();
+                            ShareClick(selected);
+                            selected.clear();
                             return true;
-
                     }
                     return false;
                 }
@@ -174,14 +198,16 @@ public class MainActivity extends AppCompatActivity {
                     if (checked) {
                         nr++;
                         adapter.setNewSelection(position, checked);
+                        selected.add(position);
                     } else {
                         nr--;
                         adapter.removeSelection(position);
+                        int i = selected.indexOf(position);
+                        selected.remove(i);
                     }
                     mode.setTitle(nr + " selected");
 
                     mode.invalidate();
-
                 }
             });
 
@@ -251,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
                                     }else {
                                         Bundle temp = new Bundle();
                                         temp.putString("param", eingabe);
-                                        Intent i = new Intent(MainActivity.this, CreatePlan.class);
+                                        Intent i = new Intent(MainActivity.this, CreatePlanActivity.class);
                                         i.putExtras(temp);
                                         startActivity(i);
                                         finish();
@@ -316,5 +342,99 @@ public class MainActivity extends AppCompatActivity {
             }
         }, zeit);
 
+    }
+
+    public void DeleteClick(final ArrayList<Integer> items){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+        alertDialogBuilder.setTitle("Wirklich löschen?");
+
+        alertDialogBuilder
+                .setMessage("Wollen Sie wirklich unwiderruflich löschen?")
+                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SQLiteDatabase db = null;
+                            try{
+                                db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                                dataSource = new TrainPlanDataSource(context);
+                                dataSource.open();
+
+                                for(int i = 0; i < items.size(); i++){
+                                    db.execSQL("DROP TABLE IF EXISTS ["+arrTblNames.get(items.get(i)) +"]");
+                                    db.delete("details", "plan = ?", new String[] { "["+ arrTblNames.get(items.get(i)) +"]" });
+                                }
+
+                                dataSource.close();
+                            }finally {
+                                if (db != null)
+                                    db.close();
+                            }
+                            finish();
+                            startActivity(getIntent());
+                        }})
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void DetailsClick(ArrayList<Integer> items){
+        SQLiteDatabase db = null;
+        try {
+            db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            dataSource = new TrainPlanDataSource(context);
+            dataSource.open();
+
+            String trainings = "default";
+            String date_create = "default";
+            String date_last = "default";
+            Cursor c = db.rawQuery("SELECT trainings,date_create,date_last FROM details WHERE plan='["+ arrTblNames.get(items.get(0)) +"]'", null);
+            if(c.moveToFirst()) {
+                trainings = c.getString(0);
+                date_create = c.getString(1);
+                date_last = c.getString(2);
+                c.close();
+            }
+
+            dataSource.close();
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            alertDialogBuilder.setTitle(arrTblNames.get(items.get(0)));
+
+            alertDialogBuilder
+                    .setMessage("Anzahl der Einheiten: "+trainings+"\nErstellt am: "+date_create+"\nZuletzt durchgeführt am: "+date_last)
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                           dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public void ShareClick(ArrayList<Integer> items){
+        //Aufruf Zeile 166
+    }
+
+    public void EditClick(ArrayList<Integer> items){
+        //Aufruf Zeile 153
+    }
+
+    public void AnalyzeClick(ArrayList<Integer> items){
+        //Aufruf Zeile 139
     }
 }

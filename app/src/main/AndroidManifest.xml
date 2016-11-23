@@ -19,7 +19,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CreatePlan"
+        <activity android:name=".CreatePlanActivity"
             android:screenOrientation="portrait"
             android:label="MuM's Fit">
         </activity>
