@@ -141,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                     nr = 0;
+                    selected.clear();
                     MenuInflater inflater = getMenuInflater();
                     inflater.inflate(R.menu.contextual_menu, menu);
                     return true;
@@ -170,10 +171,8 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.item_edit:
                             nr = 0;
-                            adapter.clearSelection();
                             mode.finish();
                             EditClick(selected);
-                            selected.clear();
                             return true;
                         case R.id.item_select_all:
                             for (int i=0; i < ViewPlan.getAdapter().getCount(); i++) {
@@ -430,8 +429,52 @@ public class MainActivity extends AppCompatActivity {
         //Aufruf Zeile 166
     }
 
-    public void EditClick(ArrayList<Integer> items){
-        //Aufruf Zeile 153
+    public void EditClick(final ArrayList<Integer> items){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        alertDialogBuilder.setTitle("Trainingsplan bearbeiten");
+        final EditText input = new EditText(context);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(arrTblNames.get(items.get(0)));
+        input.setId(R.id.calabash);
+        alertDialogBuilder.setView(input);
+
+        alertDialogBuilder
+                .setMessage("Name ändern:")
+                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String temp = input.getText().toString();
+                        String returned = checkEingabe(temp);
+                        if(returned == null){
+                            Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
+                        }else {
+                            SQLiteDatabase db = null;
+                            try {
+                                db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                                dataSource = new TrainPlanDataSource(context);
+                                dataSource.open();
+                                db.execSQL("ALTER TABLE ["+arrTblNames.get(items.get(0))+"] RENAME TO ["+ returned +"]");
+
+                                dataSource.close();
+                            }finally {
+                                if (db != null)
+                                    db.close();
+                            }
+                            finish();
+                            startActivity(getIntent());
+                        }
+                    }
+                })
+                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     public void AnalyzeClick(ArrayList<Integer> items){
