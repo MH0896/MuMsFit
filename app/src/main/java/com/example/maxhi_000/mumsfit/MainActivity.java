@@ -64,6 +64,18 @@ public class MainActivity extends AppCompatActivity {
             adapter = new CustomListAdapter(MainActivity.this, R.layout.custom_list, R.id.textView, arrTblNames);
             ViewPlan.setAdapter(adapter);
 
+            ViewPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Bundle temp = new Bundle();
+                    temp.putString("param", arrTblNames.get(position));
+                    Intent i = new Intent(MainActivity.this, ViewPlanActivity.class);
+                    i.putExtras(temp);
+                    startActivity(i);
+                    finish();
+                }
+            });
+
             ViewPlan.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
             ViewPlan.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {

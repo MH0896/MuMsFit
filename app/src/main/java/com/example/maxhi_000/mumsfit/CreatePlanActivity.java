@@ -81,8 +81,9 @@ public class CreatePlanActivity extends AppCompatActivity {
                                     String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
                                     db.execSQL("INSERT INTO details (plan, trainings, date_create, date_last) VALUES ('"+forDB+"' , 0,'"+date+"', '-')");
 
+                                    Toast.makeText(context, exercise.size()+"", Toast.LENGTH_SHORT).show();
                                     for(int i  = 0; i < exercise.size(); i++){
-                                        db.execSQL("INSERT INTO " + namePlan + " (exercise, reps, start_weight, split) VALUES ('"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
+                                        db.execSQL("INSERT INTO [" + namePlan + "] (exercise, reps, start_weight, split) VALUES ('"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
                                     }
 
                                     dataSource.close();
