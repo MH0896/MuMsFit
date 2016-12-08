@@ -5,5 +5,6 @@
     <item name="c_name" type="id"/>
     <item name="c_reps" type="id"/>
     <item name="c_sw" type="id"/>
+    <item name="c_split" type="id"/>
 
 </resources>

@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,7 +68,6 @@ public class ViewPlanActivity  extends AppCompatActivity {
 
     public void drawGUI(){
         LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);
-        Toast.makeText(context, exercises.size()+"", Toast.LENGTH_SHORT).show();
 
         for(int i = 0; i < exercises.size(); i++){
             if(i == 0){
@@ -113,5 +114,28 @@ public class ViewPlanActivity  extends AppCompatActivity {
         Intent i = new Intent(ViewPlanActivity.this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_edit_menu:
+                Bundle temp = new Bundle();
+                temp.putString("param", namePlan);
+                Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);
+                i.putExtras(temp);
+                startActivity(i);
+                finish();
+                return true;
+            case R.id.item_start_training:
+                Toast.makeText(getApplicationContext(),"Start",Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

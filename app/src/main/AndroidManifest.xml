@@ -29,6 +29,11 @@
             android:label="MuM's Fit">
         </activity>
 
+        <activity android:name=".EditPlanActivity"
+            android:screenOrientation="portrait"
+            android:label="MuM's Fit">
+        </activity>
+
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:label="@string/app_name">

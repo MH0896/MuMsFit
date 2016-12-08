@@ -1,4 +1,19 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.maxhi_000.mumsfit.MainActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_start_training"
+        android:icon="@android:drawable/ic_media_play"
+        app:showAsAction="ifRoom"
+        android:title="Start Training"
+        android:titleCondensed="Start Training">
+    </item>
 
+    <item
+        android:id="@+id/item_edit_menu"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="ifRoom"
+        android:title="Edit"
+        android:titleCondensed="Edit">
+    </item>
 </menu>
