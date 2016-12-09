@@ -16,4 +16,12 @@
         android:title="Edit"
         android:titleCondensed="Edit">
     </item>
+
+    <item
+        android:id="@+id/item_details_menu"
+        android:icon="@android:drawable/ic_menu_info_details"
+        app:showAsAction="ifRoom"
+        android:title="Details"
+        android:titleCondensed="Details">
+    </item>
 </menu>

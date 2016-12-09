@@ -11,42 +11,6 @@
     </item>
 
     <item
-        android:id="@+id/item_share"
-        android:icon="@android:drawable/ic_menu_share"
-        android:showAsAction="ifRoom|withText"
-        android:title="Share"
-        android:titleCondensed="Share"
-        android:visible="false">
-    </item>
-
-    <item
-        android:id="@+id/item_edit"
-        android:icon="@android:drawable/ic_menu_edit"
-        android:showAsAction="ifRoom|withText"
-        android:title="Edit"
-        android:titleCondensed="Edit"
-        android:visible="false">
-    </item>
-
-    <item
-        android:id="@+id/item_details"
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:showAsAction="always"
-        android:title="Details"
-        android:titleCondensed="Details"
-        android:visible="false">
-    </item>
-
-    <item
-        android:id="@+id/item_analyze"
-        android:icon="@android:drawable/ic_menu_sort_by_size"
-        android:showAsAction="ifRoom|withText"
-        android:title="Analyze"
-        android:titleCondensed="Analyze"
-        android:visible="false">
-    </item>
-
-    <item
         android:id="@+id/item_delete"
         android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="always"
@@ -55,4 +19,49 @@
         android:visible="false">
     </item>
 
+    <item
+        android:id="@+id/item_share"
+        android:icon="@android:drawable/ic_menu_share"
+        android:showAsAction="always"
+        android:title="Share"
+        android:titleCondensed="Share"
+        android:visible="false">
+    </item>
+
+    <item
+        android:id="@+id/item_menu_overflow"
+        android:icon="@drawable/more"
+        android:showAsAction="always"
+        android:title="Details"
+        android:titleCondensed="Details"
+        android:visible="false">
+        <menu>
+            <item
+                android:id="@+id/item_details"
+                android:icon="@android:drawable/ic_menu_info_details"
+                android:showAsAction="ifRoom|withText"
+                android:title="Details"
+                android:titleCondensed="Details"
+                android:visible="false">
+            </item>
+
+            <item
+                android:id="@+id/item_edit"
+                android:icon="@android:drawable/ic_menu_edit"
+                android:showAsAction="ifRoom|withText"
+                android:title="Edit"
+                android:titleCondensed="Edit"
+                android:visible="false">
+            </item>
+
+            <item
+                android:id="@+id/item_analyze"
+                android:icon="@android:drawable/ic_menu_sort_by_size"
+                android:showAsAction="ifRoom|withText"
+                android:title="Analyze"
+                android:titleCondensed="Analyze"
+                android:visible="false">
+            </item>
+        </menu>
+    </item>
 </menu>

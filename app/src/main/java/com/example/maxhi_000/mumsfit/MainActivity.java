@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_analyze);
                         item.setVisible(true);
+                        item = menu.findItem(R.id.item_menu_overflow);
+                        item.setVisible(true);
                     }
                     else if (nr == 1){
                         item = menu.findItem(R.id.item_delete);
@@ -111,6 +113,8 @@ public class MainActivity extends AppCompatActivity {
                         item = menu.findItem(R.id.item_details);
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_analyze);
+                        item.setVisible(true);
+                        item = menu.findItem(R.id.item_menu_overflow);
                         item.setVisible(true);
                         return true;
                     } else if(nr > 1 && nr!=arrTblNames.size()) {
@@ -126,6 +130,8 @@ public class MainActivity extends AppCompatActivity {
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_select_all);
                         item.setVisible(true);
+                        item = menu.findItem(R.id.item_menu_overflow);
+                        item.setVisible(false);
                         return true;
                     }else if(nr == arrTblNames.size()){
                         item = menu.findItem(R.id.item_select_all);
@@ -140,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_share);
                         item.setVisible(true);
+                        item = menu.findItem(R.id.item_menu_overflow);
+                        item.setVisible(false);
                         return true;
                     }
                     return false;

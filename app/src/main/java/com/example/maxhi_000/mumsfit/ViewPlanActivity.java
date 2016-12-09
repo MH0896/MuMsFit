@@ -2,11 +2,13 @@ package com.example.maxhi_000.mumsfit;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Menu;
@@ -134,8 +136,52 @@ public class ViewPlanActivity  extends AppCompatActivity {
             case R.id.item_start_training:
                 Toast.makeText(getApplicationContext(),"Start",Toast.LENGTH_SHORT).show();
                 return true;
+            case R.id.item_details_menu:
+                DetailsClick();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+    public void DetailsClick(){
+        SQLiteDatabase db = null;
+        try {
+            db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            dataSource = new TrainPlanDataSource(context);
+            dataSource.open();
+
+            String trainings = "default";
+            String date_create = "default";
+            String date_last = "default";
+            Cursor c = db.rawQuery("SELECT trainings,date_create,date_last FROM details WHERE plan='["+ namePlan +"]'", null);
+            if(c.moveToFirst()) {
+                trainings = c.getString(0);
+                date_create = c.getString(1);
+                date_last = c.getString(2);
+                c.close();
+            }
+
+            dataSource.close();
+
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
+
+            alertDialogBuilder.setTitle(namePlan);
+
+            alertDialogBuilder
+                    .setMessage("Anzahl der Einheiten: "+trainings+"\nErstellt am: "+date_create+"\nZuletzt durchgeführt am: "+date_last)
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        } finally {
+            if (db != null)
+                db.close();
         }
     }
 }
