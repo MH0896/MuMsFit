@@ -252,7 +252,7 @@ public class EditPlanActivity  extends AppCompatActivity {
 
                                     dataSource.open();
 
-                                    db.execSQL("INSERT INTO "+ forDB +" (exercise, reps, start_weight, split) VALUES ('"+e_name.getText().toString()+"', '"+e_reps.getText().toString()+"', '"+e_sw.getText().toString()+"', '"+e_split.getText().toString()+"')");
+                                    db.execSQL("INSERT INTO "+ forDB +" (exercise, reps, start_weight, split) VALUES ('"+e_name.getText().toString()+"', '"+e_reps.getText().toString()+"', '"+e_sw.getText().toString()+"', '"+e_split.getText().toString().toUpperCase()+"')");
 
                                     dataSource.close();
                                 }finally {
