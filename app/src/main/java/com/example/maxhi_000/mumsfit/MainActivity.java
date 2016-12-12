@@ -362,7 +362,7 @@ public class MainActivity extends AppCompatActivity {
         }, zeit);
 
     }
-
+//details ansehen
     public void DeleteClick(final ArrayList<Integer> items){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);

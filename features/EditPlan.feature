@@ -18,8 +18,9 @@ Feature: Edit a created training plan
     And I press the "Okay" button
     And I see "ViewTestPlan"
     And I long press "ViewTestPlan"
-    And I press the action menu key
+    And I press "item_menu_overflow"
     And I press "Edit"
+    And I clear input field with id "calabash"
     And I enter text "EditTestPlan" into field with id "calabash"
     And I press the "Okay" button
     Then I see "EditTestPlan"
