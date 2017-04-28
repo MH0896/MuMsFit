@@ -15,11 +15,17 @@ public class TrainPlanDataSource {
 
 
     private String[] columns = {
-            TrainPlanDbHelper.COLUMN_Id,
-            TrainPlanDbHelper.COLUMN_PLAN,
-            TrainPlanDbHelper.COLUMN_TRAININGS,
             TrainPlanDbHelper.COLUMN_DATE_CREATE,
-            TrainPlanDbHelper.COLUMN_DATE_CREATE
+            TrainPlanDbHelper.COLUMN_DATE_LAST,
+            TrainPlanDbHelper.COLUMN_START,
+            TrainPlanDbHelper.COLUMN_REPS,
+            TrainPlanDbHelper.COLUMN_GEWICHT,
+            TrainPlanDbHelper.COLUMN_GID,
+            TrainPlanDbHelper.COLUMN_PId,
+            TrainPlanDbHelper.COLUMN_PNAME,
+            TrainPlanDbHelper.COLUMN_UID,
+            TrainPlanDbHelper.COLUMN_UNAME,
+            TrainPlanDbHelper.COLUMN_SPLIT
     };
 
     public TrainPlanDataSource(Context context) {

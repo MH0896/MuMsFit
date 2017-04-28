@@ -8,7 +8,8 @@ Feature: View the Details of a training plan
     And I press the "Okay" button
     And I see "testPlanVD"
     And I long press "testPlanVD"
-    And I press "item_details"
+    And I press "item_menu_overflow"
+    And I press "Details"
     Then I see "Anzahl der Einheiten: 0"
     And I see "Erstellt am:"
     And I see "Zuletzt durchgeführt am:"

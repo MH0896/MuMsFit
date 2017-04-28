@@ -48,13 +48,14 @@ public class ViewPlanActivity  extends AppCompatActivity {
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
-            Cursor c = db.rawQuery("SELECT * FROM ["+ this.namePlan +"]", null);
+            Cursor c = db.rawQuery("SELECT uebung.name, uebung.reps, uebung.start, uebung.split " +
+                        "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id", null);
 
             if (c.moveToFirst()) {
                 while (!c.isAfterLast()) {
-                    exercises.add(c.getString(c.getColumnIndex("exercise")));
+                    exercises.add(c.getString(c.getColumnIndex("name")));
                     reps.add(c.getString(c.getColumnIndex("reps")));
-                    sweight.add(c.getString(c.getColumnIndex("start_weight")));
+                    sweight.add(c.getString(c.getColumnIndex("start")));
                     split.add(c.getString(c.getColumnIndex("split")));
                     cweight.add("-");
                     c.moveToNext();

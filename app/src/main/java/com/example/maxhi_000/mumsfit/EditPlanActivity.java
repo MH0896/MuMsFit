@@ -52,13 +52,14 @@ public class EditPlanActivity  extends AppCompatActivity {
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
-            Cursor c = db.rawQuery("SELECT * FROM ["+ this.namePlan +"]", null);
+            Cursor c = db.rawQuery("SELECT uebung.name, uebung.reps, uebung.start, uebung.split " +
+                    "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id", null);
 
             if (c.moveToFirst()) {
                 while (!c.isAfterLast()) {
-                    exercises.add(c.getString(c.getColumnIndex("exercise")));
+                    exercises.add(c.getString(c.getColumnIndex("name")));
                     reps.add(c.getString(c.getColumnIndex("reps")));
-                    sweight.add(c.getString(c.getColumnIndex("start_weight")));
+                    sweight.add(c.getString(c.getColumnIndex("start")));
                     split.add(c.getString(c.getColumnIndex("split")));
                     cweight.add("-");
                     c.moveToNext();
@@ -97,9 +98,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    String forDB = "[" + namePlan + "]";
-
-                                    db.delete(forDB, "exercise = ?", new String[] { exercises.get(toDel) });
+                                    db.execSQL("DELETE FROM uebung WHERE name='"+exercises.get(toDel)+"'");
 
                                     dataSource.close();
                                 }finally {
@@ -170,9 +169,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    String forDB = "[" + namePlan + "]";
-
-                                    db.execSQL("UPDATE"+ forDB +" SET exercise='"+ e_name.getText().toString() +"' , reps='"+ e_reps.getText().toString() +"' , start_weight='"+ e_sw.getText().toString() +"' , split='"+ split.get(toEdit) +"' WHERE exercise='"+ exercises.get(toEdit) +"' ");
+                                    db.execSQL("UPDATE uebung SET name='"+ e_name.getText().toString() +"' , reps='"+ e_reps.getText().toString() +"' , start='"+ e_sw.getText().toString() +"' , split='"+ split.get(toEdit) +"' WHERE name='"+ exercises.get(toEdit) +"' ");
 
                                     dataSource.close();
                                 }finally {
@@ -248,11 +245,12 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    String forDB = "[" + namePlan + "]";
 
                                     dataSource.open();
-
-                                    db.execSQL("INSERT INTO "+ forDB +" (exercise, reps, start_weight, split) VALUES ('"+e_name.getText().toString()+"', '"+e_reps.getText().toString()+"', '"+e_sw.getText().toString()+"', '"+e_split.getText().toString().toUpperCase()+"')");
+                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+namePlan+"'", null);
+                                    c.moveToFirst();
+                                    String id = c.getString(c.getColumnIndex("plan_id"));
+                                    db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split) VALUES ('"+id+"', '"+e_name.getText().toString()+"', '"+e_reps.getText().toString()+"', '"+e_sw.getText().toString()+"', '"+e_split.getText().toString().toUpperCase()+"')");
 
                                     dataSource.close();
                                 }finally {

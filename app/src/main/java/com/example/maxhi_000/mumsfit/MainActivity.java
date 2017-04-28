@@ -47,12 +47,9 @@ public class MainActivity extends AppCompatActivity {
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
-            Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+            Cursor c = db.rawQuery("SELECT name FROM plan", null);
 
             if (c.moveToFirst()) {
-                c.moveToNext();
-                c.moveToNext();
-                c.moveToNext();
                 while (!c.isAfterLast()) {
                     arrTblNames.add(c.getString(c.getColumnIndex("name")));
                     c.moveToNext();
@@ -270,12 +267,9 @@ public class MainActivity extends AppCompatActivity {
                                     dataSource = new TrainPlanDataSource(context);
                                     dataSource.open();
 
-                                    Cursor c = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
+                                    Cursor c = db.rawQuery("SELECT name FROM plan", null);
 
                                     if (c.moveToFirst()) {
-                                        c.moveToNext();
-                                        c.moveToNext();
-                                        c.moveToNext();
                                         while (!c.isAfterLast()) {
                                             if (eingabe.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))) {
                                                 exists = true;
@@ -381,8 +375,24 @@ public class MainActivity extends AppCompatActivity {
                                 dataSource.open();
 
                                 for(int i = 0; i < items.size(); i++){
-                                    db.execSQL("DROP TABLE IF EXISTS ["+arrTblNames.get(items.get(i)) +"]");
-                                    db.delete("details", "plan = ?", new String[] { "["+ arrTblNames.get(items.get(i)) +"]" });
+                                    String temp = arrTblNames.get(items.get(i));
+
+                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan", null);
+                                    c.moveToFirst();
+                                    String id = c.getString(c.getColumnIndex("plan_id"));
+
+                                    db.execSQL("DELETE FROM plan WHERE name='"+temp+"'");
+                                    db.execSQL("DELETE FROM uebung WHERE plan_id='"+id+"'");
+
+                                    c = db.rawQuery("SELECT uebung_id FROM uebung", null);
+
+                                    if (c.moveToFirst()) {
+                                        while (!c.isAfterLast()) {
+                                            String temps = c.getString(c.getColumnIndex("uebung_id"));
+                                            db.execSQL("DELETE FROM gewicht WHERE uebung_id='"+temps+"'");
+                                            c.moveToNext();
+                                        }
+                                    }
                                 }
 
                                 dataSource.close();
@@ -410,14 +420,12 @@ public class MainActivity extends AppCompatActivity {
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
-            String trainings = "default";
             String date_create = "default";
             String date_last = "default";
-            Cursor c = db.rawQuery("SELECT trainings,date_create,date_last FROM details WHERE plan='["+ arrTblNames.get(items.get(0)) +"]'", null);
+            Cursor c = db.rawQuery("SELECT date_create,date_last FROM plan WHERE name='"+ arrTblNames.get(items.get(0)) +"'", null);
             if(c.moveToFirst()) {
-                trainings = c.getString(0);
-                date_create = c.getString(1);
-                date_last = c.getString(2);
+                date_create = c.getString(0);
+                date_last = c.getString(1);
                 c.close();
             }
 
@@ -429,7 +437,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialogBuilder.setTitle(arrTblNames.get(items.get(0)));
 
             alertDialogBuilder
-                    .setMessage("Anzahl der Einheiten: "+trainings+"\nErstellt am: "+date_create+"\nZuletzt durchgeführt am: "+date_last)
+                    .setMessage("Erstellt am: "+date_create+"\nZuletzt durchgeführt am: "+date_last)
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -475,7 +483,7 @@ public class MainActivity extends AppCompatActivity {
                                 db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
                                 dataSource = new TrainPlanDataSource(context);
                                 dataSource.open();
-                                db.execSQL("ALTER TABLE ["+arrTblNames.get(items.get(0))+"] RENAME TO ["+ returned +"]");
+                                db.execSQL("UPDATE plan SET name='"+returned+"' WHERE name='"+arrTblNames.get(items.get(0))+"'");
 
                                 dataSource.close();
                             }finally {

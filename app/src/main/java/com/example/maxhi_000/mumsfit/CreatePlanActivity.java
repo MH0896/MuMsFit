@@ -4,6 +4,7 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -77,12 +78,16 @@ public class CreatePlanActivity extends AppCompatActivity {
                                             "reps" + " TEXT NOT NULL, "+
                                             "start_weight" + " TEXT NOT NULL, " +
                                             "split" + " TEXT NOT NULL);";
-                                    db.execSQL(CREATE_NEW_TABLE);
+
                                     String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-                                    db.execSQL("INSERT INTO details (plan, trainings, date_create, date_last) VALUES ('"+forDB+"' , 0,'"+date+"', '-')");
+                                    db.execSQL("INSERT INTO plan (name, date_create, date_last) VALUES ('"+namePlan+"','"+date+"', '-')");
+
+                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+namePlan+"'", null);
+                                    c.moveToFirst();
+                                    String id = c.getString(c.getColumnIndex("plan_id"));
 
                                     for(int i  = 0; i < exercise.size(); i++){
-                                        db.execSQL("INSERT INTO [" + namePlan + "] (exercise, reps, start_weight, split) VALUES ('"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
+                                        db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split) VALUES ('"+id+"', '"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
                                     }
 
                                     dataSource.close();

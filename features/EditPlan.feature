@@ -38,6 +38,7 @@ Feature: Edit a created training plan
     And I enter text "47kg" into field with id "c_sw"
     And I enter text "EditSplit" into field with id "c_split"
     And I see "EditSplit"
+    And I press the "Okay" button
     And I see "Edit Übung 1 Reps: 87 mal Startgewicht: 47kg"
     Then I go back
     And I see "EditSplit"
