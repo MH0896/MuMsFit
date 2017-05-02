@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> arrTblNames = new ArrayList<String>();
     ArrayList<Integer> selected = new ArrayList<Integer>();
 
+    FloatingActionButton addPlan;
+    ListView ViewPlan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             }
             dataSource.close();
 
-            final ListView ViewPlan = (ListView) findViewById(R.id.viewPlans);
+            ViewPlan = (ListView) findViewById(R.id.viewPlans);
             adapter = new CustomListAdapter(MainActivity.this, R.layout.custom_list, R.id.textView, arrTblNames);
             ViewPlan.setAdapter(adapter);
 
@@ -241,10 +244,11 @@ public class MainActivity extends AppCompatActivity {
                 db.close();
         }
 
-        FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
+        addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
         addPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.setId(R.id.u_view);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
