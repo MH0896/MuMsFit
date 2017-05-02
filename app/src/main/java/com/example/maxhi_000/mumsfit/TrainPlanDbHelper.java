@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class TrainPlanDbHelper extends SQLiteOpenHelper {
-
+// new
     private final static  String LOG_TAG = TrainPlanDbHelper.class.getSimpleName();
 
     public static final String DB_NAME = "plans.db";

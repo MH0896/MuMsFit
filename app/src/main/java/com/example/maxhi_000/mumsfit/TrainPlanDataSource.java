@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class TrainPlanDataSource {
-
+// new
     private final static  String LOG_TAG = TrainPlanDataSource.class.getSimpleName();
 
     private SQLiteDatabase database;

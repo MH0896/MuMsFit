@@ -21,7 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ViewPlanActivity  extends AppCompatActivity {
-
+//new
     String namePlan;
     private TrainPlanDataSource dataSource;
     final Context context = this;

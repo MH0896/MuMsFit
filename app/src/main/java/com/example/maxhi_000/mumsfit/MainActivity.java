@@ -25,7 +25,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
+// new
     final Context context = this;
     private String eingabe;
 

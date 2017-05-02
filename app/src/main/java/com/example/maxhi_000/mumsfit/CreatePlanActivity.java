@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CreatePlanActivity extends AppCompatActivity {
-
+// new
     final Context context = this;
 
     String namePlan;

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EditPlanActivity  extends AppCompatActivity {
-
+// new
     String namePlan;
     private TrainPlanDataSource dataSource;
     final Context context = this;
