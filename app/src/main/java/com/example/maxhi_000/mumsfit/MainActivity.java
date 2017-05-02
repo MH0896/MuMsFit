@@ -326,13 +326,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.contextual_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_startscreen, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.item_settings:
+                SettingsClick();
+                return true;
+        }
+        return false;
     }
 
     private boolean canClose = false;
@@ -507,5 +512,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void AnalyzeClick(ArrayList<Integer> items){
         //Aufruf Zeile 139
+    }
+
+    public void SettingsClick(){
+        Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(i);
+        finish();
     }
 }
