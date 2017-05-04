@@ -21,7 +21,7 @@ before_install:
     - chmod +x gradlew
 
 before_script:
-  # Create and start emulator
+  # Create and start emulator and hope that it works
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
