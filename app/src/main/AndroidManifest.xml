@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".LadeScreen"
             android:label="@string/app_name"
@@ -21,22 +22,22 @@
 
         <activity android:name=".CreatePlanActivity"
             android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+            android:label="@string/app_name">
         </activity>
 
         <activity android:name=".SettingsActivity"
             android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+            android:label="@string/app_name">
         </activity>
 
         <activity android:name=".ViewPlanActivity"
             android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+            android:label="@string/app_name">
         </activity>
 
         <activity android:name=".EditPlanActivity"
             android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+            android:label="@string/app_name">
         </activity>
 
         <activity android:name=".MainActivity"

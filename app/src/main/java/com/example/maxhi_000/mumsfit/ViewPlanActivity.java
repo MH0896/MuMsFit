@@ -4,6 +4,7 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -33,7 +34,19 @@ public class ViewPlanActivity  extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+                "MyPrefs", MODE_PRIVATE);
+
+        String themeName = prefs.getString("Theme", "Default");
+        if (themeName.equals("BlackTheme")) {
+            setTheme(R.style.BlackTheme);
+        } else if (themeName.equals("LightTheme")) {
+            setTheme(R.style.LightTheme);
+        }else if(themeName.equals("Default")){
+            setTheme(R.style.AppTheme);
+        }
         super.onCreate(savedInstanceState);
+
 
         setContentView(R.layout.view_plan);
 
