@@ -292,8 +292,9 @@ public class MainActivity extends AppCompatActivity {
                                     if(returned == null){
                                         Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
                                     }else {
+                                        Plan newPlan = new Plan(eingabe);
                                         Bundle temp = new Bundle();
-                                        temp.putString("param", eingabe);
+                                        temp.putString("param", newPlan.getName());
                                         Intent i = new Intent(MainActivity.this, CreatePlanActivity.class);
                                         i.putExtras(temp);
                                         startActivity(i);
