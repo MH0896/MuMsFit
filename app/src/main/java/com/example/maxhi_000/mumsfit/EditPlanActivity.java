@@ -4,6 +4,7 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -25,18 +26,27 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class EditPlanActivity  extends AppCompatActivity {
-// new
+
     String namePlan;
     private TrainPlanDataSource dataSource;
     final Context context = this;
-    ArrayList<String> exercises = new ArrayList<String>();
-    ArrayList<String> reps = new ArrayList<String>();
-    ArrayList<String> sweight = new ArrayList<String>();
-    ArrayList<String> split = new ArrayList<String>();
-    ArrayList<String> cweight = new ArrayList<String>();
+
+    ArrayList<Uebung> uebung = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+                "MyPrefs", MODE_PRIVATE);
+
+        String themeName = prefs.getString("Theme", "Default");
+        if (themeName.equals("BlackTheme")) {
+            setTheme(R.style.BlackTheme);
+        } else if (themeName.equals("LightTheme")) {
+            setTheme(R.style.LightTheme);
+        }else if(themeName.equals("Default")){
+            setTheme(R.style.AppTheme);
+        }
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.edit_plan);
@@ -53,15 +63,16 @@ public class EditPlanActivity  extends AppCompatActivity {
             dataSource.open();
 
             Cursor c = db.rawQuery("SELECT uebung.name, uebung.reps, uebung.start, uebung.split " +
-                    "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id", null);
+                    "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name='"+
+                    this.namePlan+"'", null);
 
             if (c.moveToFirst()) {
                 while (!c.isAfterLast()) {
-                    exercises.add(c.getString(c.getColumnIndex("name")));
-                    reps.add(c.getString(c.getColumnIndex("reps")));
-                    sweight.add(c.getString(c.getColumnIndex("start")));
-                    split.add(c.getString(c.getColumnIndex("split")));
-                    cweight.add("-");
+                    String name = (c.getString(c.getColumnIndex("name")));
+                    String reps = (c.getString(c.getColumnIndex("reps")));
+                    String start = (c.getString(c.getColumnIndex("start")));
+                    String split = (c.getString(c.getColumnIndex("split")));
+                    uebung.add(new Uebung(name, reps, start, split));
                     c.moveToNext();
                 }
             }
@@ -98,7 +109,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    db.execSQL("DELETE FROM uebung WHERE name='"+exercises.get(toDel)+"'");
+                                    db.execSQL("DELETE FROM uebung WHERE name='"+uebung.get(toDel).getName()+"'");
 
                                     dataSource.close();
                                 }finally {
@@ -140,19 +151,19 @@ public class EditPlanActivity  extends AppCompatActivity {
                 layout.setOrientation(LinearLayout.VERTICAL);
 
                 final EditText e_name = new EditText(context);
-                e_name.setText(exercises.get(toEdit));
+                e_name.setText(uebung.get(toEdit).getName());
                 e_name.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_name.setId(R.id.c_name);
                 layout.addView(e_name);
 
                 final EditText e_reps = new EditText(context);
-                e_reps.setText(reps.get(toEdit));
+                e_reps.setText(uebung.get(toEdit).getReps());
                 e_reps.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_reps.setId(R.id.c_reps);
                 layout.addView(e_reps);
 
                 final EditText e_sw = new EditText(context);
-                e_sw.setText(sweight.get(toEdit));
+                e_sw.setText(uebung.get(toEdit).getStart());
                 e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
@@ -169,7 +180,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    db.execSQL("UPDATE uebung SET name='"+ e_name.getText().toString() +"' , reps='"+ e_reps.getText().toString() +"' , start='"+ e_sw.getText().toString() +"' , split='"+ split.get(toEdit) +"' WHERE name='"+ exercises.get(toEdit) +"' ");
+                                    db.execSQL("UPDATE uebung SET name='"+ e_name.getText().toString() +"' , reps='"+ e_reps.getText().toString() +"' , start='"+ e_sw.getText().toString() +"' , split='"+ uebung.get(toEdit).getSplit() +"' WHERE name='"+ uebung.get(toEdit).getName() +"' ");
 
                                     dataSource.close();
                                 }finally {
@@ -275,16 +286,15 @@ public class EditPlanActivity  extends AppCompatActivity {
 
     public void drawGUI(){
         LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);
-
-        for(int i = 0; i < exercises.size(); i++){
+        for(int i = 0; i < uebung.size(); i++){
             if(i == 0){
                 TextView textView = new TextView(this);
-                String sourceString = "<b>" + split.get(i) + "</b>";
+                String sourceString = "<b>" + uebung.get(i).getSplit() + "</b>";
                 textView.setText(Html.fromHtml(sourceString));
                 textView.setPadding(16, 5, 16, 2);
                 ll.addView(textView);
             }
-            else if(!split.get(i).equals(split.get(i-1))){
+            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){
                 View v = new View(this);
                 v.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -294,7 +304,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                 ll.addView(v);
 
                 TextView textView = new TextView(this);
-                String sourceString = "<b>" + split.get(i) + "</b>";
+                String sourceString = "<b>" + uebung.get(i).getSplit() + "</b>";
                 textView.setText(Html.fromHtml(sourceString));
                 textView.setPadding(16, 5, 16, 2);
                 ll.addView(textView);
@@ -314,7 +324,8 @@ public class EditPlanActivity  extends AppCompatActivity {
             TextView exerView = new TextView(this);
             exerView.setPadding(10,2,10,2);
 
-            String toShow = exercises.get(i) + " Reps: " + reps.get(i) + " Startgewicht: " + sweight.get(i);
+            String toShow = uebung.get(i).getName() + " Reps: " + uebung.get(i).getReps() +
+                    " Startgewicht: " + uebung.get(i).getStart();
             exerView.setText(toShow);
             tempLL.addView(exerView);
             ll.addView(tempLL);

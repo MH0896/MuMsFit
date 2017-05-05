@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.maxhi_000.mumsfit">
-<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".LadeScreen"
-            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,24 +20,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".CreatePlanActivity"
-            android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+        <activity android:name=".CreatePlanActivity">
         </activity>
 
-        <activity android:name=".ViewPlanActivity"
-            android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+        <activity android:name=".SettingsActivity">
         </activity>
 
-        <activity android:name=".EditPlanActivity"
-            android:screenOrientation="portrait"
-            android:label="MuM's Fit">
+        <activity android:name=".ViewPlanActivity">
         </activity>
 
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name">
+        <activity android:name=".EditPlanActivity">
+        </activity>
+
+        <activity android:name=".MainActivity">
         </activity>
         <meta-data
             android:name="com.google.android.gms.version"

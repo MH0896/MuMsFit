@@ -4,6 +4,7 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -27,10 +28,8 @@ import java.util.Date;
 import java.util.List;
 
 public class CreatePlanActivity extends AppCompatActivity {
-// new
-    final Context context = this;
 
-    String namePlan;
+    final Context context = this;
 
     List<String> splits = new ArrayList<String>();
     String currentPlan = "";
@@ -39,6 +38,18 @@ public class CreatePlanActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+                "MyPrefs", MODE_PRIVATE);
+
+        String themeName = prefs.getString("Theme", "Default");
+        if (themeName.equals("BlackTheme")) {
+            setTheme(R.style.BlackTheme);
+        } else if (themeName.equals("LightTheme")) {
+            setTheme(R.style.LightTheme);
+        }else if(themeName.equals("Default")){
+            setTheme(R.style.AppTheme);
+        }
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.creating_plan);
@@ -63,6 +74,8 @@ public class CreatePlanActivity extends AppCompatActivity {
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                insertPlan(newPlan);
+
                                 SQLiteDatabase db = null;
                                 try {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
@@ -70,29 +83,18 @@ public class CreatePlanActivity extends AppCompatActivity {
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
 
                                     dataSource.open();
-                                    db.execSQL("INSERT INTO plan (name, date_create, date_last) " +
-                                            "VALUES ('"+newPlan.getName()+"','"+newPlan.getDate_create()+
-                                            "', '"+newPlan.getDate_last()+"')");
-
                                     Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+newPlan.getName()+"'", null);
                                     c.moveToFirst();
                                     String id = c.getString(c.getColumnIndex("plan_id"));
 
-                                    for(int i  = 0; i < uebungen.size(); i++){
-                                        db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split)" +
-                                                " VALUES ('"+id+"', '"+uebungen.get(i).getName()+
-                                                "', '"+uebungen.get(i).getReps()+"', '"+
-                                                uebungen.get(i).getStart()+"', '"+
-                                                uebungen.get(i).getSplit()+"')");
+                                    for(int i = 0; i<uebungen.size(); i++){
+                                        insertUebung(uebungen.get(i), id);
                                     }
-
                                     dataSource.close();
                                 }finally {
                                     if (db != null)
                                         db.close();
                                 }
-
-
 
                                 Intent i = new Intent(CreatePlanActivity.this, MainActivity.class);
                                 startActivity(i);
@@ -140,7 +142,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                                 if(returned == null){
                                     Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
                                 }else {
-                                    splits.add(eingabe);
+                                    splits.add(returned);
                                     redrawGUI();
                                     dialog.cancel();
                                 }
@@ -354,7 +356,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         return dp * mContext.getResources().getDisplayMetrics().density;
     }
 
-    public String checkEingabe(String input){
+    public static String checkEingabe(String input){
         if(input.isEmpty()){
             return null;
         }
@@ -364,6 +366,82 @@ public class CreatePlanActivity extends AppCompatActivity {
         }
 
         return newInput;
+    }
+
+    public void insertUebung(Uebung u, String id){
+        SQLiteDatabase db = null;
+        try {
+            db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+
+            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+
+            db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split)" +
+                    " VALUES ('"+id+"', '"+u.getName()+
+                    "', '"+u.getReps()+"', '"+
+                    u.getStart()+"', '"+
+                    u.getSplit()+"')");
+
+            dataSource.close();
+        }finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public void insertPlan(Plan plan){
+        SQLiteDatabase db = null;
+        try {
+            db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+
+            dataSource.open();
+            db.execSQL("INSERT INTO plan (name, date_create, date_last) " +
+                    "VALUES ('"+plan.getName()+"','"+plan.getDate_create()+
+                    "', '"+plan.getDate_last()+"')");
+
+            dataSource.close();
+        }finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public String selectDate(String name){
+        SQLiteDatabase db = null;
+        try {
+            db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+            dataSource.open();
+
+            Cursor c = db.rawQuery("SELECT date_last FROM plan WHERE name='"+name+"'", null);
+            c.moveToFirst();
+            String datum = c.getString(c.getColumnIndex("date_last"));
+
+            dataSource.close();
+            return datum;
+        }finally {
+            if (db != null)
+                db.close();
+        }
+    }
+
+    public String selectReps(String name){
+        SQLiteDatabase db = null;
+        try {
+            db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+            dataSource.open();
+
+            Cursor c = db.rawQuery("SELECT reps FROM uebung WHERE name='"+name+"'", null);
+            c.moveToFirst();
+            String reps = c.getString(c.getColumnIndex("reps"));
+
+            dataSource.close();
+            return reps;
+        }finally {
+            if (db != null)
+                db.close();
+        }
     }
 
 }

@@ -3,6 +3,7 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -25,7 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-// new
+
     final Context context = this;
     private String eingabe;
 
@@ -39,8 +41,24 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addPlan;
     ListView ViewPlan;
 
+    static {
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+                "MyPrefs", MODE_PRIVATE);
+        String themeName = prefs.getString("Theme", "Default");
+        if (themeName.equals("BlackTheme")) {
+            setTheme(R.style.BlackTheme);
+        } else if (themeName.equals("LightTheme")) {
+            setTheme(R.style.LightTheme);
+        }else if(themeName.equals("Default")){
+            setTheme(R.style.AppTheme);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -292,7 +310,7 @@ public class MainActivity extends AppCompatActivity {
                                     if(returned == null){
                                         Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
                                     }else {
-                                        Plan newPlan = new Plan(eingabe);
+                                        Plan newPlan = new Plan(returned);
                                         Bundle temp = new Bundle();
                                         temp.putString("param", newPlan.getName());
                                         Intent i = new Intent(MainActivity.this, CreatePlanActivity.class);
@@ -317,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public String checkEingabe(String input){
+    public static String checkEingabe(String input){
         if(input.isEmpty()){
             return null;
         }
@@ -331,13 +349,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.contextual_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_startscreen, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.item_settings:
+                SettingsClick();
+                return true;
+        }
+        return false;
     }
 
     private boolean canClose = false;
@@ -512,5 +535,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void AnalyzeClick(ArrayList<Integer> items){
         //Aufruf Zeile 139
+    }
+
+    public void SettingsClick(){
+        Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(i);
+        finish();
     }
 }

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 public class TrainPlanDbHelper extends SQLiteOpenHelper {
-// new
+
     private final static  String LOG_TAG = TrainPlanDbHelper.class.getSimpleName();
 
     public static final String DB_NAME = "plans.db";
@@ -52,6 +52,8 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
             COLUMN_UID+ " TEXT NOT NULL, " +
             COLUMN_GEWICHT + " TEXT NOT NULL);";
 
+    private boolean created = false;
+
     public TrainPlanDbHelper(Context context){
         super(context, DB_NAME, null, DB_VERSION);
         Log.d(LOG_TAG, "DbHelper hat die Datenbank: " + getDatabaseName() + " erzeugt.");
@@ -66,6 +68,7 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
             db.execSQL(SQL_CREATE_UEBUNG);
             Log.d(LOG_TAG, "Die Tabelle wird mit SQL-Befehl: " + SQL_CREATE_GEWICHT + " angelegt.");
             db.execSQL(SQL_CREATE_GEWICHT);
+            created = true;
         }
         catch (Exception ex) {
             Log.e(LOG_TAG, "Fehler beim Anlegen der Tabelle: " + ex.getMessage());
@@ -74,6 +77,10 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        created = true;
+    }
 
+    public boolean isCreated() {
+        return created;
     }
 }

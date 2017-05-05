@@ -67,4 +67,10 @@ public class PlanTest {
         assertEquals("newDate", testPlan.getDate_last());
     }
 
+    @Test
+    public void newPlan() throws Exception {
+        Plan testPlan = new Plan(87, "toTest", "today", "date");
+        assertEquals("date", testPlan.getDate_last());
+    }
+
 }
