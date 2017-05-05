@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.view.ActionMode;
 import android.view.Menu;
@@ -37,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> arrTblNames = new ArrayList<String>();
     ArrayList<Integer> selected = new ArrayList<Integer>();
 
+    static {
+        AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_YES);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

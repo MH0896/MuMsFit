@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -34,40 +35,48 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Farbe:"
-        android:textSize="24sp" />
+        android:text="Farbschema:"
+        android:textSize="24sp"/>
 
-    <LinearLayout
+    <RadioGroup
+        android:id="@+id/radioGroupTheme"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:orientation="horizontal">
+        android:layout_height="205dp" >
 
-        <Button
-            android:id="@+id/btn_dark"
+        <RadioButton
+            android:id="@+id/rbtn_darkTheme"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:elevation="0dp"
-            android:text="Dark" />
+            android:layout_height="64dp"
+            android:text="Dark Theme"
+            android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/btn_light"
+        <RadioButton
+            android:id="@+id/rbtn_lightTheme"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Light" />
+            android:layout_height="64dp"
+            android:text="Light Theme"
+            android:textSize="18sp" />
 
-    </LinearLayout>
-
+        <RadioButton
+            android:id="@+id/rbtn_defaultTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:text="Default Theme"
+            android:textSize="18sp"/>
+    </RadioGroup>
 
     <Button
         android:id="@+id/btn_settings_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:elevation="5dp"
+        android:paddingBottom="5dp"
         android:text="Save"
         android:textSize="18sp" />
+
 </LinearLayout>
 
