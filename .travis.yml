@@ -52,3 +52,6 @@ before_script:
 
 script:
 - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
+
+after_success:
+- ./gradlew cobertura coveralls
