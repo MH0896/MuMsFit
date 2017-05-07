@@ -27,7 +27,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
     private TrainPlanDataSource dataSource;
     final Context context = this;
 
-    ArrayList<Uebung> uebung = new ArrayList<Uebung>();
+    static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,46 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }
     }
 
+    public static  boolean alreadyIn(String split, ArrayList<String> list){
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).equals(split)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void createOrderOfUebung(){
+        ArrayList<String> splits = new ArrayList<String>();
+        for(int i = 0; i < uebung.size(); i++){
+            if (i==0){
+                splits.add(uebung.get(i).getSplit());
+            }
+            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){
+                boolean result = alreadyIn(uebung.get(i).getSplit(), splits);
+                if(result){
+                    boolean breakOut = false;
+                    int count = 0;
+                    while(!breakOut) {
+                        if (uebung.get(i).getSplit().equals(uebung.get(count).getSplit())) {
+                            breakOut = true;
+                        }else{
+                            count++;
+                        }
+                    }
+                    Uebung temp = uebung.get(i);
+                    uebung.remove(i);
+                    uebung.add(count, temp);
+                }
+                else{
+                    splits.add(uebung.get(i).getSplit());
+                }
+            }
+        }
+    }
+
     public void drawGUI(){
+        createOrderOfUebung();
         LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);
 
         for(int i = 0; i < uebung.size(); i++){
