@@ -52,8 +52,6 @@ before_script:
 
 script:
 - "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
-- bash gradlew test jacocoTestReport
 
 after_success:
 - ./gradlew cobertura coveralls
-- bash <(curl -s https://codecov.io/bash)
