@@ -52,18 +52,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 switch(i){
                     case R.id.rbtn_darkTheme:
                         editor.putString("Theme", "BlackTheme");
-
-                        Toast.makeText(context, "Dark", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.rbtn_lightTheme:
                         editor.putString("Theme", "LightTheme");
-
-                        Toast.makeText(context, "Light", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.rbtn_defaultTheme:
                         editor.putString("Theme", "Default");
-
-                        Toast.makeText(context, "Default", Toast.LENGTH_SHORT).show();
                         break;
                 }
                 editor.commit();
