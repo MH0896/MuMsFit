@@ -285,8 +285,8 @@ public class EditPlanActivity  extends AppCompatActivity {
     }
 
     public static boolean alreadyIn(String split, ArrayList<String> list){
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).equals(split)){
+        for(int i = 0; i < list.size(); i++) {
+            if (list.get(i).equals(split)) {
                 return true;
             }
         }
