@@ -187,7 +187,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     if (db != null)
                                         db.close();
                                 }
-
+                                removeUebungen();
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -268,6 +268,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     if (db != null)
                                         db.close();
                                 }
+                                removeUebungen();
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -375,9 +376,17 @@ public class EditPlanActivity  extends AppCompatActivity {
         createExerciseButton();
     }
 
+    public void removeUebungen(){
+        int temp = uebung.size();
+        for(int i = 0; i<temp; i++){
+            uebung.remove(0);
+        }
+    }
+
     @Override
     public void onBackPressed(){
         //super.onBackPressed();
+        removeUebungen();
         Bundle temp = new Bundle();
         temp.putString("param", this.namePlan);
         Intent i = new Intent(EditPlanActivity.this, ViewPlanActivity.class);

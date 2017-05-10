@@ -44,7 +44,7 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.view_plan);
+        setContentView(R.layout.perform_plan);
 
         Bundle params = getIntent().getExtras();
         this.namePlan = params.getString("param");
@@ -55,7 +55,7 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
     @Override
     public void onBackPressed(){
         //super.onBackPressed();
-        Intent i = new Intent(PerformTrainPlanActivity.this, MainActivity.class);
+        Intent i = new Intent(PerformTrainPlanActivity.this, ViewPlanActivity.class);
         startActivity(i);
         finish();
     }

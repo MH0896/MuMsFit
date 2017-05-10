@@ -282,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 eingabe = input.getText().toString();
+                                String returned = checkEingabe(eingabe);
                                 boolean exists = false;
                                 SQLiteDatabase db = null;
                                 try {
@@ -293,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     if (c.moveToFirst()) {
                                         while (!c.isAfterLast()) {
-                                            if (eingabe.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))) {
+                                            if (returned.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))) {
                                                 exists = true;
                                             }
                                             c.moveToNext();
@@ -306,7 +307,6 @@ public class MainActivity extends AppCompatActivity {
                                 }
 
                                 if (!exists) {
-                                    String returned = checkEingabe(eingabe);
                                     if(returned == null){
                                         Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
                                     }else {

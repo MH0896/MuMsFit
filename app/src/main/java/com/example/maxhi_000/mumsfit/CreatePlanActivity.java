@@ -96,6 +96,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                                         db.close();
                                 }
 
+                                removeUebungen();
                                 Intent i = new Intent(CreatePlanActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
@@ -111,6 +112,17 @@ public class CreatePlanActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    public void removeUebungen(){
+        int temp = uebungen.size();
+        for(int i = 0; i<temp; i++){
+            uebungen.remove(0);
+        }
+        temp = splits.size();
+        for(int i = 0; i<temp; i++){
+            splits.remove(0);
+        }
     }
 
     public void createSplitButton(){

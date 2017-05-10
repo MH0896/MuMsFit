@@ -162,9 +162,17 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }
     }
 
+    public void removeUebungen(){
+        int temp = uebung.size();
+        for(int i = 0; i<temp; i++){
+            uebung.remove(0);
+        }
+    }
+
     @Override
     public void onBackPressed(){
         //super.onBackPressed();
+        removeUebungen();
         Intent i = new Intent(ViewPlanActivity.this, MainActivity.class);
         startActivity(i);
         finish();
@@ -231,6 +239,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
     }
 
     public void EditClick() {
+        removeUebungen();
         Bundle temp = new Bundle();
         temp.putString("param", namePlan);
         Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);
@@ -240,11 +249,12 @@ public class ViewPlanActivity  extends AppCompatActivity {
     }
 
     public void StartClick(){
-        Bundle temp = new Bundle();
-        temp.putString("param", namePlan);
-        Intent i = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);
-        i.putExtras(temp);
-        startActivity(i);
+        removeUebungen();
+        Bundle t = new Bundle();
+        t.putString("param", namePlan);
+        Intent in = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);
+        in.putExtras(t);
+        startActivity(in);
         finish();
     }
 }
