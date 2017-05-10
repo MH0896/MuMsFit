@@ -38,10 +38,14 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> arrTblNames = new ArrayList<String>();
     ArrayList<Integer> selected = new ArrayList<Integer>();
 
+    FloatingActionButton addPlan;
+    ListView ViewPlan;
+
     static {
         AppCompatDelegate.setDefaultNightMode(
                 AppCompatDelegate.MODE_NIGHT_YES);
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -57,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         SQLiteDatabase db = null;
@@ -76,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             }
             dataSource.close();
 
-            final ListView ViewPlan = (ListView) findViewById(R.id.viewPlans);
+            ViewPlan = (ListView) findViewById(R.id.viewPlans);
             adapter = new CustomListAdapter(MainActivity.this, R.layout.custom_list, R.id.textView, arrTblNames);
             ViewPlan.setAdapter(adapter);
 
@@ -260,10 +263,11 @@ public class MainActivity extends AppCompatActivity {
                 db.close();
         }
 
-        FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
+        addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
         addPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                view.setId(R.id.u_view);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
@@ -307,8 +311,9 @@ public class MainActivity extends AppCompatActivity {
                                     if(returned == null){
                                         Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
                                     }else {
+                                        Plan newPlan = new Plan(eingabe);
                                         Bundle temp = new Bundle();
-                                        temp.putString("param", eingabe);
+                                        temp.putString("param", newPlan.getName());
                                         Intent i = new Intent(MainActivity.this, CreatePlanActivity.class);
                                         i.putExtras(temp);
                                         startActivity(i);

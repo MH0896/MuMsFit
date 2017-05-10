@@ -1,0 +1,162 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: TrainPlanDbHelper</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.example.maxhi_000.mumsfit</a> ]
+</div>
+
+<h1>Coverage Summary for Class: TrainPlanDbHelper (com.example.maxhi_000.mumsfit)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">TrainPlanDbHelper</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/ 4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (9/ 12)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.example.maxhi_000.mumsfit;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;
+<i>4</i>&nbsp;import android.content.Context;
+<i>5</i>&nbsp;import android.database.sqlite.SQLiteDatabase;
+<i>6</i>&nbsp;import android.database.sqlite.SQLiteOpenHelper;
+<i>7</i>&nbsp;import android.util.Log;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;public class TrainPlanDbHelper extends SQLiteOpenHelper {
+<i>10</i>&nbsp;// new
+<b class="fc"><i>11</i>&nbsp;    private final static  String LOG_TAG = TrainPlanDbHelper.class.getSimpleName();</b>
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    public static final String DB_NAME = &quot;plans.db&quot;;
+<i>14</i>&nbsp;    public static final int DB_VERSION = 1;
+<i>15</i>&nbsp;
+<i>16</i>&nbsp;    public static final String COLUMN_PId = &quot;plan_id&quot;;
+<i>17</i>&nbsp;    public static final String COLUMN_PNAME = &quot;name&quot;;
+<i>18</i>&nbsp;    public static final String COLUMN_DATE_CREATE = &quot;date_create&quot;;
+<i>19</i>&nbsp;    public static final String COLUMN_DATE_LAST = &quot;date_last&quot;;
+<i>20</i>&nbsp;
+<i>21</i>&nbsp;    public static final String TABLE_PLAN = &quot;plan&quot;;
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;    public static final String COLUMN_UID = &quot;uebung_id&quot;;
+<i>24</i>&nbsp;    public static final String COLUMN_UNAME = &quot;name&quot;;
+<b class="fc"><i>25</i>&nbsp;    public static final String COLUMN_REPS = &quot;reps&quot;;</b>
+<i>26</i>&nbsp;    public static final String COLUMN_START = &quot;start&quot;;
+<i>27</i>&nbsp;    public static final String COLUMN_SPLIT = &quot;split&quot;;
+<i>28</i>&nbsp;
+<i>29</i>&nbsp;    public static final String TABLE_UEBUNG = &quot;uebung&quot;;
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public static final String COLUMN_GID = &quot;gewicht_id&quot;;
+<i>32</i>&nbsp;    public static final String COLUMN_GEWICHT = &quot;gewicht&quot;;
+<b class="fc"><i>33</i>&nbsp;</b>
+<b class="fc"><i>34</i>&nbsp;    public static final String TABLE_GEWICHT = &quot;gewicht&quot;;</b>
+<b class="fc"><i>35</i>&nbsp;</b>
+<i>36</i>&nbsp;    public String SQL_CREATE_PLAN = &quot;CREATE TABLE &quot; + TABLE_PLAN +
+<i>37</i>&nbsp;            &quot;(&quot; + COLUMN_PId + &quot; INTEGER PRIMARY KEY AUTOINCREMENT, &quot; +
+<i>38</i>&nbsp;            COLUMN_PNAME + &quot; TEXT NOT NULL, &quot; +
+<i>39</i>&nbsp;            COLUMN_DATE_CREATE + &quot; TEXT NOT NULL, &quot;+
+<b class="fc"><i>40</i>&nbsp;            COLUMN_DATE_LAST + &quot; TEXT NOT NULL);&quot;;</b>
+<b class="fc"><i>41</i>&nbsp;</b>
+<i>42</i>&nbsp;    public String SQL_CREATE_UEBUNG = &quot;CREATE TABLE &quot; + TABLE_UEBUNG +
+<b class="nc"><i>43</i>&nbsp;            &quot;(&quot; + COLUMN_UID + &quot; INTEGER PRIMARY KEY AUTOINCREMENT, &quot; +</b>
+<b class="nc"><i>44</i>&nbsp;            COLUMN_PId+ &quot; TEXT NOT NULL, &quot; +</b>
+<b class="fc"><i>45</i>&nbsp;            COLUMN_UNAME + &quot; TEXT NOT NULL, &quot;+</b>
+<b class="fc"><i>46</i>&nbsp;            COLUMN_REPS + &quot; TEXT NOT NULL, &quot;+</b>
+<i>47</i>&nbsp;            COLUMN_START + &quot; TEXT NOT NULL, &quot;+
+<i>48</i>&nbsp;            COLUMN_SPLIT + &quot; TEXT NOT NULL);&quot;;
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    public String SQL_CREATE_GEWICHT = &quot;CREATE TABLE &quot; + TABLE_GEWICHT +
+<b class="nc"><i>51</i>&nbsp;            &quot;(&quot; + COLUMN_GID + &quot; INTEGER PRIMARY KEY AUTOINCREMENT, &quot; +</b>
+<i>52</i>&nbsp;            COLUMN_UID+ &quot; TEXT NOT NULL, &quot; +
+<i>53</i>&nbsp;            COLUMN_GEWICHT + &quot; TEXT NOT NULL);&quot;;
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;    public TrainPlanDbHelper(Context context){
+<i>56</i>&nbsp;        super(context, DB_NAME, null, DB_VERSION);
+<i>57</i>&nbsp;        Log.d(LOG_TAG, &quot;DbHelper hat die Datenbank: &quot; + getDatabaseName() + &quot; erzeugt.&quot;);
+<i>58</i>&nbsp;    }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;    @Override
+<i>61</i>&nbsp;    public void onCreate(SQLiteDatabase db) {
+<i>62</i>&nbsp;        try {
+<i>63</i>&nbsp;            Log.d(LOG_TAG, &quot;Die Tabelle wird mit SQL-Befehl: &quot; + SQL_CREATE_PLAN + &quot; angelegt.&quot;);
+<i>64</i>&nbsp;            db.execSQL(SQL_CREATE_PLAN);
+<i>65</i>&nbsp;            Log.d(LOG_TAG, &quot;Die Tabelle wird mit SQL-Befehl: &quot; + SQL_CREATE_UEBUNG + &quot; angelegt.&quot;);
+<i>66</i>&nbsp;            db.execSQL(SQL_CREATE_UEBUNG);
+<i>67</i>&nbsp;            Log.d(LOG_TAG, &quot;Die Tabelle wird mit SQL-Befehl: &quot; + SQL_CREATE_GEWICHT + &quot; angelegt.&quot;);
+<i>68</i>&nbsp;            db.execSQL(SQL_CREATE_GEWICHT);
+<i>69</i>&nbsp;        }
+<i>70</i>&nbsp;        catch (Exception ex) {
+<i>71</i>&nbsp;            Log.e(LOG_TAG, &quot;Fehler beim Anlegen der Tabelle: &quot; + ex.getMessage());
+<i>72</i>&nbsp;        }
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;    @Override
+<i>76</i>&nbsp;    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+<i>77</i>&nbsp;
+<i>78</i>&nbsp;    }
+<i>79</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-05-03 09:22</div>
+</div>
+</body>
+</html>

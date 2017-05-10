@@ -34,11 +34,9 @@ public class CreatePlanActivity extends AppCompatActivity {
     String namePlan;
 
     List<String> splits = new ArrayList<String>();
-    List<String> exercise = new ArrayList<String>();
-    List<String> reps = new ArrayList<String>();
-    List<String> start_weight = new ArrayList<String>();
-    List<String> e_split = new ArrayList<String>();
     String currentPlan = "";
+
+    List<Uebung> uebungen = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +56,10 @@ public class CreatePlanActivity extends AppCompatActivity {
         setContentView(R.layout.creating_plan);
 
         Bundle params = getIntent().getExtras();
-        this.namePlan = params.getString("param");
+        final String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        final Plan newPlan = new Plan(params.getString("param"), date, "-");
 
-        setTitle(this.namePlan);
+        setTitle(newPlan.getName());
 
         createSplitButton();
         FloatingActionButton readyButton = (FloatingActionButton) findViewById(R.id.readyButton);
@@ -81,25 +80,22 @@ public class CreatePlanActivity extends AppCompatActivity {
                                     db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    String forDB = "[" + namePlan + "]";
 
                                     dataSource.open();
-                                    String CREATE_NEW_TABLE = "CREATE TABLE " + forDB +
-                                            "(" + "_id" + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                            "exercise" + " TEXT NOT NULL, " +
-                                            "reps" + " TEXT NOT NULL, "+
-                                            "start_weight" + " TEXT NOT NULL, " +
-                                            "split" + " TEXT NOT NULL);";
+                                    db.execSQL("INSERT INTO plan (name, date_create, date_last) " +
+                                            "VALUES ('"+newPlan.getName()+"','"+newPlan.getDate_create()+
+                                            "', '"+newPlan.getDate_last()+"')");
 
-                                    String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-                                    db.execSQL("INSERT INTO plan (name, date_create, date_last) VALUES ('"+namePlan+"','"+date+"', '-')");
-
-                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+namePlan+"'", null);
+                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+newPlan.getName()+"'", null);
                                     c.moveToFirst();
                                     String id = c.getString(c.getColumnIndex("plan_id"));
 
-                                    for(int i  = 0; i < exercise.size(); i++){
-                                        db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split) VALUES ('"+id+"', '"+exercise.get(i)+"', '"+reps.get(i)+"', '"+start_weight.get(i)+"', '"+e_split.get(i)+"')");
+                                    for(int i  = 0; i < uebungen.size(); i++){
+                                        db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split)" +
+                                                " VALUES ('"+id+"', '"+uebungen.get(i).getName()+
+                                                "', '"+uebungen.get(i).getReps()+"', '"+
+                                                uebungen.get(i).getStart()+"', '"+
+                                                uebungen.get(i).getSplit()+"')");
                                     }
 
                                     dataSource.close();
@@ -216,10 +212,9 @@ public class CreatePlanActivity extends AppCompatActivity {
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                e_split.add(temp_plan);
-                                exercise.add(e_name.getText().toString());
-                                reps.add(e_reps.getText().toString());
-                                start_weight.add(e_sw.getText().toString());
+                                uebungen.add(new Uebung(e_name.getText().toString(),
+                                        e_reps.getText().toString(),
+                                        e_sw.getText().toString(), temp_plan));
                                 redrawGUI();
                                 dialog.cancel();
                             }
@@ -247,10 +242,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         tempLL.addView(delete);
         delete.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                exercise.remove(toDel);
-                reps.remove(toDel);
-                start_weight.remove(toDel);
-                e_split.remove(toDel);
+                uebungen.remove(toDel);
                 redrawGUI();
             }
         });
@@ -282,8 +274,8 @@ public class CreatePlanActivity extends AppCompatActivity {
             currentPlan = splits.get(i);
             boolean toTest = true;
             int k = 0;
-            while(k < exercise.size() && toTest){
-                if(currentPlan.equals((e_split.get(k)))){
+            while(k < uebungen.size() && toTest){
+                if(currentPlan.equals((uebungen.get(k).getSplit()))){
                     toTest = false;
                 }
                 k++;
@@ -306,14 +298,15 @@ public class CreatePlanActivity extends AppCompatActivity {
             }
             LinearLayout tempLL = null;
 
-            for(int j = 0; j < exercise.size(); j++){
+            for(int j = 0; j < uebungen.size(); j++){
                 tempLL = new LinearLayout(this);
-                if(currentPlan.equals(e_split.get(j))){
+                if(currentPlan.equals(uebungen.get(j).getSplit())){
                     createDeleteButton(j, tempLL);
                     TextView exerView = new TextView(this);
                     exerView.setPadding(10,2,10,2);
 
-                    String toShow = exercise.get(j) + " Reps: " + reps.get(j) + " Startgewicht: " + start_weight.get(j);
+                    String toShow = uebungen.get(j).getName() + " Reps: " + uebungen.get(j).getReps()
+                            + " Startgewicht: " + uebungen.get(j).getStart();
                     exerView.setText(toShow);
                     tempLL.addView(exerView);
                     ll.addView(tempLL);
