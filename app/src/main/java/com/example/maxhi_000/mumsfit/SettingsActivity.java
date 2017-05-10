@@ -11,11 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-
-/**
- * Created by Moritz on 02.05.2017.
- */
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -23,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(
-        "MyPrefs", MODE_PRIVATE);
+                "MyPrefs", MODE_PRIVATE);
 
         String themeName = prefs.getString("Theme", "Default");
         if (themeName.equals("BlackTheme")) {
@@ -37,38 +34,55 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.settings);
 
         Button save = (Button) findViewById(R.id.btn_settings_save);
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroupTheme);
+        RadioGroup radioGroupTheme = (RadioGroup) findViewById(R.id.radioGroupTheme);
 
         if (themeName.equals("BlackTheme")) {
-            radioGroup.check(R.id.rbtn_darkTheme);
+            radioGroupTheme.check(R.id.rbtn_darkTheme);
         } else if (themeName.equals("LightTheme")) {
-            radioGroup.check(R.id.rbtn_lightTheme);
+            radioGroupTheme.check(R.id.rbtn_lightTheme);
         }else if(themeName.equals("Default")){
-            radioGroup.check(R.id.rbtn_defaultTheme);
+            radioGroupTheme.check(R.id.rbtn_defaultTheme);
+        }
+
+        RadioGroup radioGroupLanguage = (RadioGroup) findViewById(R.id.radioGroupLanguage);
+        String language = prefs.getString("Language", "ENG");
+        if(language.equals("GER")){
+            radioGroupLanguage.check(R.id.rbtn_lang_de);
+        }else if(language.equals("ENG")){
+            radioGroupLanguage.check(R.id.rbtn_lang_en);
         }
 
         final SharedPreferences.Editor editor = prefs.edit();
 
         save.setOnClickListener(this);
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        radioGroupTheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
                 switch(i){
                     case R.id.rbtn_darkTheme:
-                    editor.putString("Theme", "BlackTheme");
-
-                    Toast.makeText(context, "Dark", Toast.LENGTH_SHORT).show();
-                    break;
+                        editor.putString("Theme", "BlackTheme");
+                        break;
                     case R.id.rbtn_lightTheme:
-                    editor.putString("Theme", "LightTheme");
-
-                    Toast.makeText(context, "Light", Toast.LENGTH_SHORT).show();
-                    break;
+                        editor.putString("Theme", "LightTheme");
+                        break;
                     case R.id.rbtn_defaultTheme:
-                    editor.putString("Theme", "Default");
+                        editor.putString("Theme", "Default");
+                        break;
+                }
+                editor.commit();
+            }
+        });
 
-                    Toast.makeText(context, "Default", Toast.LENGTH_SHORT).show();
-                    break;
+        radioGroupLanguage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i){
+                switch(i){
+                    case R.id.rbtn_lang_de:
+                        editor.putString("Language", "GER");
+                                break;
+                    case R.id.rbtn_lang_en:
+                        editor.putString("Language", "ENG");
+                        break;
                 }
                 editor.commit();
             }

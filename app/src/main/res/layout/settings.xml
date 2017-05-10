@@ -12,12 +12,13 @@
         android:textSize="24sp" />
 
     <RadioGroup
+        android:id="@+id/radioGroupLanguage"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/lang_de"
+            android:id="@+id/rbtn_lang_de"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.00"
@@ -26,7 +27,7 @@
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/lang_en"
+            android:id="@+id/rbtn_lang_en"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.00"
@@ -79,4 +80,3 @@
         android:textSize="18sp" />
 
 </LinearLayout>
-

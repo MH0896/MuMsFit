@@ -27,7 +27,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-// new
+
     final Context context = this;
     private String eingabe;
 
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(
                 "MyPrefs", MODE_PRIVATE);
         String themeName = prefs.getString("Theme", "Default");
@@ -117,8 +116,6 @@ public class MainActivity extends AppCompatActivity {
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_analyze);
                         item.setVisible(true);
-                        item = menu.findItem(R.id.item_menu_overflow);
-                        item.setVisible(true);
                     }
                     else if (nr == 1){
                         item = menu.findItem(R.id.item_delete);
@@ -132,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
                         item = menu.findItem(R.id.item_details);
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_analyze);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_menu_overflow);
                         item.setVisible(true);
                         return true;
                     } else if(nr > 1 && nr!=arrTblNames.size()) {
@@ -149,8 +144,6 @@ public class MainActivity extends AppCompatActivity {
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_select_all);
                         item.setVisible(true);
-                        item = menu.findItem(R.id.item_menu_overflow);
-                        item.setVisible(false);
                         return true;
                     }else if(nr == arrTblNames.size()){
                         item = menu.findItem(R.id.item_select_all);
@@ -165,8 +158,6 @@ public class MainActivity extends AppCompatActivity {
                         item.setVisible(true);
                         item = menu.findItem(R.id.item_share);
                         item.setVisible(true);
-                        item = menu.findItem(R.id.item_menu_overflow);
-                        item.setVisible(false);
                         return true;
                     }
                     return false;
@@ -311,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
                                     if(returned == null){
                                         Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
                                     }else {
-                                        Plan newPlan = new Plan(eingabe);
+                                        Plan newPlan = new Plan(returned);
                                         Bundle temp = new Bundle();
                                         temp.putString("param", newPlan.getName());
                                         Intent i = new Intent(MainActivity.this, CreatePlanActivity.class);
@@ -336,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public String checkEingabe(String input){
+    public static String checkEingabe(String input){
         if(input.isEmpty()){
             return null;
         }
@@ -385,7 +376,7 @@ public class MainActivity extends AppCompatActivity {
         }, zeit);
 
     }
-//details ansehen
+    //details ansehen
     public void DeleteClick(final ArrayList<Integer> items){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);

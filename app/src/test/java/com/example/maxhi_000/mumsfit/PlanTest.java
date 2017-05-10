@@ -7,9 +7,6 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by maxhi_000 on 05.05.2017.
- */
 public class PlanTest {
     @Test
     public void getPlan_id() throws Exception {
@@ -65,6 +62,12 @@ public class PlanTest {
         Plan testPlan = new Plan("toTest", "today", date);
         testPlan.setDate_last("newDate");
         assertEquals("newDate", testPlan.getDate_last());
+    }
+
+    @Test
+    public void newPlan() throws Exception {
+        Plan testPlan = new Plan(87, "toTest", "today", "date");
+        assertEquals("date", testPlan.getDate_last());
     }
 
 }

@@ -1,7 +1,11 @@
 package com.example.maxhi_000.mumsfit;
 
 
-public class Uebung {
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AppCompatActivity;
+
+public class Uebung  extends AppCompatActivity {
     private int uebung_id;
     private int plan_id;
     private String name;
@@ -18,7 +22,7 @@ public class Uebung {
         this.split = split;
     }
 
-    public Uebung( String name, String reps, String start, String split) {
+    public Uebung(String name, String reps, String start, String split) {
         this.uebung_id = 0;
         this.plan_id = 0;
         this.name = name;
@@ -74,4 +78,6 @@ public class Uebung {
     public void setSplit(String split) {
         this.split = split;
     }
+
+
 }

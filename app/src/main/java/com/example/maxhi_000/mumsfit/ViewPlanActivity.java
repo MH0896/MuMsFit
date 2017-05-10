@@ -22,15 +22,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ViewPlanActivity  extends AppCompatActivity {
-//new
+
     String namePlan;
     private TrainPlanDataSource dataSource;
     final Context context = this;
-    ArrayList<String> exercises = new ArrayList<String>();
-    ArrayList<String> reps = new ArrayList<String>();
-    ArrayList<String> sweight = new ArrayList<String>();
-    ArrayList<String> split = new ArrayList<String>();
-    ArrayList<String> cweight = new ArrayList<String>();
+
+    static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +42,8 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }else if(themeName.equals("Default")){
             setTheme(R.style.AppTheme);
         }
-        super.onCreate(savedInstanceState);
 
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.view_plan);
 
@@ -62,15 +59,16 @@ public class ViewPlanActivity  extends AppCompatActivity {
             dataSource.open();
 
             Cursor c = db.rawQuery("SELECT uebung.name, uebung.reps, uebung.start, uebung.split " +
-                        "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id", null);
+                    "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name='"+
+                    this.namePlan+"'", null);
 
             if (c.moveToFirst()) {
                 while (!c.isAfterLast()) {
-                    exercises.add(c.getString(c.getColumnIndex("name")));
-                    reps.add(c.getString(c.getColumnIndex("reps")));
-                    sweight.add(c.getString(c.getColumnIndex("start")));
-                    split.add(c.getString(c.getColumnIndex("split")));
-                    cweight.add("-");
+                    String name = (c.getString(c.getColumnIndex("name")));
+                    String reps = (c.getString(c.getColumnIndex("reps")));
+                    String start = (c.getString(c.getColumnIndex("start")));
+                    String split = (c.getString(c.getColumnIndex("split")));
+                    uebung.add(new Uebung(name, reps, start, split));
                     c.moveToNext();
                 }
             }
@@ -82,18 +80,57 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }
     }
 
+    public static  boolean alreadyIn(String split, ArrayList<String> list){
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).equals(split)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void createOrderOfUebung(){
+        ArrayList<String> splits = new ArrayList<String>();
+        for(int i = 0; i < uebung.size(); i++){
+            if (i==0){
+                splits.add(uebung.get(i).getSplit());
+            }
+            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){
+                boolean result = alreadyIn(uebung.get(i).getSplit(), splits);
+                if(result){
+                    boolean breakOut = false;
+                    int count = 0;
+                    while(!breakOut) {
+                        if (uebung.get(i).getSplit().equals(uebung.get(count).getSplit())) {
+                            breakOut = true;
+                        }else{
+                            count++;
+                        }
+                    }
+                    Uebung temp = uebung.get(i);
+                    uebung.remove(i);
+                    uebung.add(count, temp);
+                }
+                else{
+                    splits.add(uebung.get(i).getSplit());
+                }
+            }
+        }
+    }
+
     public void drawGUI(){
+        createOrderOfUebung();
         LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);
 
-        for(int i = 0; i < exercises.size(); i++){
+        for(int i = 0; i < uebung.size(); i++){
             if(i == 0){
                 TextView textView = new TextView(this);
-                String sourceString = "<b>" + split.get(i) + "</b>";
+                String sourceString = "<b>" + uebung.get(i).getSplit() + "</b>";
                 textView.setText(Html.fromHtml(sourceString));
                 textView.setPadding(16, 5, 16, 2);
                 ll.addView(textView);
             }
-            else if(!split.get(i).equals(split.get(i-1))){
+            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){
                 View v = new View(this);
                 v.setLayoutParams(new LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -103,7 +140,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
                 ll.addView(v);
 
                 TextView textView = new TextView(this);
-                String sourceString = "<b>" + split.get(i) + "</b>";
+                String sourceString = "<b>" + uebung.get(i).getSplit() + "</b>";
                 textView.setText(Html.fromHtml(sourceString));
                 textView.setPadding(16, 5, 16, 2);
                 ll.addView(textView);
@@ -118,7 +155,8 @@ public class ViewPlanActivity  extends AppCompatActivity {
             }
             TextView exerView = new TextView(this);
             exerView.setPadding(10,2,10,2);
-            String toShow = exercises.get(i) + " Reps: " + reps.get(i) + " Startgewicht: " + sweight.get(i);
+            String toShow = uebung.get(i).getName() + " Reps: " + uebung.get(i).getReps() +
+                    " Startgewicht: " + uebung.get(i).getStart();
             exerView.setText(toShow);
             ll.addView(exerView);
         }
@@ -140,15 +178,10 @@ public class ViewPlanActivity  extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_edit_menu:
-                Bundle temp = new Bundle();
-                temp.putString("param", namePlan);
-                Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);
-                i.putExtras(temp);
-                startActivity(i);
-                finish();
+                EditClick();
                 return true;
             case R.id.item_start_training:
-                Toast.makeText(getApplicationContext(),"Start",Toast.LENGTH_SHORT).show();
+                StartClick();
                 return true;
             case R.id.item_details_menu:
                 DetailsClick();
@@ -157,21 +190,19 @@ public class ViewPlanActivity  extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void DetailsClick(){
+    public void DetailsClick() {
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
-            String trainings = "default";
             String date_create = "default";
             String date_last = "default";
-            Cursor c = db.rawQuery("SELECT trainings,date_create,date_last FROM details WHERE plan='["+ namePlan +"]'", null);
-            if(c.moveToFirst()) {
-                trainings = c.getString(0);
-                date_create = c.getString(1);
-                date_last = c.getString(2);
+            Cursor c = db.rawQuery("SELECT date_create,date_last FROM plan WHERE name='" + namePlan + "'", null);
+            if (c.moveToFirst()) {
+                date_create = c.getString(0);
+                date_last = c.getString(1);
                 c.close();
             }
 
@@ -183,7 +214,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
             alertDialogBuilder.setTitle(namePlan);
 
             alertDialogBuilder
-                    .setMessage("Anzahl der Einheiten: "+trainings+"\nErstellt am: "+date_create+"\nZuletzt durchgeführt am: "+date_last)
+                    .setMessage("Erstellt am: " + date_create + "\nZuletzt durchgeführt am: " + date_last)
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -197,5 +228,23 @@ public class ViewPlanActivity  extends AppCompatActivity {
             if (db != null)
                 db.close();
         }
+    }
+
+    public void EditClick() {
+        Bundle temp = new Bundle();
+        temp.putString("param", namePlan);
+        Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);
+        i.putExtras(temp);
+        startActivity(i);
+        finish();
+    }
+
+    public void StartClick(){
+        Bundle temp = new Bundle();
+        temp.putString("param", namePlan);
+        Intent i = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);
+        i.putExtras(temp);
+        startActivity(i);
+        finish();
     }
 }

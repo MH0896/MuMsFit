@@ -1,11 +1,15 @@
 package com.example.maxhi_000.mumsfit;
 
 
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AppCompatActivity;
 
-public class Plan {
+public class Plan  extends AppCompatActivity {
     private int plan_id;
     private String name;
-    private  String date_create;
+    private String date_create;
     private String date_last;
 
     public Plan(int plan_id, String name, String date_create, String date_last) {
@@ -59,4 +63,5 @@ public class Plan {
     public void setDate_last(String date_last) {
         this.date_last = date_last;
     }
+
 }
