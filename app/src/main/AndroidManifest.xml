@@ -32,6 +32,9 @@
         <activity android:name=".EditPlanActivity">
         </activity>
 
+        <activity android:name=".PerformTrainPlanActivity">
+        </activity>
+
         <activity android:name=".MainActivity">
         </activity>
         <meta-data

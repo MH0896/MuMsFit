@@ -178,15 +178,10 @@ public class ViewPlanActivity  extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_edit_menu:
-                Bundle temp = new Bundle();
-                temp.putString("param", namePlan);
-                Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);
-                i.putExtras(temp);
-                startActivity(i);
-                finish();
+                EditClick();
                 return true;
             case R.id.item_start_training:
-                Toast.makeText(getApplicationContext(),"Start",Toast.LENGTH_SHORT).show();
+                StartClick();
                 return true;
             case R.id.item_details_menu:
                 DetailsClick();
@@ -233,5 +228,23 @@ public class ViewPlanActivity  extends AppCompatActivity {
             if (db != null)
                 db.close();
         }
+    }
+
+    public void EditClick() {
+        Bundle temp = new Bundle();
+        temp.putString("param", namePlan);
+        Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);
+        i.putExtras(temp);
+        startActivity(i);
+        finish();
+    }
+
+    public void StartClick(){
+        Bundle temp = new Bundle();
+        temp.putString("param", namePlan);
+        Intent i = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);
+        i.putExtras(temp);
+        startActivity(i);
+        finish();
     }
 }

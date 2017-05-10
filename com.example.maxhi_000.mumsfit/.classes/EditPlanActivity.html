@@ -39,18 +39,18 @@
   <td class="name">EditPlanActivity</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    27,3%
   </span>
   <span class="absValue">
-    (0/ 8)
+    (3/ 11)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    18%
   </span>
   <span class="absValue">
-    (0/ 98)
+    (23/ 128)
   </span>
 </td>
 </tr>
@@ -229,18 +229,18 @@
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    10,3%
   </span>
   <span class="absValue">
-    (0/ 26)
+    (3/ 29)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    9,7%
   </span>
   <span class="absValue">
-    (0/ 206)
+    (23/ 236)
   </span>
 </td>
 </tr>
@@ -283,7 +283,7 @@
 <i>31</i>&nbsp;    private TrainPlanDataSource dataSource;
 <b class="nc"><i>32</i>&nbsp;    final Context context = this;</b>
 <i>33</i>&nbsp;
-<b class="nc"><i>34</i>&nbsp;    ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
+<b class="fc"><i>34</i>&nbsp;    static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
 <i>35</i>&nbsp;
 <i>36</i>&nbsp;    @Override
 <i>37</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
@@ -334,7 +334,7 @@
 <b class="nc"><i>82</i>&nbsp;            if (db != null)</b>
 <b class="nc"><i>83</i>&nbsp;                db.close();</b>
 <i>84</i>&nbsp;        }
-<i>85</i>&nbsp;    }
+<b class="nc"><i>85</i>&nbsp;    }</b>
 <i>86</i>&nbsp;
 <i>87</i>&nbsp;    public void createExerciseDeleteButton(final int toDel, LinearLayout tempLL){
 <b class="nc"><i>88</i>&nbsp;        TextView delete = new TextView(this);</b>
@@ -383,7 +383,7 @@
 <b class="nc"><i>131</i>&nbsp;                alertDialog.show();</b>
 <i>132</i>&nbsp;            }
 <i>133</i>&nbsp;        });
-<i>134</i>&nbsp;    }
+<b class="nc"><i>134</i>&nbsp;    }</b>
 <i>135</i>&nbsp;
 <i>136</i>&nbsp;    public void createExerciseEditButton(final int toEdit, LinearLayout tempLL){
 <b class="nc"><i>137</i>&nbsp;        TextView delete = new TextView(this);</b>
@@ -454,7 +454,7 @@
 <b class="nc"><i>202</i>&nbsp;                alertDialog.show();</b>
 <i>203</i>&nbsp;            }
 <i>204</i>&nbsp;        });
-<i>205</i>&nbsp;    }
+<b class="nc"><i>205</i>&nbsp;    }</b>
 <i>206</i>&nbsp;
 <i>207</i>&nbsp;    public void createExerciseButton(){
 <b class="nc"><i>208</i>&nbsp;        Button exerciseButton = new Button(this);</b>
@@ -534,79 +534,120 @@
 <b class="nc"><i>282</i>&nbsp;                alertDialog.show();</b>
 <i>283</i>&nbsp;            }
 <i>284</i>&nbsp;        });
-<i>285</i>&nbsp;    }
+<b class="nc"><i>285</i>&nbsp;    }</b>
 <i>286</i>&nbsp;
-<i>287</i>&nbsp;    public void drawGUI(){
-<b class="nc"><i>288</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);</b>
-<b class="nc"><i>289</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
-<b class="nc"><i>290</i>&nbsp;            if(i == 0){</b>
-<b class="nc"><i>291</i>&nbsp;                TextView textView = new TextView(this);</b>
-<b class="nc"><i>292</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
-<b class="nc"><i>293</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
-<b class="nc"><i>294</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
-<b class="nc"><i>295</i>&nbsp;                ll.addView(textView);</b>
-<b class="nc"><i>296</i>&nbsp;            }</b>
-<b class="nc"><i>297</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
-<b class="nc"><i>298</i>&nbsp;                View v = new View(this);</b>
-<b class="nc"><i>299</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
-<i>300</i>&nbsp;                        LinearLayout.LayoutParams.MATCH_PARENT,
-<i>301</i>&nbsp;                        5
-<i>302</i>&nbsp;                ));
-<b class="nc"><i>303</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
-<b class="nc"><i>304</i>&nbsp;                ll.addView(v);</b>
-<i>305</i>&nbsp;
-<b class="nc"><i>306</i>&nbsp;                TextView textView = new TextView(this);</b>
-<b class="nc"><i>307</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
-<b class="nc"><i>308</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
-<b class="nc"><i>309</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
-<b class="nc"><i>310</i>&nbsp;                ll.addView(textView);</b>
-<b class="nc"><i>311</i>&nbsp;            }else{</b>
-<b class="nc"><i>312</i>&nbsp;                View v = new View(this);</b>
-<b class="nc"><i>313</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
-<i>314</i>&nbsp;                        LinearLayout.LayoutParams.MATCH_PARENT,
-<i>315</i>&nbsp;                        2
-<i>316</i>&nbsp;                ));
-<b class="nc"><i>317</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
-<b class="nc"><i>318</i>&nbsp;                ll.addView(v);</b>
-<i>319</i>&nbsp;            }
-<b class="nc"><i>320</i>&nbsp;            LinearLayout tempLL = new LinearLayout(this);</b>
-<i>321</i>&nbsp;
-<b class="nc"><i>322</i>&nbsp;            createExerciseDeleteButton(i, tempLL);</b>
-<b class="nc"><i>323</i>&nbsp;            createExerciseEditButton(i, tempLL);</b>
-<b class="nc"><i>324</i>&nbsp;            TextView exerView = new TextView(this);</b>
-<b class="nc"><i>325</i>&nbsp;            exerView.setPadding(10,2,10,2);</b>
-<i>326</i>&nbsp;
-<b class="nc"><i>327</i>&nbsp;            String toShow = uebung.get(i).getName() + &quot; Reps: &quot; + uebung.get(i).getReps() +</b>
-<b class="nc"><i>328</i>&nbsp;                    &quot; Startgewicht: &quot; + uebung.get(i).getStart();</b>
-<b class="nc"><i>329</i>&nbsp;            exerView.setText(toShow);</b>
-<b class="nc"><i>330</i>&nbsp;            tempLL.addView(exerView);</b>
-<b class="nc"><i>331</i>&nbsp;            ll.addView(tempLL);</b>
-<i>332</i>&nbsp;        }
-<i>333</i>&nbsp;
-<b class="nc"><i>334</i>&nbsp;        createExerciseButton();</b>
-<i>335</i>&nbsp;    }
-<i>336</i>&nbsp;
-<i>337</i>&nbsp;    @Override
-<i>338</i>&nbsp;    public void onBackPressed(){
-<i>339</i>&nbsp;        //super.onBackPressed();
-<b class="nc"><i>340</i>&nbsp;        Bundle temp = new Bundle();</b>
-<b class="nc"><i>341</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
-<b class="nc"><i>342</i>&nbsp;        Intent i = new Intent(EditPlanActivity.this, ViewPlanActivity.class);</b>
-<b class="nc"><i>343</i>&nbsp;        i.putExtras(temp);</b>
-<b class="nc"><i>344</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>345</i>&nbsp;        finish();</b>
-<i>346</i>&nbsp;    }
-<i>347</i>&nbsp;
-<i>348</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
-<b class="nc"><i>349</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
-<i>350</i>&nbsp;    }
-<i>351</i>&nbsp;}
+<i>287</i>&nbsp;    public static boolean alreadyIn(String split, ArrayList&lt;String&gt; list){
+<b class="fc"><i>288</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++) {</b>
+<b class="fc"><i>289</i>&nbsp;            if (list.get(i).equals(split)) {</b>
+<b class="fc"><i>290</i>&nbsp;                return true;</b>
+<i>291</i>&nbsp;            }
+<i>292</i>&nbsp;        }
+<b class="fc"><i>293</i>&nbsp;        return false;</b>
+<i>294</i>&nbsp;    }
+<i>295</i>&nbsp;
+<i>296</i>&nbsp;    public static void createOrderOfUebung(){
+<b class="fc"><i>297</i>&nbsp;        ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>298</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
+<b class="fc"><i>299</i>&nbsp;            if (i==0){</b>
+<b class="fc"><i>300</i>&nbsp;                splits.add(uebung.get(i).getSplit());</b>
+<i>301</i>&nbsp;            }
+<b class="fc"><i>302</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
+<b class="fc"><i>303</i>&nbsp;                boolean result = alreadyIn(uebung.get(i).getSplit(), splits);</b>
+<b class="fc"><i>304</i>&nbsp;                if(result){</b>
+<b class="fc"><i>305</i>&nbsp;                    boolean breakOut = false;</b>
+<b class="fc"><i>306</i>&nbsp;                    int count = 0;</b>
+<b class="fc"><i>307</i>&nbsp;                    while(!breakOut) {</b>
+<b class="fc"><i>308</i>&nbsp;                        if (uebung.get(i).getSplit().equals(uebung.get(count).getSplit())) {</b>
+<b class="fc"><i>309</i>&nbsp;                            breakOut = true;</b>
+<i>310</i>&nbsp;                        }else{
+<b class="nc"><i>311</i>&nbsp;                            count++;</b>
+<i>312</i>&nbsp;                        }
+<i>313</i>&nbsp;                    }
+<b class="fc"><i>314</i>&nbsp;                    Uebung temp = uebung.get(i);</b>
+<b class="fc"><i>315</i>&nbsp;                    uebung.remove(i);</b>
+<b class="fc"><i>316</i>&nbsp;                    uebung.add(count, temp);</b>
+<b class="fc"><i>317</i>&nbsp;                }</b>
+<i>318</i>&nbsp;                else{
+<b class="fc"><i>319</i>&nbsp;                    splits.add(uebung.get(i).getSplit());</b>
+<i>320</i>&nbsp;                }
+<i>321</i>&nbsp;            }
+<i>322</i>&nbsp;        }
+<b class="fc"><i>323</i>&nbsp;    }</b>
+<i>324</i>&nbsp;
+<i>325</i>&nbsp;    public void drawGUI(){
+<b class="nc"><i>326</i>&nbsp;        createOrderOfUebung();</b>
+<i>327</i>&nbsp;
+<b class="nc"><i>328</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);</b>
+<b class="nc"><i>329</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
+<b class="nc"><i>330</i>&nbsp;            if(i == 0){</b>
+<i>331</i>&nbsp;
+<b class="nc"><i>332</i>&nbsp;                TextView textView = new TextView(this);</b>
+<b class="nc"><i>333</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
+<b class="nc"><i>334</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
+<b class="nc"><i>335</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
+<b class="nc"><i>336</i>&nbsp;                ll.addView(textView);</b>
+<b class="nc"><i>337</i>&nbsp;            }</b>
+<b class="nc"><i>338</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
+<b class="nc"><i>339</i>&nbsp;                View v = new View(this);</b>
+<b class="nc"><i>340</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
+<i>341</i>&nbsp;                    LinearLayout.LayoutParams.MATCH_PARENT,
+<i>342</i>&nbsp;                    5
+<i>343</i>&nbsp;                ));
+<b class="nc"><i>344</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
+<b class="nc"><i>345</i>&nbsp;                ll.addView(v);</b>
+<i>346</i>&nbsp;
+<b class="nc"><i>347</i>&nbsp;                TextView textView = new TextView(this);</b>
+<b class="nc"><i>348</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
+<b class="nc"><i>349</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
+<b class="nc"><i>350</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
+<b class="nc"><i>351</i>&nbsp;                ll.addView(textView);</b>
+<b class="nc"><i>352</i>&nbsp;            }else{</b>
+<b class="nc"><i>353</i>&nbsp;                View v = new View(this);</b>
+<b class="nc"><i>354</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
+<i>355</i>&nbsp;                        LinearLayout.LayoutParams.MATCH_PARENT,
+<i>356</i>&nbsp;                        2
+<i>357</i>&nbsp;                ));
+<b class="nc"><i>358</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
+<b class="nc"><i>359</i>&nbsp;                ll.addView(v);</b>
+<i>360</i>&nbsp;            }
+<b class="nc"><i>361</i>&nbsp;            LinearLayout tempLL = new LinearLayout(this);</b>
+<i>362</i>&nbsp;
+<b class="nc"><i>363</i>&nbsp;            createExerciseDeleteButton(i, tempLL);</b>
+<b class="nc"><i>364</i>&nbsp;            createExerciseEditButton(i, tempLL);</b>
+<b class="nc"><i>365</i>&nbsp;            TextView exerView = new TextView(this);</b>
+<b class="nc"><i>366</i>&nbsp;            exerView.setPadding(10,2,10,2);</b>
+<i>367</i>&nbsp;
+<b class="nc"><i>368</i>&nbsp;            String toShow = uebung.get(i).getName() + &quot; Reps: &quot; + uebung.get(i).getReps() +</b>
+<b class="nc"><i>369</i>&nbsp;                    &quot; Startgewicht: &quot; + uebung.get(i).getStart();</b>
+<b class="nc"><i>370</i>&nbsp;            exerView.setText(toShow);</b>
+<b class="nc"><i>371</i>&nbsp;            tempLL.addView(exerView);</b>
+<b class="nc"><i>372</i>&nbsp;            ll.addView(tempLL);</b>
+<i>373</i>&nbsp;        }
+<i>374</i>&nbsp;
+<b class="nc"><i>375</i>&nbsp;        createExerciseButton();</b>
+<b class="nc"><i>376</i>&nbsp;    }</b>
+<i>377</i>&nbsp;
+<i>378</i>&nbsp;    @Override
+<i>379</i>&nbsp;    public void onBackPressed(){
+<i>380</i>&nbsp;        //super.onBackPressed();
+<b class="nc"><i>381</i>&nbsp;        Bundle temp = new Bundle();</b>
+<b class="nc"><i>382</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
+<b class="nc"><i>383</i>&nbsp;        Intent i = new Intent(EditPlanActivity.this, ViewPlanActivity.class);</b>
+<b class="nc"><i>384</i>&nbsp;        i.putExtras(temp);</b>
+<b class="nc"><i>385</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>386</i>&nbsp;        finish();</b>
+<b class="nc"><i>387</i>&nbsp;    }</b>
+<i>388</i>&nbsp;
+<i>389</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
+<b class="nc"><i>390</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
+<i>391</i>&nbsp;    }
+<i>392</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-05 18:57</div>
+    <div style="float:right;">generated on 2017-05-10 09:41</div>
 </div>
 </body>
 </html>

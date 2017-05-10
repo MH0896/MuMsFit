@@ -69,7 +69,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 11)
+    (0/ 8)
   </span>
 </td>
   </tr>
@@ -88,7 +88,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 41)
+    (0/ 38)
   </span>
 </td>
 </tr>
@@ -152,49 +152,43 @@
 <b class="nc"><i>52</i>&nbsp;                switch(i){</b>
 <i>53</i>&nbsp;                    case R.id.rbtn_darkTheme:
 <b class="nc"><i>54</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;BlackTheme&quot;);</b>
-<i>55</i>&nbsp;
-<b class="nc"><i>56</i>&nbsp;                        Toast.makeText(context, &quot;Dark&quot;, Toast.LENGTH_SHORT).show();</b>
-<b class="nc"><i>57</i>&nbsp;                        break;</b>
-<i>58</i>&nbsp;                    case R.id.rbtn_lightTheme:
-<b class="nc"><i>59</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;LightTheme&quot;);</b>
-<i>60</i>&nbsp;
-<b class="nc"><i>61</i>&nbsp;                        Toast.makeText(context, &quot;Light&quot;, Toast.LENGTH_SHORT).show();</b>
-<b class="nc"><i>62</i>&nbsp;                        break;</b>
-<i>63</i>&nbsp;                    case R.id.rbtn_defaultTheme:
-<b class="nc"><i>64</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;Default&quot;);</b>
-<i>65</i>&nbsp;
-<b class="nc"><i>66</i>&nbsp;                        Toast.makeText(context, &quot;Default&quot;, Toast.LENGTH_SHORT).show();</b>
-<i>67</i>&nbsp;                        break;
-<i>68</i>&nbsp;                }
-<b class="nc"><i>69</i>&nbsp;                editor.commit();</b>
-<i>70</i>&nbsp;            }
-<i>71</i>&nbsp;        });
-<i>72</i>&nbsp;    }
-<i>73</i>&nbsp;
-<i>74</i>&nbsp;    @Override
-<i>75</i>&nbsp;    public void onClick(View v) {
-<b class="nc"><i>76</i>&nbsp;        switch (v.getId()) {</b>
-<i>77</i>&nbsp;            case R.id.btn_settings_save:
-<b class="nc"><i>78</i>&nbsp;                Intent i = new Intent(SettingsActivity.this, MainActivity.class);</b>
-<b class="nc"><i>79</i>&nbsp;                startActivity(i);</b>
-<b class="nc"><i>80</i>&nbsp;                finish();</b>
-<i>81</i>&nbsp;                break;
-<i>82</i>&nbsp;        }
-<i>83</i>&nbsp;    }
-<i>84</i>&nbsp;    @Override
-<i>85</i>&nbsp;    public void onBackPressed(){
-<i>86</i>&nbsp;        //super.onBackPressed();
-<b class="nc"><i>87</i>&nbsp;        Intent i = new Intent(SettingsActivity.this, MainActivity.class);</b>
-<b class="nc"><i>88</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>89</i>&nbsp;        finish();</b>
-<i>90</i>&nbsp;    }
-<i>91</i>&nbsp;}
+<b class="nc"><i>55</i>&nbsp;                        break;</b>
+<i>56</i>&nbsp;                    case R.id.rbtn_lightTheme:
+<b class="nc"><i>57</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;LightTheme&quot;);</b>
+<b class="nc"><i>58</i>&nbsp;                        break;</b>
+<i>59</i>&nbsp;                    case R.id.rbtn_defaultTheme:
+<b class="nc"><i>60</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;Default&quot;);</b>
+<i>61</i>&nbsp;                        break;
+<i>62</i>&nbsp;                }
+<b class="nc"><i>63</i>&nbsp;                editor.commit();</b>
+<i>64</i>&nbsp;            }
+<i>65</i>&nbsp;        });
+<i>66</i>&nbsp;    }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;    @Override
+<i>69</i>&nbsp;    public void onClick(View v) {
+<b class="nc"><i>70</i>&nbsp;        switch (v.getId()) {</b>
+<i>71</i>&nbsp;            case R.id.btn_settings_save:
+<b class="nc"><i>72</i>&nbsp;                Intent i = new Intent(SettingsActivity.this, MainActivity.class);</b>
+<b class="nc"><i>73</i>&nbsp;                startActivity(i);</b>
+<b class="nc"><i>74</i>&nbsp;                finish();</b>
+<i>75</i>&nbsp;                break;
+<i>76</i>&nbsp;        }
+<i>77</i>&nbsp;    }
+<i>78</i>&nbsp;    @Override
+<i>79</i>&nbsp;    public void onBackPressed(){
+<i>80</i>&nbsp;        //super.onBackPressed();
+<b class="nc"><i>81</i>&nbsp;        Intent i = new Intent(SettingsActivity.this, MainActivity.class);</b>
+<b class="nc"><i>82</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>83</i>&nbsp;        finish();</b>
+<i>84</i>&nbsp;    }
+<i>85</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-05 18:57</div>
+    <div style="float:right;">generated on 2017-05-10 09:41</div>
 </div>
 </body>
 </html>
