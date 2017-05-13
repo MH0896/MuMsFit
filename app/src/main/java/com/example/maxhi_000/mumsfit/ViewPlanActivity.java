@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -12,6 +14,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ViewPlanActivity  extends AppCompatActivity {
 
@@ -42,6 +46,9 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }else if(themeName.equals("Default")){
             setTheme(R.style.AppTheme);
         }
+
+        String appLanguage = prefs.getString("Language", "en-US");
+        setLocale(appLanguage);
 
         super.onCreate(savedInstanceState);
 
@@ -155,8 +162,12 @@ public class ViewPlanActivity  extends AppCompatActivity {
             }
             TextView exerView = new TextView(this);
             exerView.setPadding(10,2,10,2);
-            String toShow = uebung.get(i).getName() + " Reps: " + uebung.get(i).getReps() +
-                    " Startgewicht: " + uebung.get(i).getStart();
+
+            String reps = getResources().getString(R.string.hint_reps)+": ";
+            String weight = getResources().getString(R.string.hint_weight)+": ";
+            String toShow = uebung.get(i).getName() + reps + uebung.get(i).getReps()
+                    + weight + uebung.get(i).getStart();
+
             exerView.setText(toShow);
             ll.addView(exerView);
         }
@@ -214,7 +225,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
             alertDialogBuilder.setTitle(namePlan);
 
             alertDialogBuilder
-                    .setMessage("Erstellt am: " + date_create + "\nZuletzt durchgeführt am: " + date_last)
+                    .setMessage(getResources().getString(R.string.alert_planInfoCreated) + " " + date_create + "\n" + getResources().getString(R.string.alert_planInfoExecuted) + " " + date_last)
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -246,5 +257,14 @@ public class ViewPlanActivity  extends AppCompatActivity {
         i.putExtras(temp);
         startActivity(i);
         finish();
+    }
+
+    public void setLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
     }
 }

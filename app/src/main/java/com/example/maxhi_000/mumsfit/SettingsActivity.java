@@ -3,16 +3,21 @@ package com.example.maxhi_000.mumsfit;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -30,6 +35,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }else if(themeName.equals("Default")){
             setTheme(R.style.AppTheme);
         }
+
+        String appLanguage = prefs.getString("Language", "en-US");
+        setLocale(appLanguage);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
@@ -45,10 +54,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }
 
         RadioGroup radioGroupLanguage = (RadioGroup) findViewById(R.id.radioGroupLanguage);
-        String language = prefs.getString("Language", "ENG");
-        if(language.equals("GER")){
+        if(appLanguage.equals("de")){
             radioGroupLanguage.check(R.id.rbtn_lang_de);
-        }else if(language.equals("ENG")){
+        }else if(appLanguage.equals("en-US")){
             radioGroupLanguage.check(R.id.rbtn_lang_en);
         }
 
@@ -78,15 +86,24 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i){
                 switch(i){
                     case R.id.rbtn_lang_de:
-                        editor.putString("Language", "GER");
+                        editor.putString("Language", "de");
                                 break;
                     case R.id.rbtn_lang_en:
-                        editor.putString("Language", "ENG");
+                        editor.putString("Language", "en-US");
                         break;
                 }
                 editor.commit();
             }
         });
+    }
+
+    public void setLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
     }
 
     @Override

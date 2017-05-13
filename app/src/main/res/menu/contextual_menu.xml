@@ -5,54 +5,48 @@
     <item
         android:id="@+id/item_select_all"
         android:icon="?attr/actionModeSelectAllDrawable"
-        app:showAsAction="always"
-        android:title="Select All"
+        android:title="@string/menu_selectAll"
         android:titleCondensed="Select All"
-        android:visible="false">
-    </item>
+        android:visible="false"
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/item_delete"
         android:icon="@android:drawable/ic_menu_delete"
-        app:showAsAction="always"
-        android:title="Delete"
+        android:title="@string/menu_delete"
         android:titleCondensed="Delete"
-        android:visible="false">
-    </item>
+        android:visible="false"
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/item_share"
         android:icon="@android:drawable/ic_menu_share"
-        app:showAsAction="always"
-        android:title="Share"
+        android:title="@string/menu_share"
         android:titleCondensed="Share"
-        android:visible="false">
-    </item>
+        android:visible="false"
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/item_details"
         android:icon="@android:drawable/ic_menu_info_details"
-        app:showAsAction="ifRoom|withText"
-        android:title="Details"
+        android:title="@string/menu_details"
         android:titleCondensed="Details"
-        android:visible="false">
-    </item>
+        android:visible="false"
+        app:showAsAction="ifRoom|withText"></item>
 
     <item
         android:id="@+id/item_edit"
         android:icon="@android:drawable/ic_menu_edit"
-        app:showAsAction="ifRoom|withText"
-        android:title="Edit"
+        android:title="@string/menu_edit"
         android:titleCondensed="Edit"
-        android:visible="false">
-    </item>
+        android:visible="false"
+        app:showAsAction="ifRoom|withText"></item>
 
     <item
         android:id="@+id/item_analyze"
         android:icon="@android:drawable/ic_menu_sort_by_size"
-        app:showAsAction="ifRoom|withText"
-        android:title="Analyze"
+        android:title="@string/menu_analyze"
         android:titleCondensed="Analyze"
-        android:visible="false">
-    </item>
+        android:visible="false"
+        app:showAsAction="ifRoom|withText"></item>
 </menu>

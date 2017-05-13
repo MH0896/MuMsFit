@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +28,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         }else if(themeName.equals("Default")){
             setTheme(R.style.AppTheme);
         }
+
+        String appLanguage = prefs.getString("Language", "en-US");
+        setLocale(appLanguage);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -262,14 +269,14 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Neuen Plan anlegen");
+                alertDialogBuilder.setTitle(R.string.alert_createPlanTitle); //String: Create a new plan
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setId(R.id.calabash);
                 alertDialogBuilder.setView(input);
 
                 alertDialogBuilder
-                        .setMessage("Name Ihres Planes:")
+                        .setMessage(R.string.alert_createPlanName) //String: Name of your plan
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -300,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
                                 if (!exists) {
                                     String returned = checkEingabe(eingabe);
                                     if(returned == null){
-                                        Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(context, R.string.toast_errorEnterName, Toast.LENGTH_SHORT).show(); //String: Please enter a name
                                     }else {
                                         Plan newPlan = new Plan(returned);
                                         Bundle temp = new Bundle();
@@ -311,11 +318,11 @@ public class MainActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 } else {
-                                    Toast.makeText(context, "Name schon vergeben. Bitte wählen Sie einen anderen!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.toast_errorNameExists, Toast.LENGTH_SHORT).show(); //String: Name already exists
                                 }
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -365,7 +372,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, "Erneut Klicken, um zu beenden!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.toast_exitApp, Toast.LENGTH_SHORT).show(); //String: Press again to exit
         canClose = true;
 
         new Handler().postDelayed(new Runnable() {
@@ -381,10 +388,10 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);
 
-        alertDialogBuilder.setTitle("Wirklich löschen?");
+        alertDialogBuilder.setTitle(R.string.alert_deletePlanTitle); //String: delete for sure?
 
         alertDialogBuilder
-                .setMessage("Wollen Sie wirklich unwiderruflich löschen?")
+                .setMessage(R.string.alert_deletePlanMessage) //String: really delete permanently?
                 .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -423,7 +430,7 @@ public class MainActivity extends AppCompatActivity {
                             finish();
                             startActivity(getIntent());
                         }})
-                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             dialog.cancel();
                         }
@@ -457,7 +464,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialogBuilder.setTitle(arrTblNames.get(items.get(0)));
 
             alertDialogBuilder
-                    .setMessage("Erstellt am: "+date_create+"\nZuletzt durchgeführt am: "+date_last)
+                    .setMessage(getResources().getString(R.string.alert_planInfoCreated) + " " + date_create + "\n" + getResources().getString(R.string.alert_planInfoExecuted) + " " + date_last)
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -481,7 +488,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
-        alertDialogBuilder.setTitle("Trainingsplan bearbeiten");
+        alertDialogBuilder.setTitle(R.string.alert_editPlanTitle);
         final EditText input = new EditText(context);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setText(arrTblNames.get(items.get(0)));
@@ -489,14 +496,14 @@ public class MainActivity extends AppCompatActivity {
         alertDialogBuilder.setView(input);
 
         alertDialogBuilder
-                .setMessage("Name ändern:")
+                .setMessage(R.string.alert_editPlanMessage)
                 .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String temp = input.getText().toString();
                         String returned = checkEingabe(temp);
                         if(returned == null){
-                            Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, R.string.toast_errorEnterName, Toast.LENGTH_SHORT).show();
                         }else {
                             SQLiteDatabase db = null;
                             try {
@@ -515,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 })
-                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -533,5 +540,14 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void setLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
     }
 }

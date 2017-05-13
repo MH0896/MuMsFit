@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PerformTrainPlanActivity extends AppCompatActivity{
 
@@ -42,6 +46,9 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
             setTheme(R.style.AppTheme);
         }
 
+        String appLanguage = prefs.getString("Language", "en-US");
+        setLocale(appLanguage);
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.view_plan);
@@ -58,5 +65,14 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
         Intent i = new Intent(PerformTrainPlanActivity.this, MainActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public void setLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
     }
 }
