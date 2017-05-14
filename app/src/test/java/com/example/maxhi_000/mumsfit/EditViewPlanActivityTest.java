@@ -12,6 +12,10 @@ public class EditViewPlanActivityTest {
 
     @Test
     public void createOrderOfUebungUnordered() throws Exception {
+        int temp = EditPlanActivity.uebung.size();
+        for(int i = 0; i< temp; i++){
+            EditPlanActivity.uebung.remove(0);
+        }
         EditPlanActivity.uebung.add(new Uebung("u1", "5", "7kg", "split1"));
         EditPlanActivity.uebung.add(new Uebung("u2", "5", "7kg", "split1"));
         EditPlanActivity.uebung.add(new Uebung("u3", "5", "7kg", "split2"));
@@ -37,7 +41,8 @@ public class EditViewPlanActivityTest {
 
     @Test
     public void createOrderOfUebungOrdered() throws Exception {
-        for(int i = 0; i< EditPlanActivity.uebung.size(); i++){
+        int temp = EditPlanActivity.uebung.size();
+        for(int i = 0; i< temp; i++){
             EditPlanActivity.uebung.remove(0);
         }
         EditPlanActivity.uebung.add(new Uebung("u1", "5", "7kg", "split1"));
@@ -51,8 +56,9 @@ public class EditViewPlanActivityTest {
 
         assertEquals("u3", EditPlanActivity.uebung.get(2).getName());
 
-        for(int i = 0; i< ViewPlanActivity.uebung.size(); i++){
-           ViewPlanActivity.uebung.remove(0);
+        temp = ViewPlanActivity.uebung.size();
+        for(int i = 0; i< temp; i++){
+            ViewPlanActivity.uebung.remove(0);
         }
         ViewPlanActivity.uebung.add(new Uebung("u1", "5", "7kg", "split1"));
         ViewPlanActivity.uebung.add(new Uebung("u2", "5", "7kg", "split1"));

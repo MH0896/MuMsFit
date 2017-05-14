@@ -30,6 +30,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import static android.R.id.input;
+
 public class MainActivity extends AppCompatActivity {
 
     final Context context = this;
@@ -44,11 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton addPlan;
     ListView ViewPlan;
-
-    static {
-        AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_YES);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,46 +266,46 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle(R.string.alert_createPlanTitle); //String: Create a new plan
+                alertDialogBuilder.setTitle(R.string.alert_createPlanTitle);
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 input.setId(R.id.calabash);
                 alertDialogBuilder.setView(input);
 
                 alertDialogBuilder
-                        .setMessage(R.string.alert_createPlanName) //String: Name of your plan
+                        .setMessage(R.string.alert_createPlanName)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 eingabe = input.getText().toString();
-                                boolean exists = false;
-                                SQLiteDatabase db = null;
-                                try {
-                                    db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
-                                    dataSource = new TrainPlanDataSource(context);
-                                    dataSource.open();
+                                String returned = checkEingabe(eingabe);
+                                if (returned == null) {
+                                    Toast.makeText(context, R.string.toast_errorEnterName, Toast.LENGTH_SHORT).show();
+                                } else {
+                                    boolean exists = false;
+                                    SQLiteDatabase db = null;
+                                    try {
+                                        db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                                        dataSource = new TrainPlanDataSource(context);
+                                        dataSource.open();
 
-                                    Cursor c = db.rawQuery("SELECT name FROM plan", null);
+                                        Cursor c = db.rawQuery("SELECT name FROM plan", null);
 
-                                    if (c.moveToFirst()) {
-                                        while (!c.isAfterLast()) {
-                                            if (eingabe.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))) {
-                                                exists = true;
+                                        if (c.moveToFirst()) {
+                                            while (!c.isAfterLast()) {
+                                                if (returned.equalsIgnoreCase(c.getString(c.getColumnIndex("name")))) {
+                                                    exists = true;
+                                                }
+                                                c.moveToNext();
                                             }
-                                            c.moveToNext();
                                         }
+                                        dataSource.close();
+                                    } finally {
+                                        if (db != null)
+                                            db.close();
                                     }
-                                    dataSource.close();
-                                } finally {
-                                    if (db != null)
-                                        db.close();
-                                }
 
-                                if (!exists) {
-                                    String returned = checkEingabe(eingabe);
-                                    if(returned == null){
-                                        Toast.makeText(context, R.string.toast_errorEnterName, Toast.LENGTH_SHORT).show(); //String: Please enter a name
-                                    }else {
+                                    if (!exists) {
                                         Plan newPlan = new Plan(returned);
                                         Bundle temp = new Bundle();
                                         temp.putString("param", newPlan.getName());
@@ -316,9 +313,9 @@ public class MainActivity extends AppCompatActivity {
                                         i.putExtras(temp);
                                         startActivity(i);
                                         finish();
+                                    } else {
+                                        Toast.makeText(context, R.string.toast_errorNameExists, Toast.LENGTH_SHORT).show();
                                     }
-                                } else {
-                                    Toast.makeText(context, R.string.toast_errorNameExists, Toast.LENGTH_SHORT).show(); //String: Name already exists
                                 }
                             }
                         })
@@ -372,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(this, R.string.toast_exitApp, Toast.LENGTH_SHORT).show(); //String: Press again to exit
+        Toast.makeText(this, R.string.toast_exitApp, Toast.LENGTH_SHORT).show();
         canClose = true;
 
         new Handler().postDelayed(new Runnable() {
@@ -391,7 +388,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialogBuilder.setTitle(R.string.alert_deletePlanTitle); //String: delete for sure?
 
         alertDialogBuilder
-                .setMessage(R.string.alert_deletePlanMessage) //String: really delete permanently?
+                .setMessage(R.string.alert_deletePlanMessage)
                 .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {

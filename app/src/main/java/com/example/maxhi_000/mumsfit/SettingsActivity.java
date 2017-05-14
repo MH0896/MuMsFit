@@ -87,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 switch(i){
                     case R.id.rbtn_lang_de:
                         editor.putString("Language", "de");
-                                break;
+                        break;
                     case R.id.rbtn_lang_en:
                         editor.putString("Language", "en-US");
                         break;

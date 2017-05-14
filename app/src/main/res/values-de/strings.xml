@@ -28,7 +28,7 @@
     <string name="alert_planInfoCreated">Erstellt am:</string>
     <string name="alert_planInfoExecuted">Zuletzt durchgeführt am:</string>
     <string name="alert_savePlanTitle">Der Plan kann später noch bearbeitet werden.</string>
-    <string name="alert_savePlanMessage">Wollen Sie den Plan speichern?\nSie können ihn später noch bearbeiten</string>
+    <string name="alert_savePlanMessage">Wollen Sie den Plan speichern?\nSie können ihn später noch bearbeiten.</string>
     <string name="alert_addSplitTitle">Trainingstag hinzufügen</string>
     <string name="alert_addSplitMessage">Name des Trainingstages:</string>
     <string name="alert_addExerciseTitle">Übung hinzufügen</string>
@@ -36,7 +36,7 @@
     <string name="hint_name">Name der Übung</string>
     <string name="hint_reps">Wiederholungen</string>
     <string name="hint_weight">Startgewicht</string>
-    <string name="alert_cancelAddingTitle">Anlegen eines neuen Plans abbrechen?</string>
+    <string name="alert_cancelAddingTitle">Plan anlegen abbrechen?</string>
     <string name="alert_cancelAddingMessage">Plan anlegen wirklich beenden? \nAlle Änderungen gehen verloren</string>
     <string name="yes">Ja</string>
     <string name="alert_deleteExerciseTitle">Übung wirklich löschen</string>

@@ -40,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/settings_color"
-        android:textSize="24sp" />
+        android:textSize="24sp"/>
 
     <RadioGroup
         android:id="@+id/radioGroupTheme"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="64dp"
             android:text="@string/settings_defaultTheme"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
     </RadioGroup>
 
     <Button

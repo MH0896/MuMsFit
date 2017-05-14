@@ -50,7 +50,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View v = super.getView(position, convertView, parent);//let the adapter handle setting up the row views
-        v.setBackgroundColor(mContext.getResources().getColor(android.R.color.background_light)); //default color
+        //v.setBackgroundColor(mContext.getResources().getColor(android.R.color.background_light)); //default color
 
         if (mSelection.get(position) != null) {
             v.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red

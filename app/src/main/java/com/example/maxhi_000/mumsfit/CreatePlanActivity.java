@@ -35,10 +35,10 @@ public class CreatePlanActivity extends AppCompatActivity {
 
     final Context context = this;
 
-    List<String> splits = new ArrayList<String>();
+    static List<String> splits = new ArrayList<String>();
     String currentPlan = "";
 
-    List<Uebung> uebungen = new ArrayList<Uebung>();
+    static List<Uebung> uebungen = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                                         db.close();
                                 }
 
+                                removeUebungen();
                                 Intent i = new Intent(CreatePlanActivity.this, MainActivity.class);
                                 startActivity(i);
                                 finish();
@@ -118,6 +119,17 @@ public class CreatePlanActivity extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    public static void removeUebungen(){
+        int temp = uebungen.size();
+        for(int i = 0; i<temp; i++){
+            uebungen.remove(0);
+        }
+        temp = splits.size();
+        for(int i = 0; i<temp; i++){
+            splits.remove(0);
+        }
     }
 
     public void createSplitButton(){

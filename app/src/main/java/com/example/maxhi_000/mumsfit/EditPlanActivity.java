@@ -194,7 +194,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     if (db != null)
                                         db.close();
                                 }
-
+                                removeUebungen();
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -234,7 +234,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                 layout.addView(e_name);
 
                 final EditText e_reps = new EditText(context);
-                e_reps.setHint(R.string.hint_weight);
+                e_reps.setHint(R.string.hint_reps);
                 e_reps.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_reps.setId(R.id.c_reps);
                 layout.addView(e_reps);
@@ -275,6 +275,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     if (db != null)
                                         db.close();
                                 }
+                                removeUebungen();
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -385,9 +386,17 @@ public class EditPlanActivity  extends AppCompatActivity {
         createExerciseButton();
     }
 
+    public static void removeUebungen(){
+        int temp = uebung.size();
+        for(int i = 0; i<temp; i++){
+            uebung.remove(0);
+        }
+    }
+
     @Override
     public void onBackPressed(){
         //super.onBackPressed();
+        removeUebungen();
         Bundle temp = new Bundle();
         temp.putString("param", this.namePlan);
         Intent i = new Intent(EditPlanActivity.this, ViewPlanActivity.class);
