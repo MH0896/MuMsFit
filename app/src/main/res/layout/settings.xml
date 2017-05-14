@@ -8,29 +8,30 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sprache:"
+        android:text="@string/settings_language"
         android:textSize="24sp" />
 
     <RadioGroup
+        android:id="@+id/radioGroupLanguage"
         android:layout_width="match_parent"
         android:layout_height="59dp"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/lang_de"
+            android:id="@+id/rbtn_lang_de"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.00"
             android:checked="true"
-            android:text="Deutsch"
+            android:text="@string/settings_langGER"
             android:textSize="18sp" />
 
         <RadioButton
-            android:id="@+id/lang_en"
+            android:id="@+id/rbtn_lang_en"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1.00"
-            android:text="Englisch"
+            android:text="@string/settings_langENG"
             android:textSize="18sp" />
     </RadioGroup>
 
@@ -38,7 +39,7 @@
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Farbschema:"
+        android:text="@string/settings_color"
         android:textSize="24sp"/>
 
     <RadioGroup
@@ -50,21 +51,21 @@
             android:id="@+id/rbtn_darkTheme"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
-            android:text="Dark Theme"
+            android:text="@string/settings_darkTheme"
             android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/rbtn_lightTheme"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
-            android:text="Light Theme"
+            android:text="@string/settings_lightTheme"
             android:textSize="18sp" />
 
         <RadioButton
             android:id="@+id/rbtn_defaultTheme"
             android:layout_width="wrap_content"
             android:layout_height="64dp"
-            android:text="Default Theme"
+            android:text="@string/settings_defaultTheme"
             android:textSize="18sp"/>
     </RadioGroup>
 
@@ -75,7 +76,7 @@
         android:layout_marginBottom="5dp"
         android:elevation="5dp"
         android:paddingBottom="5dp"
-        android:text="Save"
+        android:text="@string/settings_save"
         android:textSize="18sp" />
 
 </LinearLayout>

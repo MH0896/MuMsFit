@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -14,6 +16,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -26,15 +29,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class CreatePlanActivity extends AppCompatActivity {
 
     final Context context = this;
 
-    List<String> splits = new ArrayList<String>();
+    static List<String> splits = new ArrayList<String>();
     String currentPlan = "";
 
-    List<Uebung> uebungen = new ArrayList<Uebung>();
+    static List<Uebung> uebungen = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,9 @@ public class CreatePlanActivity extends AppCompatActivity {
         }else if(themeName.equals("Default")){
             setTheme(R.style.AppTheme);
         }
+
+        String appLanguage = prefs.getString("Language", "en-US");
+        setLocale(appLanguage);
 
         super.onCreate(savedInstanceState);
 
@@ -68,9 +75,9 @@ public class CreatePlanActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Speichern");
+                alertDialogBuilder.setTitle(R.string.alert_savePlanTitle);
                 alertDialogBuilder
-                        .setMessage("Wollen Sie den Plan speichern?\nDer Plan kann später noch bearbeitet werden.")
+                        .setMessage(R.string.alert_savePlanMessage)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -102,7 +109,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                                 finish();
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -114,7 +121,7 @@ public class CreatePlanActivity extends AppCompatActivity {
         });
     }
 
-    public void removeUebungen(){
+    public static void removeUebungen(){
         int temp = uebungen.size();
         for(int i = 0; i<temp; i++){
             uebungen.remove(0);
@@ -127,7 +134,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
     public void createSplitButton(){
         Button splitButton = new Button(this);
-        splitButton.setText("Trainingstag hinzufügen");
+        splitButton.setText(R.string.alert_addSplitTitle);
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -137,7 +144,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Trainingstag hinzufügen");
+                alertDialogBuilder.setTitle(R.string.alert_addSplitTitle);
 
                 final EditText input = new EditText(context);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -145,14 +152,14 @@ public class CreatePlanActivity extends AppCompatActivity {
                 input.setId(R.id.calabash);
 
                 alertDialogBuilder
-                        .setMessage("Name des Trainingstages:")
+                        .setMessage(R.string.alert_addSplitMessage)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String eingabe = input.getText().toString().toUpperCase();
                                 String returned = checkEingabe(eingabe);
                                 if(returned == null){
-                                    Toast.makeText(context, "Bitte einen Namen eingeben", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context, R.string.toast_errorEnterName, Toast.LENGTH_SHORT).show();
                                 }else {
                                     splits.add(returned);
                                     redrawGUI();
@@ -160,7 +167,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                                 }
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -174,7 +181,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
     public void createExerciseButton(String t_plan){
         Button exerciseButton = new Button(this);
-        exerciseButton.setText("Übung hinzufügen");
+        exerciseButton.setText(R.string.alert_addExerciseTitle);
         final String temp_plan = t_plan;
         LinearLayout ll = (LinearLayout)findViewById(R.id.linear);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -184,25 +191,25 @@ public class CreatePlanActivity extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Übung hinzufügen");
+                alertDialogBuilder.setTitle(R.string.alert_addExerciseTitle);
 
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
 
                 final EditText e_name = new EditText(context);
-                e_name.setHint("Name");
+                e_name.setHint(R.string.hint_name);
                 e_name.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_name.setId(R.id.c_name);
                 layout.addView(e_name);
 
                 final EditText e_reps = new EditText(context);
-                e_reps.setHint("Wiederholungen");
+                e_reps.setHint(R.string.hint_reps);
                 e_reps.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_reps.setId(R.id.c_reps);
                 layout.addView(e_reps);
 
                 final EditText e_sw = new EditText(context);
-                e_sw.setHint("Startgewicht");
+                e_sw.setHint(R.string.hint_weight);
                 e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
@@ -210,7 +217,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                 alertDialogBuilder.setView(layout);
 
                 alertDialogBuilder
-                        .setMessage("Neue Übung:")
+                        .setMessage(R.string.alert_addExerciseMessage)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -221,7 +228,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                                 dialog.cancel();
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -307,8 +314,10 @@ public class CreatePlanActivity extends AppCompatActivity {
                     TextView exerView = new TextView(this);
                     exerView.setPadding(10,2,10,2);
 
-                    String toShow = uebungen.get(j).getName() + " Reps: " + uebungen.get(j).getReps()
-                            + " Startgewicht: " + uebungen.get(j).getStart();
+                    String reps = getResources().getString(R.string.hint_reps)+": ";
+                    String weight = getResources().getString(R.string.hint_weight)+": ";
+                    String toShow = uebungen.get(j).getName() + reps + uebungen.get(j).getReps()
+                            + weight + uebungen.get(j).getStart();
                     exerView.setText(toShow);
                     tempLL.addView(exerView);
                     ll.addView(tempLL);
@@ -343,10 +352,10 @@ public class CreatePlanActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
-        alertDialogBuilder.setTitle("Abbrechen");
+        alertDialogBuilder.setTitle(R.string.alert_cancelAddingTitle);
         alertDialogBuilder
-                .setMessage("Plan anlegen wirklich beenden? \nAlle Änderungen gehen verloren")
-                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.alert_cancelAddingMessage)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(CreatePlanActivity.this, MainActivity.class);
@@ -354,7 +363,7 @@ public class CreatePlanActivity extends AppCompatActivity {
                         finish();
                     }
                 })
-                .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
@@ -454,6 +463,15 @@ public class CreatePlanActivity extends AppCompatActivity {
             if (db != null)
                 db.close();
         }
+    }
+
+    public void setLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
     }
 
 }

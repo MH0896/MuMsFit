@@ -15,9 +15,6 @@ import java.util.Set;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by maxhi_000 on 05.05.2017.
- */
 public class CustomListAdapterTest {
     Context c;
     List<String> list = new ArrayList<>();

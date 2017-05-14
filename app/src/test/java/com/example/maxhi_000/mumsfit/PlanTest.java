@@ -7,9 +7,7 @@ import java.util.Date;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by maxhi_000 on 05.05.2017.
- */
+
 public class PlanTest {
     @Test
     public void getPlan_id() throws Exception {

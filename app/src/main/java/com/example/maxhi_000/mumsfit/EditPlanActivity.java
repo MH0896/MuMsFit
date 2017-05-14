@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -13,6 +15,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +27,7 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class EditPlanActivity  extends AppCompatActivity {
 
@@ -46,6 +50,9 @@ public class EditPlanActivity  extends AppCompatActivity {
         }else if(themeName.equals("Default")){
             setTheme(R.style.AppTheme);
         }
+
+        String appLanguage = prefs.getString("Language", "en-US");
+        setLocale(appLanguage);
 
         super.onCreate(savedInstanceState);
 
@@ -98,9 +105,9 @@ public class EditPlanActivity  extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Löschen");
+                alertDialogBuilder.setTitle(R.string.alert_deleteExerciseTitle);
                 alertDialogBuilder
-                        .setMessage("Übung unwiderruflich löschen?")
+                        .setMessage(R.string.alert_deleteExerciseMessage)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -121,7 +128,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                 startActivity(getIntent());
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -169,9 +176,9 @@ public class EditPlanActivity  extends AppCompatActivity {
                 layout.addView(e_sw);
                 alertDialogBuilder.setView(layout);
 
-                alertDialogBuilder.setTitle("Bearbeiten");
+                alertDialogBuilder.setTitle(R.string.alert_editExerciseTitle);
                 alertDialogBuilder
-                        .setMessage("Übung bearbeiten:")
+                        .setMessage(R.string.alert_editExerciseMessage)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -192,7 +199,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                 startActivity(getIntent());
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -206,7 +213,7 @@ public class EditPlanActivity  extends AppCompatActivity {
 
     public void createExerciseButton(){
         Button exerciseButton = new Button(this);
-        exerciseButton.setText("Übung hinzufügen");
+        exerciseButton.setText(R.string.alert_addExerciseTitle);
         LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);;
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         ll.addView(exerciseButton, lp);
@@ -215,31 +222,31 @@ public class EditPlanActivity  extends AppCompatActivity {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
-                alertDialogBuilder.setTitle("Übung hinzufügen");
+                alertDialogBuilder.setTitle(R.string.alert_addExerciseTitle);
 
                 LinearLayout layout = new LinearLayout(context);
                 layout.setOrientation(LinearLayout.VERTICAL);
 
                 final EditText e_name = new EditText(context);
-                e_name.setHint("Name");
+                e_name.setHint(R.string.hint_name);
                 e_name.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_name.setId(R.id.c_name);
                 layout.addView(e_name);
 
                 final EditText e_reps = new EditText(context);
-                e_reps.setHint("Wiederholungen");
+                e_reps.setHint(R.string.hint_reps);
                 e_reps.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_reps.setId(R.id.c_reps);
                 layout.addView(e_reps);
 
                 final EditText e_sw = new EditText(context);
-                e_sw.setHint("Startgewicht");
+                e_sw.setHint(R.string.hint_weight);
                 e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
 
                 final EditText e_split = new EditText(context);
-                e_split.setHint("Split");
+                e_split.setHint(R.string.hint_split);
                 e_split.setInputType(InputType.TYPE_CLASS_TEXT);
                 e_split.setId(R.id.c_split);
                 layout.addView(e_split);
@@ -247,7 +254,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                 alertDialogBuilder.setView(layout);
 
                 alertDialogBuilder
-                        .setMessage("Neue Übung:")
+                        .setMessage(R.string.alert_addExerciseMessage)
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -273,7 +280,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                 startActivity(getIntent());
                             }
                         })
-                        .setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+                        .setNegativeButton("R.string.cancel", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
                             }
@@ -366,8 +373,10 @@ public class EditPlanActivity  extends AppCompatActivity {
             TextView exerView = new TextView(this);
             exerView.setPadding(10,2,10,2);
 
-            String toShow = uebung.get(i).getName() + " Reps: " + uebung.get(i).getReps() +
-                    " Startgewicht: " + uebung.get(i).getStart();
+            String reps = getResources().getString(R.string.hint_reps)+": ";
+            String weight = getResources().getString(R.string.hint_weight)+": ";
+            String toShow = uebung.get(i).getName() + reps + uebung.get(i).getReps()
+                    + weight + uebung.get(i).getStart();
             exerView.setText(toShow);
             tempLL.addView(exerView);
             ll.addView(tempLL);
@@ -376,7 +385,7 @@ public class EditPlanActivity  extends AppCompatActivity {
         createExerciseButton();
     }
 
-    public void removeUebungen(){
+    public static void removeUebungen(){
         int temp = uebung.size();
         for(int i = 0; i<temp; i++){
             uebung.remove(0);
@@ -393,6 +402,15 @@ public class EditPlanActivity  extends AppCompatActivity {
         i.putExtras(temp);
         startActivity(i);
         finish();
+    }
+
+    public void setLocale(String lang){
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration config = res.getConfiguration();
+        config.locale = myLocale;
+        res.updateConfiguration(config, dm);
     }
 
     public static float pxFromDp(float dp, Context mContext) {

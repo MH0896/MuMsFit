@@ -1,0 +1,254 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: SettingsActivity</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.example.maxhi_000.mumsfit</a> ]
+</div>
+
+<h1>Coverage Summary for Class: SettingsActivity (com.example.maxhi_000.mumsfit)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">SettingsActivity</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 44)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">SettingsActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">SettingsActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 58)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.example.maxhi_000.mumsfit;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import android.content.Context;
+<i>4</i>&nbsp;import android.content.Intent;
+<i>5</i>&nbsp;import android.content.SharedPreferences;
+<i>6</i>&nbsp;import android.content.res.Configuration;
+<i>7</i>&nbsp;import android.content.res.Resources;
+<i>8</i>&nbsp;import android.os.Bundle;
+<i>9</i>&nbsp;import android.provider.MediaStore;
+<i>10</i>&nbsp;import android.support.annotation.IdRes;
+<i>11</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>12</i>&nbsp;import android.util.DisplayMetrics;
+<i>13</i>&nbsp;import android.view.View;
+<i>14</i>&nbsp;import android.widget.Button;
+<i>15</i>&nbsp;import android.widget.RadioButton;
+<i>16</i>&nbsp;import android.widget.RadioGroup;
+<i>17</i>&nbsp;import android.widget.TextView;
+<i>18</i>&nbsp;import android.widget.Toast;
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;import java.util.Locale;
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{</b>
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;    final Context context = this;</b>
+<i>25</i>&nbsp;    @Override
+<i>26</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>27</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
+<i>28</i>&nbsp;                &quot;MyPrefs&quot;, MODE_PRIVATE);
+<i>29</i>&nbsp;
+<b class="nc"><i>30</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
+<b class="nc"><i>31</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
+<b class="nc"><i>32</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
+<b class="nc"><i>33</i>&nbsp;        } else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
+<b class="nc"><i>34</i>&nbsp;            setTheme(R.style.LightTheme);</b>
+<b class="nc"><i>35</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
+<b class="nc"><i>36</i>&nbsp;            setTheme(R.style.AppTheme);</b>
+<i>37</i>&nbsp;        }
+<i>38</i>&nbsp;
+<b class="nc"><i>39</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
+<b class="nc"><i>40</i>&nbsp;        setLocale(appLanguage);</b>
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>43</i>&nbsp;        setContentView(R.layout.settings);</b>
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;        Button save = (Button) findViewById(R.id.btn_settings_save);</b>
+<b class="nc"><i>46</i>&nbsp;        RadioGroup radioGroupTheme = (RadioGroup) findViewById(R.id.radioGroupTheme);</b>
+<i>47</i>&nbsp;
+<b class="nc"><i>48</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
+<b class="nc"><i>49</i>&nbsp;            radioGroupTheme.check(R.id.rbtn_darkTheme);</b>
+<b class="nc"><i>50</i>&nbsp;        } else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
+<b class="nc"><i>51</i>&nbsp;            radioGroupTheme.check(R.id.rbtn_lightTheme);</b>
+<b class="nc"><i>52</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
+<b class="nc"><i>53</i>&nbsp;            radioGroupTheme.check(R.id.rbtn_defaultTheme);</b>
+<i>54</i>&nbsp;        }
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;        RadioGroup radioGroupLanguage = (RadioGroup) findViewById(R.id.radioGroupLanguage);</b>
+<b class="nc"><i>57</i>&nbsp;        if(appLanguage.equals(&quot;de&quot;)){</b>
+<b class="nc"><i>58</i>&nbsp;            radioGroupLanguage.check(R.id.rbtn_lang_de);</b>
+<b class="nc"><i>59</i>&nbsp;        }else if(appLanguage.equals(&quot;en-US&quot;)){</b>
+<b class="nc"><i>60</i>&nbsp;            radioGroupLanguage.check(R.id.rbtn_lang_en);</b>
+<i>61</i>&nbsp;        }
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        final SharedPreferences.Editor editor = prefs.edit();</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;        save.setOnClickListener(this);</b>
+<b class="nc"><i>66</i>&nbsp;        radioGroupTheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {</b>
+<i>67</i>&nbsp;            @Override
+<i>68</i>&nbsp;            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {
+<b class="nc"><i>69</i>&nbsp;                switch(i){</b>
+<i>70</i>&nbsp;                    case R.id.rbtn_darkTheme:
+<b class="nc"><i>71</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;BlackTheme&quot;);</b>
+<b class="nc"><i>72</i>&nbsp;                        break;</b>
+<i>73</i>&nbsp;                    case R.id.rbtn_lightTheme:
+<b class="nc"><i>74</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;LightTheme&quot;);</b>
+<b class="nc"><i>75</i>&nbsp;                        break;</b>
+<i>76</i>&nbsp;                    case R.id.rbtn_defaultTheme:
+<b class="nc"><i>77</i>&nbsp;                        editor.putString(&quot;Theme&quot;, &quot;Default&quot;);</b>
+<i>78</i>&nbsp;                        break;
+<i>79</i>&nbsp;                }
+<b class="nc"><i>80</i>&nbsp;                editor.commit();</b>
+<i>81</i>&nbsp;            }
+<i>82</i>&nbsp;        });
+<i>83</i>&nbsp;
+<b class="nc"><i>84</i>&nbsp;        radioGroupLanguage.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){</b>
+<i>85</i>&nbsp;            @Override
+<i>86</i>&nbsp;            public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i){
+<b class="nc"><i>87</i>&nbsp;                switch(i){</b>
+<i>88</i>&nbsp;                    case R.id.rbtn_lang_de:
+<b class="nc"><i>89</i>&nbsp;                        editor.putString(&quot;Language&quot;, &quot;de&quot;);</b>
+<b class="nc"><i>90</i>&nbsp;                        break;</b>
+<i>91</i>&nbsp;                    case R.id.rbtn_lang_en:
+<b class="nc"><i>92</i>&nbsp;                        editor.putString(&quot;Language&quot;, &quot;en-US&quot;);</b>
+<i>93</i>&nbsp;                        break;
+<i>94</i>&nbsp;                }
+<b class="nc"><i>95</i>&nbsp;                editor.commit();</b>
+<i>96</i>&nbsp;            }
+<i>97</i>&nbsp;        });
+<i>98</i>&nbsp;    }
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>101</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>102</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>103</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>104</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>105</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>106</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<i>107</i>&nbsp;    }
+<i>108</i>&nbsp;
+<i>109</i>&nbsp;    @Override
+<i>110</i>&nbsp;    public void onClick(View v) {
+<b class="nc"><i>111</i>&nbsp;        switch (v.getId()) {</b>
+<i>112</i>&nbsp;            case R.id.btn_settings_save:
+<b class="nc"><i>113</i>&nbsp;                Intent i = new Intent(SettingsActivity.this, MainActivity.class);</b>
+<b class="nc"><i>114</i>&nbsp;                startActivity(i);</b>
+<b class="nc"><i>115</i>&nbsp;                finish();</b>
+<i>116</i>&nbsp;                break;
+<i>117</i>&nbsp;        }
+<i>118</i>&nbsp;    }
+<i>119</i>&nbsp;    @Override
+<i>120</i>&nbsp;    public void onBackPressed(){
+<i>121</i>&nbsp;        //super.onBackPressed();
+<b class="nc"><i>122</i>&nbsp;        Intent i = new Intent(SettingsActivity.this, MainActivity.class);</b>
+<b class="nc"><i>123</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>124</i>&nbsp;        finish();</b>
+<i>125</i>&nbsp;    }
+<i>126</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2017-05-14 19:21</div>
+</div>
+</body>
+</html>

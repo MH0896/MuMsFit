@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by maxhi_000 on 05.05.2017.
- */
 public class UebungTest {
     @Test
     public void getUebung_id() throws Exception {
