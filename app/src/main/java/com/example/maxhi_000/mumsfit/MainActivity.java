@@ -384,7 +384,7 @@ public class MainActivity extends AppCompatActivity {
         }, zeit);
 
     }
-//details ansehen
+
     public void DeleteClick(final ArrayList<Integer> items){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);
@@ -534,12 +534,40 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AnalyzeClick(ArrayList<Integer> items){
-        Bundle temp = new Bundle();
-        temp.putString("param", arrTblNames.get(items.get(0)));
-        Intent i = new Intent(MainActivity.this, AnalyzePlanActivity.class);
-        i.putExtras(temp);
-        startActivity(i);
-        finish();
+        SQLiteDatabase db = null;
+        ArrayList<Uebung> uebung = new ArrayList<Uebung>();
+        try {
+            db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            dataSource = new TrainPlanDataSource(context);
+            dataSource.open();
+
+            Cursor c = db.rawQuery("SELECT uebung.name" +
+                    " FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name='"+
+                    arrTblNames.get(items.get(0))+"'", null);
+
+            if (c.moveToFirst()) {
+                while (!c.isAfterLast()) {
+                    String name = (c.getString(c.getColumnIndex("name")));
+                    uebung.add(new Uebung(name, "gh", 5, "sg"));
+                    c.moveToNext();
+                }
+            }
+            dataSource.close();
+        }finally {
+            if (db != null)
+                db.close();
+        }
+
+        if(uebung.size() == 0){
+            Toast.makeText(context, R.string.errorNoExcercisesAnalyse, Toast.LENGTH_SHORT).show();
+        }else {
+            Bundle temp = new Bundle();
+            temp.putString("param", arrTblNames.get(items.get(0)));
+            Intent i = new Intent(MainActivity.this, AnalyzePlanActivity.class);
+            i.putExtras(temp);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void SettingsClick(){

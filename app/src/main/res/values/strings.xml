@@ -52,4 +52,5 @@
     <string name="errorEnterAll">Please enter all information</string>
     <string name="errorEnterStart">Please enter a starting weight</string>
     <string name="errorNoExcercises">Add exercises to start the training</string>
+    <string name="errorNoExcercisesAnalyse">Please add excercises to analyse</string>
 </resources>

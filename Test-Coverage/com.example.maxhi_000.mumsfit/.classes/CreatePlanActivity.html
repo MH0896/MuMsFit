@@ -47,15 +47,15 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    6,1%
+    7,6%
   </span>
   <span class="absValue">
-    (16/ 261)
+    (14/ 184)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">CreatePlanActivity$$EnhancerByMockitoWithCGLIB$$8a657c82</td>
+    <td class="name">CreatePlanActivity$$EnhancerByMockitoWithCGLIB$$154f8321</td>
   </tr>
   <tr>
     <td class="name">CreatePlanActivity$1</td>
@@ -316,10 +316,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    4,4%
+    4,8%
   </span>
   <span class="absValue">
-    (16/ 366)
+    (14/ 289)
   </span>
 </td>
 </tr>
@@ -362,21 +362,21 @@
 <i>31</i>&nbsp;import java.util.List;
 <i>32</i>&nbsp;import java.util.Locale;
 <i>33</i>&nbsp;import java.util.concurrent.Exchanger;
-<b class="nc"><i>34</i>&nbsp;</b>
+<i>34</i>&nbsp;
 <b class="nc"><i>35</i>&nbsp;public class CreatePlanActivity extends AppCompatActivity {</b>
-<b class="nc"><i>36</i>&nbsp;</b>
+<i>36</i>&nbsp;
 <b class="nc"><i>37</i>&nbsp;    final Context context = this;</b>
-<b class="fc"><i>38</i>&nbsp;</b>
+<i>38</i>&nbsp;
 <b class="fc"><i>39</i>&nbsp;    static List&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
 <b class="nc"><i>40</i>&nbsp;    String currentPlan = &quot;&quot;;</b>
-<b class="fc"><i>41</i>&nbsp;</b>
+<i>41</i>&nbsp;
 <b class="fc"><i>42</i>&nbsp;    static List&lt;Uebung&gt; uebungen = new ArrayList&lt;Uebung&gt;();</b>
 <i>43</i>&nbsp;
 <i>44</i>&nbsp;    @Override
-<b class="nc"><i>45</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {</b>
+<i>45</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
 <b class="nc"><i>46</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
 <i>47</i>&nbsp;                &quot;MyPrefs&quot;, MODE_PRIVATE);
-<b class="nc"><i>48</i>&nbsp;</b>
+<i>48</i>&nbsp;
 <b class="nc"><i>49</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
 <b class="nc"><i>50</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
 <b class="nc"><i>51</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
@@ -385,20 +385,20 @@
 <b class="nc"><i>54</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
 <b class="nc"><i>55</i>&nbsp;            setTheme(R.style.AppTheme);</b>
 <i>56</i>&nbsp;        }
-<b class="nc"><i>57</i>&nbsp;</b>
+<i>57</i>&nbsp;
 <b class="nc"><i>58</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
 <b class="nc"><i>59</i>&nbsp;        setLocale(appLanguage);</b>
-<b class="nc"><i>60</i>&nbsp;</b>
+<i>60</i>&nbsp;
 <b class="nc"><i>61</i>&nbsp;        super.onCreate(savedInstanceState);</b>
-<b class="nc"><i>62</i>&nbsp;</b>
+<i>62</i>&nbsp;
 <b class="nc"><i>63</i>&nbsp;        setContentView(R.layout.creating_plan);</b>
-<b class="nc"><i>64</i>&nbsp;</b>
+<i>64</i>&nbsp;
 <b class="nc"><i>65</i>&nbsp;        Bundle params = getIntent().getExtras();</b>
 <b class="nc"><i>66</i>&nbsp;        final String date = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;).format(new Date());</b>
 <b class="nc"><i>67</i>&nbsp;        final Plan newPlan = new Plan(params.getString(&quot;param&quot;), date, &quot;-&quot;);</b>
-<b class="nc"><i>68</i>&nbsp;</b>
+<i>68</i>&nbsp;
 <b class="nc"><i>69</i>&nbsp;        setTitle(newPlan.getName());</b>
-<b class="nc"><i>70</i>&nbsp;</b>
+<i>70</i>&nbsp;
 <b class="nc"><i>71</i>&nbsp;        createSplitButton();</b>
 <b class="nc"><i>72</i>&nbsp;        FloatingActionButton readyButton = (FloatingActionButton) findViewById(R.id.readyButton);</b>
 <b class="nc"><i>73</i>&nbsp;        readyButton.setOnClickListener(new View.OnClickListener() {</b>
@@ -450,24 +450,24 @@
 <b class="nc"><i>119</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
 <b class="nc"><i>120</i>&nbsp;                alertDialog.show();</b>
 <i>121</i>&nbsp;            }
-<b class="nc"><i>122</i>&nbsp;        });</b>
+<i>122</i>&nbsp;        });
 <b class="nc"><i>123</i>&nbsp;    }</b>
 <i>124</i>&nbsp;
-<b class="nc"><i>125</i>&nbsp;    public static void removeUebungen(){</b>
+<i>125</i>&nbsp;    public static void removeUebungen(){
 <b class="fc"><i>126</i>&nbsp;        int temp = uebungen.size();</b>
 <b class="fc"><i>127</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
 <b class="fc"><i>128</i>&nbsp;            uebungen.remove(0);</b>
-<b class="nc"><i>129</i>&nbsp;        }</b>
+<i>129</i>&nbsp;        }
 <b class="fc"><i>130</i>&nbsp;        temp = splits.size();</b>
 <b class="fc"><i>131</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
 <b class="fc"><i>132</i>&nbsp;            splits.remove(0);</b>
-<b class="nc"><i>133</i>&nbsp;        }</b>
+<i>133</i>&nbsp;        }
 <b class="fc"><i>134</i>&nbsp;    }</b>
 <i>135</i>&nbsp;
-<b class="nc"><i>136</i>&nbsp;    public void createSplitButton(){</b>
+<i>136</i>&nbsp;    public void createSplitButton(){
 <b class="nc"><i>137</i>&nbsp;        Button splitButton = new Button(this);</b>
 <b class="nc"><i>138</i>&nbsp;        splitButton.setText(R.string.alert_addSplitTitle);</b>
-<b class="nc"><i>139</i>&nbsp;</b>
+<i>139</i>&nbsp;
 <b class="nc"><i>140</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linear);</b>
 <b class="nc"><i>141</i>&nbsp;        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);</b>
 <b class="nc"><i>142</i>&nbsp;        ll.addView(splitButton, lp);</b>
@@ -508,10 +508,10 @@
 <b class="nc"><i>177</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
 <b class="nc"><i>178</i>&nbsp;                alertDialog.show();</b>
 <i>179</i>&nbsp;            }
-<b class="nc"><i>180</i>&nbsp;        });</b>
+<i>180</i>&nbsp;        });
 <b class="nc"><i>181</i>&nbsp;    }</b>
 <i>182</i>&nbsp;
-<b class="nc"><i>183</i>&nbsp;    public void createExerciseButton(String t_plan){</b>
+<i>183</i>&nbsp;    public void createExerciseButton(String t_plan){
 <b class="nc"><i>184</i>&nbsp;        Button exerciseButton = new Button(this);</b>
 <b class="nc"><i>185</i>&nbsp;        exerciseButton.setText(R.string.alert_addExerciseTitle);</b>
 <b class="nc"><i>186</i>&nbsp;        final String temp_plan = t_plan;</b>
@@ -569,17 +569,17 @@
 <b class="nc"><i>238</i>&nbsp;                                    Toast.makeText(context, R.string.errorEnterStart, Toast.LENGTH_SHORT).show();</b>
 <b class="nc"><i>239</i>&nbsp;                                }</b>
 <i>240</i>&nbsp;                            }
-<b class="nc"><i>241</i>&nbsp;                        })</b>
+<i>241</i>&nbsp;                        })
 <b class="nc"><i>242</i>&nbsp;                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {</b>
 <i>243</i>&nbsp;                            public void onClick(DialogInterface dialog, int id) {
 <b class="nc"><i>244</i>&nbsp;                                dialog.cancel();</b>
-<b class="nc"><i>245</i>&nbsp;                            }</b>
-<b class="nc"><i>246</i>&nbsp;                        });</b>
-<b class="nc"><i>247</i>&nbsp;</b>
+<i>245</i>&nbsp;                            }
+<i>246</i>&nbsp;                        });
+<i>247</i>&nbsp;
 <b class="nc"><i>248</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
 <b class="nc"><i>249</i>&nbsp;                alertDialog.show();</b>
 <i>250</i>&nbsp;            }
-<b class="nc"><i>251</i>&nbsp;        });</b>
+<i>251</i>&nbsp;        });
 <b class="nc"><i>252</i>&nbsp;    }</b>
 <i>253</i>&nbsp;
 <i>254</i>&nbsp;    public void createDeleteButton(final int toDel, LinearLayout tempLL){
@@ -589,14 +589,14 @@
 <b class="nc"><i>258</i>&nbsp;        delete.setGravity(Gravity.LEFT);</b>
 <b class="nc"><i>259</i>&nbsp;        delete.setPadding(5,1,5,1);</b>
 <b class="nc"><i>260</i>&nbsp;        delete.setTextSize(pxFromDp(9, context));</b>
-<b class="nc"><i>261</i>&nbsp;</b>
+<i>261</i>&nbsp;
 <b class="nc"><i>262</i>&nbsp;        tempLL.addView(delete);</b>
 <b class="nc"><i>263</i>&nbsp;        delete.setOnClickListener(new View.OnClickListener() {</b>
-<b class="nc"><i>264</i>&nbsp;            public void onClick(View view) {</b>
+<i>264</i>&nbsp;            public void onClick(View view) {
 <b class="nc"><i>265</i>&nbsp;                uebungen.remove(toDel);</b>
 <b class="nc"><i>266</i>&nbsp;                redrawGUI();</b>
 <i>267</i>&nbsp;            }
-<b class="nc"><i>268</i>&nbsp;        });</b>
+<i>268</i>&nbsp;        });
 <b class="nc"><i>269</i>&nbsp;    }</b>
 <i>270</i>&nbsp;
 <i>271</i>&nbsp;    public void createSplitDelete(final int splitDel, LinearLayout deleteLL){
@@ -606,21 +606,21 @@
 <b class="nc"><i>275</i>&nbsp;        deleteS.setGravity(Gravity.LEFT);</b>
 <b class="nc"><i>276</i>&nbsp;        deleteS.setPadding(5,1,5,1);</b>
 <b class="nc"><i>277</i>&nbsp;        deleteS.setTextSize(pxFromDp(11, context));</b>
-<b class="nc"><i>278</i>&nbsp;</b>
+<i>278</i>&nbsp;
 <b class="nc"><i>279</i>&nbsp;        deleteLL.addView(deleteS);</b>
 <b class="nc"><i>280</i>&nbsp;        deleteS.setOnClickListener(new View.OnClickListener() {</b>
 <i>281</i>&nbsp;            public void onClick(View view) {
 <b class="nc"><i>282</i>&nbsp;                splits.remove(splitDel);</b>
 <b class="nc"><i>283</i>&nbsp;                redrawGUI();</b>
-<b class="nc"><i>284</i>&nbsp;            }</b>
-<b class="nc"><i>285</i>&nbsp;        });</b>
+<i>284</i>&nbsp;            }
+<i>285</i>&nbsp;        });
 <b class="nc"><i>286</i>&nbsp;    }</b>
-<b class="nc"><i>287</i>&nbsp;</b>
-<b class="nc"><i>288</i>&nbsp;    public void redrawGUI(){</b>
+<i>287</i>&nbsp;
+<i>288</i>&nbsp;    public void redrawGUI(){
 <b class="nc"><i>289</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linear);</b>
 <b class="nc"><i>290</i>&nbsp;        if(((LinearLayout) ll).getChildCount() &gt; 0)</b>
 <b class="nc"><i>291</i>&nbsp;            ((LinearLayout) ll).removeAllViews();</b>
-<b class="nc"><i>292</i>&nbsp;</b>
+<i>292</i>&nbsp;
 <b class="nc"><i>293</i>&nbsp;        for(int i = 0; i &lt; splits.size(); i++){</b>
 <b class="nc"><i>294</i>&nbsp;            currentPlan = splits.get(i);</b>
 <b class="nc"><i>295</i>&nbsp;            boolean toTest = true;</b>
@@ -628,9 +628,9 @@
 <b class="nc"><i>297</i>&nbsp;            while(k &lt; uebungen.size() &amp;&amp; toTest){</b>
 <b class="nc"><i>298</i>&nbsp;                if(currentPlan.equals((uebungen.get(k).getSplit()))){</b>
 <b class="nc"><i>299</i>&nbsp;                    toTest = false;</b>
-<b class="nc"><i>300</i>&nbsp;                }</b>
+<i>300</i>&nbsp;                }
 <b class="nc"><i>301</i>&nbsp;                k++;</b>
-<b class="nc"><i>302</i>&nbsp;            }</b>
+<i>302</i>&nbsp;            }
 <b class="nc"><i>303</i>&nbsp;            if(toTest){</b>
 <b class="nc"><i>304</i>&nbsp;                LinearLayout deleteLL = new LinearLayout(this);</b>
 <b class="nc"><i>305</i>&nbsp;                createSplitDelete(i, deleteLL);</b>
@@ -646,9 +646,9 @@
 <b class="nc"><i>315</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
 <b class="nc"><i>316</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
 <b class="nc"><i>317</i>&nbsp;                ll.addView(textView);</b>
-<b class="nc"><i>318</i>&nbsp;            }</b>
+<i>318</i>&nbsp;            }
 <b class="nc"><i>319</i>&nbsp;            LinearLayout tempLL = null;</b>
-<b class="nc"><i>320</i>&nbsp;</b>
+<i>320</i>&nbsp;
 <b class="nc"><i>321</i>&nbsp;            for(int j = 0; j &lt; uebungen.size(); j++){</b>
 <b class="nc"><i>322</i>&nbsp;                tempLL = new LinearLayout(this);</b>
 <b class="nc"><i>323</i>&nbsp;                if(currentPlan.equals(uebungen.get(j).getSplit())){</b>
@@ -671,10 +671,10 @@
 <i>340</i>&nbsp;                    ));
 <b class="nc"><i>341</i>&nbsp;                    v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
 <b class="nc"><i>342</i>&nbsp;                    ll.addView(v);</b>
-<b class="nc"><i>343</i>&nbsp;                }</b>
+<i>343</i>&nbsp;                }
 <i>344</i>&nbsp;            }
 <b class="nc"><i>345</i>&nbsp;            createExerciseButton(currentPlan);</b>
-<b class="nc"><i>346</i>&nbsp;</b>
+<i>346</i>&nbsp;
 <b class="nc"><i>347</i>&nbsp;            View v = new View(this);</b>
 <b class="nc"><i>348</i>&nbsp;            v.setLayoutParams(new LinearLayout.LayoutParams(</b>
 <i>349</i>&nbsp;                    LinearLayout.LayoutParams.MATCH_PARENT,
@@ -683,10 +683,10 @@
 <b class="nc"><i>352</i>&nbsp;            v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
 <i>353</i>&nbsp;
 <b class="nc"><i>354</i>&nbsp;            ll.addView(v);</b>
-<b class="nc"><i>355</i>&nbsp;        }</b>
+<i>355</i>&nbsp;        }
 <b class="nc"><i>356</i>&nbsp;        createSplitButton();</b>
 <b class="nc"><i>357</i>&nbsp;    }</b>
-<b class="nc"><i>358</i>&nbsp;</b>
+<i>358</i>&nbsp;
 <i>359</i>&nbsp;    @Override
 <i>360</i>&nbsp;    public void onBackPressed(){
 <i>361</i>&nbsp;        //super.onBackPressed();
@@ -709,15 +709,15 @@
 <i>378</i>&nbsp;                    public void onClick(DialogInterface dialog, int id) {
 <b class="nc"><i>379</i>&nbsp;                        dialog.cancel();</b>
 <i>380</i>&nbsp;                    }
-<b class="nc"><i>381</i>&nbsp;                });</b>
-<b class="nc"><i>382</i>&nbsp;</b>
+<i>381</i>&nbsp;                });
+<i>382</i>&nbsp;
 <b class="nc"><i>383</i>&nbsp;        AlertDialog alertDialog = alertDialogBuilder.create();</b>
 <b class="nc"><i>384</i>&nbsp;        alertDialog.show();</b>
 <b class="nc"><i>385</i>&nbsp;    }</b>
-<b class="nc"><i>386</i>&nbsp;</b>
+<i>386</i>&nbsp;
 <i>387</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
 <b class="nc"><i>388</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
-<b class="nc"><i>389</i>&nbsp;    }</b>
+<i>389</i>&nbsp;    }
 <i>390</i>&nbsp;
 <i>391</i>&nbsp;    public static String checkEingabe(String input){
 <b class="fc"><i>392</i>&nbsp;        if(input.isEmpty()){</b>
@@ -727,15 +727,15 @@
 <b class="fc"><i>396</i>&nbsp;        if(newInput == &quot;&quot; || newInput.isEmpty()){</b>
 <b class="fc"><i>397</i>&nbsp;            return null;</b>
 <i>398</i>&nbsp;        }
-<b class="nc"><i>399</i>&nbsp;</b>
+<i>399</i>&nbsp;
 <b class="fc"><i>400</i>&nbsp;        return newInput;</b>
-<b class="nc"><i>401</i>&nbsp;    }</b>
-<b class="nc"><i>402</i>&nbsp;</b>
-<b class="nc"><i>403</i>&nbsp;    public void insertUebung(Uebung u, String id){</b>
+<i>401</i>&nbsp;    }
+<i>402</i>&nbsp;
+<i>403</i>&nbsp;    public void insertUebung(Uebung u, String id){
 <b class="nc"><i>404</i>&nbsp;        SQLiteDatabase db = null;</b>
-<b class="nc"><i>405</i>&nbsp;        try {</b>
+<i>405</i>&nbsp;        try {
 <b class="nc"><i>406</i>&nbsp;            db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
-<b class="nc"><i>407</i>&nbsp;</b>
+<i>407</i>&nbsp;
 <b class="nc"><i>408</i>&nbsp;            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);</b>
 <i>409</i>&nbsp;
 <b class="nc"><i>410</i>&nbsp;            db.execSQL(&quot;INSERT INTO uebung (plan_id, name, reps, start, split)&quot; +</b>
@@ -743,33 +743,33 @@
 <b class="nc"><i>412</i>&nbsp;                    &quot;&#39;, &#39;&quot;+u.getReps()+&quot;&#39;, &#39;&quot;+</b>
 <b class="nc"><i>413</i>&nbsp;                    u.getStart()+&quot;&#39;, &#39;&quot;+</b>
 <b class="nc"><i>414</i>&nbsp;                    u.getSplit()+&quot;&#39;)&quot;);</b>
-<b class="nc"><i>415</i>&nbsp;</b>
+<i>415</i>&nbsp;
 <b class="nc"><i>416</i>&nbsp;            dataSource.close();</b>
 <i>417</i>&nbsp;        }finally {
 <b class="nc"><i>418</i>&nbsp;            if (db != null)</b>
 <b class="nc"><i>419</i>&nbsp;                db.close();</b>
-<b class="nc"><i>420</i>&nbsp;        }</b>
+<i>420</i>&nbsp;        }
 <b class="nc"><i>421</i>&nbsp;    }</b>
 <i>422</i>&nbsp;
-<b class="nc"><i>423</i>&nbsp;    public void insertPlan(Plan plan){</b>
+<i>423</i>&nbsp;    public void insertPlan(Plan plan){
 <b class="nc"><i>424</i>&nbsp;        SQLiteDatabase db = null;</b>
-<b class="nc"><i>425</i>&nbsp;        try {</b>
+<i>425</i>&nbsp;        try {
 <b class="nc"><i>426</i>&nbsp;            db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
 <b class="nc"><i>427</i>&nbsp;            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);</b>
-<b class="nc"><i>428</i>&nbsp;</b>
+<i>428</i>&nbsp;
 <b class="nc"><i>429</i>&nbsp;            dataSource.open();</b>
 <b class="nc"><i>430</i>&nbsp;            db.execSQL(&quot;INSERT INTO plan (name, date_create, date_last) &quot; +</b>
 <b class="nc"><i>431</i>&nbsp;                    &quot;VALUES (&#39;&quot;+plan.getName()+&quot;&#39;,&#39;&quot;+plan.getDate_create()+</b>
 <b class="nc"><i>432</i>&nbsp;                    &quot;&#39;, &#39;&quot;+plan.getDate_last()+&quot;&#39;)&quot;);</b>
-<b class="nc"><i>433</i>&nbsp;</b>
+<i>433</i>&nbsp;
 <b class="nc"><i>434</i>&nbsp;            dataSource.close();</b>
-<b class="nc"><i>435</i>&nbsp;        }finally {</b>
+<i>435</i>&nbsp;        }finally {
 <b class="nc"><i>436</i>&nbsp;            if (db != null)</b>
 <b class="nc"><i>437</i>&nbsp;                db.close();</b>
-<b class="nc"><i>438</i>&nbsp;        }</b>
+<i>438</i>&nbsp;        }
 <b class="nc"><i>439</i>&nbsp;    }</b>
 <i>440</i>&nbsp;
-<b class="nc"><i>441</i>&nbsp;    public String selectDate(String name){</b>
+<i>441</i>&nbsp;    public String selectDate(String name){
 <b class="nc"><i>442</i>&nbsp;        SQLiteDatabase db = null;</b>
 <i>443</i>&nbsp;        try {
 <b class="nc"><i>444</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
@@ -782,13 +782,13 @@
 <i>451</i>&nbsp;
 <b class="nc"><i>452</i>&nbsp;            dataSource.close();</b>
 <b class="nc"><i>453</i>&nbsp;            return datum;</b>
-<b class="nc"><i>454</i>&nbsp;        }finally {</b>
+<i>454</i>&nbsp;        }finally {
 <b class="nc"><i>455</i>&nbsp;            if (db != null)</b>
 <b class="nc"><i>456</i>&nbsp;                db.close();</b>
-<b class="nc"><i>457</i>&nbsp;        }</b>
-<b class="nc"><i>458</i>&nbsp;    }</b>
+<i>457</i>&nbsp;        }
+<i>458</i>&nbsp;    }
 <i>459</i>&nbsp;
-<b class="nc"><i>460</i>&nbsp;    public String selectReps(String name){</b>
+<i>460</i>&nbsp;    public String selectReps(String name){
 <b class="nc"><i>461</i>&nbsp;        SQLiteDatabase db = null;</b>
 <i>462</i>&nbsp;        try {
 <b class="nc"><i>463</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
@@ -798,10 +798,10 @@
 <b class="nc"><i>467</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT reps FROM uebung WHERE name=&#39;&quot;+name+&quot;&#39;&quot;, null);</b>
 <b class="nc"><i>468</i>&nbsp;            c.moveToFirst();</b>
 <b class="nc"><i>469</i>&nbsp;            String reps = c.getString(c.getColumnIndex(&quot;reps&quot;));</b>
-<b class="nc"><i>470</i>&nbsp;</b>
+<i>470</i>&nbsp;
 <b class="nc"><i>471</i>&nbsp;            dataSource.close();</b>
 <b class="nc"><i>472</i>&nbsp;            return reps;</b>
-<b class="nc"><i>473</i>&nbsp;        }finally {</b>
+<i>473</i>&nbsp;        }finally {
 <b class="nc"><i>474</i>&nbsp;            if (db != null)</b>
 <b class="nc"><i>475</i>&nbsp;                db.close();</b>
 <i>476</i>&nbsp;        }
@@ -824,7 +824,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-15 19:52</div>
+    <div style="float:right;">generated on 2017-05-15 21:40</div>
 </div>
 </body>
 </html>

@@ -47,10 +47,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    5,6%
+    4,9%
   </span>
   <span class="absValue">
-    (7/ 124)
+    (7/ 142)
   </span>
 </td>
 </tr>
@@ -294,10 +294,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    2,1%
+    2%
   </span>
   <span class="absValue">
-    (7/ 332)
+    (7/ 350)
   </span>
 </td>
 </tr>
@@ -693,7 +693,7 @@
 <i>384</i>&nbsp;        }, zeit);
 <i>385</i>&nbsp;
 <b class="nc"><i>386</i>&nbsp;    }</b>
-<i>387</i>&nbsp;//details ansehen
+<i>387</i>&nbsp;
 <i>388</i>&nbsp;    public void DeleteClick(final ArrayList&lt;Integer&gt; items){
 <b class="nc"><i>389</i>&nbsp;        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(</b>
 <i>390</i>&nbsp;                    context);
@@ -843,35 +843,63 @@
 <b class="nc"><i>534</i>&nbsp;    }</b>
 <i>535</i>&nbsp;
 <i>536</i>&nbsp;    public void AnalyzeClick(ArrayList&lt;Integer&gt; items){
-<b class="nc"><i>537</i>&nbsp;        Bundle temp = new Bundle();</b>
-<b class="nc"><i>538</i>&nbsp;        temp.putString(&quot;param&quot;, arrTblNames.get(items.get(0)));</b>
-<b class="nc"><i>539</i>&nbsp;        Intent i = new Intent(MainActivity.this, AnalyzePlanActivity.class);</b>
-<b class="nc"><i>540</i>&nbsp;        i.putExtras(temp);</b>
-<b class="nc"><i>541</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>542</i>&nbsp;        finish();</b>
-<b class="nc"><i>543</i>&nbsp;    }</b>
-<i>544</i>&nbsp;
-<i>545</i>&nbsp;    public void SettingsClick(){
-<b class="nc"><i>546</i>&nbsp;        Intent i = new Intent(MainActivity.this, SettingsActivity.class);</b>
-<b class="nc"><i>547</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>548</i>&nbsp;        finish();</b>
-<b class="nc"><i>549</i>&nbsp;    }</b>
-<i>550</i>&nbsp;
-<i>551</i>&nbsp;    public void setLocale(String lang){
-<b class="nc"><i>552</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
-<b class="nc"><i>553</i>&nbsp;        Resources res = getResources();</b>
-<b class="nc"><i>554</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
-<b class="nc"><i>555</i>&nbsp;        Configuration config = res.getConfiguration();</b>
-<b class="nc"><i>556</i>&nbsp;        config.locale = myLocale;</b>
-<b class="nc"><i>557</i>&nbsp;        res.updateConfiguration(config, dm);</b>
-<b class="nc"><i>558</i>&nbsp;    }</b>
-<i>559</i>&nbsp;}
+<b class="nc"><i>537</i>&nbsp;        SQLiteDatabase db = null;</b>
+<b class="nc"><i>538</i>&nbsp;        ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
+<i>539</i>&nbsp;        try {
+<b class="nc"><i>540</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>541</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>542</i>&nbsp;            dataSource.open();</b>
+<i>543</i>&nbsp;
+<b class="nc"><i>544</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT uebung.name&quot; +</b>
+<i>545</i>&nbsp;                    &quot; FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name=&#39;&quot;+
+<b class="nc"><i>546</i>&nbsp;                    arrTblNames.get(items.get(0))+&quot;&#39;&quot;, null);</b>
+<i>547</i>&nbsp;
+<b class="nc"><i>548</i>&nbsp;            if (c.moveToFirst()) {</b>
+<b class="nc"><i>549</i>&nbsp;                while (!c.isAfterLast()) {</b>
+<b class="nc"><i>550</i>&nbsp;                    String name = (c.getString(c.getColumnIndex(&quot;name&quot;)));</b>
+<b class="nc"><i>551</i>&nbsp;                    uebung.add(new Uebung(name, &quot;gh&quot;, 5, &quot;sg&quot;));</b>
+<b class="nc"><i>552</i>&nbsp;                    c.moveToNext();</b>
+<b class="nc"><i>553</i>&nbsp;                }</b>
+<i>554</i>&nbsp;            }
+<b class="nc"><i>555</i>&nbsp;            dataSource.close();</b>
+<i>556</i>&nbsp;        }finally {
+<b class="nc"><i>557</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>558</i>&nbsp;                db.close();</b>
+<i>559</i>&nbsp;        }
+<i>560</i>&nbsp;
+<b class="nc"><i>561</i>&nbsp;        if(uebung.size() == 0){</b>
+<b class="nc"><i>562</i>&nbsp;            Toast.makeText(context, R.string.errorNoExcercisesAnalyse, Toast.LENGTH_SHORT).show();</b>
+<i>563</i>&nbsp;        }else {
+<b class="nc"><i>564</i>&nbsp;            Bundle temp = new Bundle();</b>
+<b class="nc"><i>565</i>&nbsp;            temp.putString(&quot;param&quot;, arrTblNames.get(items.get(0)));</b>
+<b class="nc"><i>566</i>&nbsp;            Intent i = new Intent(MainActivity.this, AnalyzePlanActivity.class);</b>
+<b class="nc"><i>567</i>&nbsp;            i.putExtras(temp);</b>
+<b class="nc"><i>568</i>&nbsp;            startActivity(i);</b>
+<b class="nc"><i>569</i>&nbsp;            finish();</b>
+<i>570</i>&nbsp;        }
+<b class="nc"><i>571</i>&nbsp;    }</b>
+<i>572</i>&nbsp;
+<i>573</i>&nbsp;    public void SettingsClick(){
+<b class="nc"><i>574</i>&nbsp;        Intent i = new Intent(MainActivity.this, SettingsActivity.class);</b>
+<b class="nc"><i>575</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>576</i>&nbsp;        finish();</b>
+<b class="nc"><i>577</i>&nbsp;    }</b>
+<i>578</i>&nbsp;
+<i>579</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>580</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>581</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>582</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>583</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>584</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>585</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>586</i>&nbsp;    }</b>
+<i>587</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-15 19:52</div>
+    <div style="float:right;">generated on 2017-05-15 21:40</div>
 </div>
 </body>
 </html>

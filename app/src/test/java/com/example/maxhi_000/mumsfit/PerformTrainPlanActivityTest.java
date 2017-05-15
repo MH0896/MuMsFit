@@ -2,10 +2,21 @@ package com.example.maxhi_000.mumsfit;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 
 public class PerformTrainPlanActivityTest {
+    @Test
+    public void alreadyIn() throws Exception {
+        ArrayList<String> list = new ArrayList();
+        list.add("1");
+        list.add("2");
+        list.add("3");
+        assertTrue(PerformTrainPlanActivity.alreadyIn("2", list));
+        assertFalse(PerformTrainPlanActivity.alreadyIn("7", list));
+    }
 
     @Test
     public void createSplitUebung() throws Exception {
@@ -25,5 +36,4 @@ public class PerformTrainPlanActivityTest {
         PerformTrainPlanActivity.createSplitUebung();
         assertTrue(3 == PerformTrainPlanActivity.split_uebung.size());
     }
-
 }

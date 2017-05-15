@@ -23,12 +23,9 @@
 <h1>Coverage Summary for Class: AnalyzePlanActivity (com.example.maxhi_000.mumsfit)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -42,30 +39,78 @@
   <td class="name">AnalyzePlanActivity</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    30%
   </span>
   <span class="absValue">
-    (0/ 1)
+    (3/ 10)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    9,8%
   </span>
   <span class="absValue">
-    (0/ 5)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/ 45)
+    (13/ 133)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">AnalyzePlanActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AnalyzePlanActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    21,4%
+  </span>
+  <span class="absValue">
+    (3/ 14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    9,2%
+  </span>
+  <span class="absValue">
+    (13/ 141)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -79,106 +124,263 @@
 <i>5</i>&nbsp;import android.content.SharedPreferences;
 <i>6</i>&nbsp;import android.content.res.Configuration;
 <i>7</i>&nbsp;import android.content.res.Resources;
-<i>8</i>&nbsp;import android.os.Bundle;
-<i>9</i>&nbsp;import android.support.v7.app.AppCompatActivity;
-<i>10</i>&nbsp;import android.util.DisplayMetrics;
-<i>11</i>&nbsp;
-<i>12</i>&nbsp;import com.jjoe64.graphview.GraphView;
-<i>13</i>&nbsp;import com.jjoe64.graphview.series.DataPoint;
-<i>14</i>&nbsp;import com.jjoe64.graphview.series.LineGraphSeries;
-<i>15</i>&nbsp;
-<i>16</i>&nbsp;import java.util.Locale;
+<i>8</i>&nbsp;import android.database.Cursor;
+<i>9</i>&nbsp;import android.database.sqlite.SQLiteDatabase;
+<i>10</i>&nbsp;import android.os.Bundle;
+<i>11</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>12</i>&nbsp;import android.util.DisplayMetrics;
+<i>13</i>&nbsp;import android.view.View;
+<i>14</i>&nbsp;import android.widget.AdapterView;
+<i>15</i>&nbsp;import android.widget.ArrayAdapter;
+<i>16</i>&nbsp;import android.widget.Spinner;
 <i>17</i>&nbsp;
-<b class="nc"><i>18</i>&nbsp;public class AnalyzePlanActivity extends AppCompatActivity{</b>
-<i>19</i>&nbsp;
-<i>20</i>&nbsp;    String namePlan;
-<b class="nc"><i>21</i>&nbsp;    final Context context = this;</b>
-<i>22</i>&nbsp;
-<i>23</i>&nbsp;    @Override
-<i>24</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
-<b class="nc"><i>25</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
-<i>26</i>&nbsp;                &quot;MyPrefs&quot;, MODE_PRIVATE);
-<i>27</i>&nbsp;
-<b class="nc"><i>28</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
-<b class="nc"><i>29</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
-<b class="nc"><i>30</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
-<b class="nc"><i>31</i>&nbsp;        } else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
-<b class="nc"><i>32</i>&nbsp;            setTheme(R.style.LightTheme);</b>
-<b class="nc"><i>33</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
-<b class="nc"><i>34</i>&nbsp;            setTheme(R.style.AppTheme);</b>
-<i>35</i>&nbsp;        }
+<i>18</i>&nbsp;import com.jjoe64.graphview.GraphView;
+<i>19</i>&nbsp;import com.jjoe64.graphview.series.DataPoint;
+<i>20</i>&nbsp;import com.jjoe64.graphview.series.LineGraphSeries;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;import java.util.ArrayList;
+<i>23</i>&nbsp;import java.util.Locale;
+<i>24</i>&nbsp;
+<b class="nc"><i>25</i>&nbsp;public class AnalyzePlanActivity extends AppCompatActivity{</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    String namePlan;
+<b class="nc"><i>28</i>&nbsp;    final Context context = this;</b>
+<i>29</i>&nbsp;    private TrainPlanDataSource dataSource;
+<i>30</i>&nbsp;
+<b class="fc"><i>31</i>&nbsp;    static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
+<b class="fc"><i>32</i>&nbsp;    static ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    static String current_split;
+<b class="fc"><i>35</i>&nbsp;    static ArrayList&lt;Uebung&gt; split_uebung = new ArrayList&lt;Uebung&gt;();</b>
 <i>36</i>&nbsp;
-<b class="nc"><i>37</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
-<b class="nc"><i>38</i>&nbsp;        setLocale(appLanguage);</b>
-<i>39</i>&nbsp;
-<b class="nc"><i>40</i>&nbsp;        super.onCreate(savedInstanceState);</b>
-<b class="nc"><i>41</i>&nbsp;        setContentView(R.layout.analyze_plan);</b>
-<i>42</i>&nbsp;
-<b class="nc"><i>43</i>&nbsp;        Bundle params = getIntent().getExtras();</b>
-<b class="nc"><i>44</i>&nbsp;        this.namePlan = params.getString(&quot;param&quot;);</b>
-<i>45</i>&nbsp;
-<b class="nc"><i>46</i>&nbsp;        setTitle(this.namePlan);</b>
-<i>47</i>&nbsp;
-<i>48</i>&nbsp;
-<i>49</i>&nbsp;
-<b class="nc"><i>50</i>&nbsp;        int maxX =7;</b>
-<b class="nc"><i>51</i>&nbsp;        int maxY =20;</b>
-<b class="nc"><i>52</i>&nbsp;        GraphView graph = (GraphView) findViewById(R.id.graph);</b>
-<b class="nc"><i>53</i>&nbsp;        LineGraphSeries&lt;DataPoint&gt; series = new LineGraphSeries&lt;&gt;(new DataPoint[] {</b>
-<i>54</i>&nbsp;                new DataPoint(1, 10),
-<i>55</i>&nbsp;                new DataPoint(2, 10),
-<i>56</i>&nbsp;                new DataPoint(3, 12.5),
-<i>57</i>&nbsp;                new DataPoint(4, 15),
-<i>58</i>&nbsp;                new DataPoint(5, 16),
-<i>59</i>&nbsp;                new DataPoint(6, 17.5),
-<i>60</i>&nbsp;                new DataPoint(7, 20),
+<i>37</i>&nbsp;    ArrayAdapter dataAdapter_uebung;
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    @Override
+<i>40</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>41</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
+<i>42</i>&nbsp;                &quot;MyPrefs&quot;, MODE_PRIVATE);
+<i>43</i>&nbsp;
+<b class="nc"><i>44</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
+<b class="nc"><i>45</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
+<b class="nc"><i>46</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
+<b class="nc"><i>47</i>&nbsp;        } else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
+<b class="nc"><i>48</i>&nbsp;            setTheme(R.style.LightTheme);</b>
+<b class="nc"><i>49</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
+<b class="nc"><i>50</i>&nbsp;            setTheme(R.style.AppTheme);</b>
+<i>51</i>&nbsp;        }
+<i>52</i>&nbsp;
+<b class="nc"><i>53</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
+<b class="nc"><i>54</i>&nbsp;        setLocale(appLanguage);</b>
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<b class="nc"><i>57</i>&nbsp;        setContentView(R.layout.analyze_plan);</b>
+<i>58</i>&nbsp;
+<b class="nc"><i>59</i>&nbsp;        Bundle params = getIntent().getExtras();</b>
+<b class="nc"><i>60</i>&nbsp;        this.namePlan = params.getString(&quot;param&quot;);</b>
 <i>61</i>&nbsp;
-<i>62</i>&nbsp;        });
-<b class="nc"><i>63</i>&nbsp;        graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.analyze_graphHorizontal));</b>
-<b class="nc"><i>64</i>&nbsp;        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.analyze_graphVertical));</b>
-<b class="nc"><i>65</i>&nbsp;        graph.getGridLabelRenderer().setHorizontalAxisTitleTextSize(pxFromDp(18,context));</b>
-<b class="nc"><i>66</i>&nbsp;        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(pxFromDp(18,context));</b>
-<b class="nc"><i>67</i>&nbsp;        graph.getGridLabelRenderer().setPadding((int)pxFromDp(25,context));</b>
-<i>68</i>&nbsp;
-<b class="nc"><i>69</i>&nbsp;        graph.getViewport().setScrollable(true);</b>
-<b class="nc"><i>70</i>&nbsp;        graph.getViewport().setScrollableY(true);</b>
-<b class="nc"><i>71</i>&nbsp;        graph.getViewport().setScalable(true);</b>
-<b class="nc"><i>72</i>&nbsp;        graph.getViewport().setScalableY(true);</b>
+<b class="nc"><i>62</i>&nbsp;        setTitle(this.namePlan);</b>
+<i>63</i>&nbsp;
+<b class="nc"><i>64</i>&nbsp;        SQLiteDatabase db = null;</b>
+<i>65</i>&nbsp;        try {
+<b class="nc"><i>66</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>67</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>68</i>&nbsp;            dataSource.open();</b>
+<i>69</i>&nbsp;
+<b class="nc"><i>70</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT uebung.uebung_id, uebung.plan_id, uebung.name, uebung.reps, uebung.start, uebung.split &quot; +</b>
+<i>71</i>&nbsp;                    &quot;FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name=&#39;&quot;+
+<i>72</i>&nbsp;                    this.namePlan+&quot;&#39;&quot;, null);
 <i>73</i>&nbsp;
-<b class="nc"><i>74</i>&nbsp;        graph.getViewport().setMinX(1);</b>
-<b class="nc"><i>75</i>&nbsp;        graph.getViewport().setMaxX(maxX);</b>
-<b class="nc"><i>76</i>&nbsp;        graph.getViewport().setMinY(0);</b>
-<b class="nc"><i>77</i>&nbsp;        graph.getViewport().setMaxY(maxY);</b>
-<i>78</i>&nbsp;
-<b class="nc"><i>79</i>&nbsp;        graph.addSeries(series);</b>
-<i>80</i>&nbsp;    }
-<i>81</i>&nbsp;
-<i>82</i>&nbsp;    @Override
-<i>83</i>&nbsp;    public void onBackPressed(){
-<b class="nc"><i>84</i>&nbsp;        Intent i = new Intent(AnalyzePlanActivity.this, MainActivity.class);</b>
-<b class="nc"><i>85</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>86</i>&nbsp;        finish();</b>
-<i>87</i>&nbsp;    }
-<i>88</i>&nbsp;
-<i>89</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
-<b class="nc"><i>90</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
-<i>91</i>&nbsp;    }
-<i>92</i>&nbsp;
-<i>93</i>&nbsp;    public void setLocale(String lang){
-<b class="nc"><i>94</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
-<b class="nc"><i>95</i>&nbsp;        Resources res = getResources();</b>
-<b class="nc"><i>96</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
-<b class="nc"><i>97</i>&nbsp;        Configuration config = res.getConfiguration();</b>
-<b class="nc"><i>98</i>&nbsp;        config.locale = myLocale;</b>
-<b class="nc"><i>99</i>&nbsp;        res.updateConfiguration(config, dm);</b>
-<i>100</i>&nbsp;    }
-<i>101</i>&nbsp;}
+<b class="nc"><i>74</i>&nbsp;            if (c.moveToFirst()) {</b>
+<b class="nc"><i>75</i>&nbsp;                while (!c.isAfterLast()) {</b>
+<b class="nc"><i>76</i>&nbsp;                    String uid = (c.getString(c.getColumnIndex(&quot;uebung_id&quot;)));</b>
+<b class="nc"><i>77</i>&nbsp;                    String pid = (c.getString(c.getColumnIndex(&quot;plan_id&quot;)));</b>
+<b class="nc"><i>78</i>&nbsp;                    String name = (c.getString(c.getColumnIndex(&quot;name&quot;)));</b>
+<b class="nc"><i>79</i>&nbsp;                    String reps = (c.getString(c.getColumnIndex(&quot;reps&quot;)));</b>
+<b class="nc"><i>80</i>&nbsp;                    String start = (c.getString(c.getColumnIndex(&quot;start&quot;)));</b>
+<b class="nc"><i>81</i>&nbsp;                    String split = (c.getString(c.getColumnIndex(&quot;split&quot;)));</b>
+<b class="nc"><i>82</i>&nbsp;                    boolean temp = alreadyIn(split, splits);</b>
+<b class="nc"><i>83</i>&nbsp;                    if(!temp){</b>
+<b class="nc"><i>84</i>&nbsp;                        splits.add(split);</b>
+<i>85</i>&nbsp;                    }
+<b class="nc"><i>86</i>&nbsp;                    uebung.add(new Uebung(Integer.parseInt(uid), Integer.parseInt(pid), name, reps, Double.parseDouble(start), split));</b>
+<b class="nc"><i>87</i>&nbsp;                    c.moveToNext();</b>
+<b class="nc"><i>88</i>&nbsp;                }</b>
+<i>89</i>&nbsp;            }
+<b class="nc"><i>90</i>&nbsp;            dataSource.close();</b>
+<i>91</i>&nbsp;        }finally {
+<b class="nc"><i>92</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>93</i>&nbsp;                db.close();</b>
+<i>94</i>&nbsp;        }
+<i>95</i>&nbsp;
+<b class="nc"><i>96</i>&nbsp;        current_split = splits.get(0);</b>
+<i>97</i>&nbsp;
+<b class="nc"><i>98</i>&nbsp;        Spinner spinner_splits = (Spinner) findViewById(R.id.spinner_split);</b>
+<b class="nc"><i>99</i>&nbsp;        ArrayAdapter dataAdapter_split = new ArrayAdapter(this,android.R.layout.simple_spinner_item, splits);</b>
+<b class="nc"><i>100</i>&nbsp;        dataAdapter_split.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</b>
+<b class="nc"><i>101</i>&nbsp;        spinner_splits.setAdapter(dataAdapter_split);</b>
+<b class="nc"><i>102</i>&nbsp;        spinner_splits.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
+<i>103</i>&nbsp;
+<i>104</i>&nbsp;            @Override
+<i>105</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc"><i>106</i>&nbsp;                String selected = parent.getItemAtPosition(position).toString();</b>
+<b class="nc"><i>107</i>&nbsp;                current_split = selected;</b>
+<b class="nc"><i>108</i>&nbsp;                createSplitUebung();</b>
+<b class="nc"><i>109</i>&nbsp;                dataAdapter_uebung.notifyDataSetChanged();</b>
+<b class="nc"><i>110</i>&nbsp;                createGraph();</b>
+<i>111</i>&nbsp;            }
+<i>112</i>&nbsp;
+<i>113</i>&nbsp;            @Override
+<i>114</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
+<i>115</i>&nbsp;
+<i>116</i>&nbsp;            }
+<i>117</i>&nbsp;        });
+<i>118</i>&nbsp;
+<i>119</i>&nbsp;
+<b class="nc"><i>120</i>&nbsp;        createSplitUebung();</b>
+<b class="nc"><i>121</i>&nbsp;        Spinner spinner_uebung = (Spinner) findViewById(R.id.spinner_uebung);</b>
+<b class="nc"><i>122</i>&nbsp;        dataAdapter_uebung = new ArrayAdapter(this,android.R.layout.simple_spinner_item, split_uebung);</b>
+<b class="nc"><i>123</i>&nbsp;        dataAdapter_uebung.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</b>
+<b class="nc"><i>124</i>&nbsp;        spinner_uebung.setAdapter(dataAdapter_uebung);</b>
+<b class="nc"><i>125</i>&nbsp;        spinner_uebung.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;            @Override
+<i>128</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc"><i>129</i>&nbsp;                createGraph();</b>
+<i>130</i>&nbsp;            }
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;            @Override
+<i>133</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;            }
+<i>136</i>&nbsp;        });
+<i>137</i>&nbsp;
+<b class="nc"><i>138</i>&nbsp;        createGraph();</b>
+<b class="nc"><i>139</i>&nbsp;    }</b>
+<i>140</i>&nbsp;
+<i>141</i>&nbsp;    public void createGraph(){
+<b class="nc"><i>142</i>&nbsp;        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();</b>
+<b class="nc"><i>143</i>&nbsp;        ArrayList&lt;Gewicht&gt; gewichte = new ArrayList&lt;Gewicht&gt;();</b>
+<b class="nc"><i>144</i>&nbsp;        int maxY =0;</b>
+<b class="nc"><i>145</i>&nbsp;        SQLiteDatabase db = null;</b>
+<i>146</i>&nbsp;        try {
+<b class="nc"><i>147</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>148</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>149</i>&nbsp;            dataSource.open();</b>
+<i>150</i>&nbsp;
+<b class="nc"><i>151</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT gewicht.gewicht FROM plan, gewicht, uebung WHERE &quot; +</b>
+<b class="nc"><i>152</i>&nbsp;                    &quot;uebung.name=&#39;&quot;+test.getName()+&quot;&#39; AND uebung.uebung_id=gewicht.uebung_id &quot; +</b>
+<i>153</i>&nbsp;                    &quot;AND plan.name=&#39;&quot;+this.namePlan+&quot;&#39; AND plan.plan_id=uebung.plan_id&quot;, null);
+<i>154</i>&nbsp;
+<b class="nc"><i>155</i>&nbsp;            if (c.moveToFirst()) {</b>
+<b class="nc"><i>156</i>&nbsp;                while (!c.isAfterLast()) {</b>
+<b class="nc"><i>157</i>&nbsp;                    String temp = c.getString(c.getColumnIndex(&quot;gewicht&quot;));</b>
+<b class="nc"><i>158</i>&nbsp;                    gewichte.add(new Gewicht(0, Double.parseDouble(temp)));</b>
+<b class="nc"><i>159</i>&nbsp;                    if(Double.parseDouble(temp) &gt; maxY){</b>
+<b class="nc"><i>160</i>&nbsp;                        double d = Double.parseDouble(temp)+1;</b>
+<b class="nc"><i>161</i>&nbsp;                        maxY =  (int) Math.round(d);</b>
+<i>162</i>&nbsp;                    }
+<b class="nc"><i>163</i>&nbsp;                    c.moveToNext();</b>
+<b class="nc"><i>164</i>&nbsp;                }</b>
+<i>165</i>&nbsp;            }
+<i>166</i>&nbsp;
+<b class="nc"><i>167</i>&nbsp;            dataSource.close();</b>
+<i>168</i>&nbsp;        }finally {
+<b class="nc"><i>169</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>170</i>&nbsp;                db.close();</b>
+<i>171</i>&nbsp;        }
+<i>172</i>&nbsp;
+<b class="nc"><i>173</i>&nbsp;        int maxX = gewichte.size()+1;</b>
+<b class="nc"><i>174</i>&nbsp;        GraphView graph = (GraphView) findViewById(R.id.graph);</b>
+<b class="nc"><i>175</i>&nbsp;        graph.removeAllSeries();</b>
+<b class="nc"><i>176</i>&nbsp;        LineGraphSeries&lt;DataPoint&gt; series = new LineGraphSeries&lt;&gt;();</b>
+<i>177</i>&nbsp;
+<b class="nc"><i>178</i>&nbsp;        series.appendData(new DataPoint(0, test.getStart()), true, gewichte.size()+2);</b>
+<b class="nc"><i>179</i>&nbsp;        for (int i = 0; i &lt; gewichte.size(); i++){</b>
+<b class="nc"><i>180</i>&nbsp;            series.appendData(new DataPoint((i+1), gewichte.get(i).getGewicht()), true, gewichte.size()+2);</b>
+<i>181</i>&nbsp;        }
+<i>182</i>&nbsp;
+<b class="nc"><i>183</i>&nbsp;        graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.analyze_graphHorizontal));</b>
+<b class="nc"><i>184</i>&nbsp;        graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.analyze_graphVertical));</b>
+<b class="nc"><i>185</i>&nbsp;        graph.getGridLabelRenderer().setHorizontalAxisTitleTextSize(pxFromDp(18,context));</b>
+<b class="nc"><i>186</i>&nbsp;        graph.getGridLabelRenderer().setVerticalAxisTitleTextSize(pxFromDp(18,context));</b>
+<b class="nc"><i>187</i>&nbsp;        graph.getGridLabelRenderer().setPadding((int)pxFromDp(25,context));</b>
+<i>188</i>&nbsp;
+<b class="nc"><i>189</i>&nbsp;        graph.getViewport().setScrollable(true);</b>
+<b class="nc"><i>190</i>&nbsp;        graph.getViewport().setScrollableY(true);</b>
+<b class="nc"><i>191</i>&nbsp;        graph.getViewport().setScalable(true);</b>
+<b class="nc"><i>192</i>&nbsp;        graph.getViewport().setScalableY(true);</b>
+<i>193</i>&nbsp;
+<b class="nc"><i>194</i>&nbsp;        graph.getViewport().setMinX(0);</b>
+<b class="nc"><i>195</i>&nbsp;        graph.getViewport().setMaxX(maxX);</b>
+<b class="nc"><i>196</i>&nbsp;        graph.getViewport().setMinY(0);</b>
+<b class="nc"><i>197</i>&nbsp;        graph.getViewport().setMaxY(maxY);</b>
+<i>198</i>&nbsp;
+<b class="nc"><i>199</i>&nbsp;        graph.addSeries(series);</b>
+<b class="nc"><i>200</i>&nbsp;    }</b>
+<i>201</i>&nbsp;
+<i>202</i>&nbsp;    public static void createSplitUebung() {
+<b class="fc"><i>203</i>&nbsp;        int temp = split_uebung.size();</b>
+<b class="fc"><i>204</i>&nbsp;        for(int i = 0; i &lt; temp; i++){</b>
+<b class="nc"><i>205</i>&nbsp;            split_uebung.remove(0);</b>
+<i>206</i>&nbsp;        }
+<b class="fc"><i>207</i>&nbsp;        for(int j = 0; j &lt; uebung.size(); j++){</b>
+<b class="fc"><i>208</i>&nbsp;            if(uebung.get(j).getSplit().equals(current_split)){</b>
+<b class="fc"><i>209</i>&nbsp;                split_uebung.add(uebung.get(j));</b>
+<i>210</i>&nbsp;            }
+<i>211</i>&nbsp;        }
+<b class="fc"><i>212</i>&nbsp;    }</b>
+<i>213</i>&nbsp;
+<i>214</i>&nbsp;    public static  boolean alreadyIn(String split, ArrayList&lt;String&gt; list){
+<b class="fc"><i>215</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++){</b>
+<b class="fc"><i>216</i>&nbsp;            if(list.get(i).equals(split)){</b>
+<b class="fc"><i>217</i>&nbsp;                return true;</b>
+<i>218</i>&nbsp;            }
+<i>219</i>&nbsp;        }
+<b class="fc"><i>220</i>&nbsp;        return false;</b>
+<i>221</i>&nbsp;    }
+<i>222</i>&nbsp;
+<i>223</i>&nbsp;    @Override
+<i>224</i>&nbsp;    public void onBackPressed(){
+<b class="nc"><i>225</i>&nbsp;        removeUebungen();</b>
+<b class="nc"><i>226</i>&nbsp;        Intent i = new Intent(AnalyzePlanActivity.this, MainActivity.class);</b>
+<b class="nc"><i>227</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>228</i>&nbsp;        finish();</b>
+<b class="nc"><i>229</i>&nbsp;    }</b>
+<i>230</i>&nbsp;
+<i>231</i>&nbsp;    public static void removeUebungen(){
+<b class="nc"><i>232</i>&nbsp;        int temp = uebung.size();</b>
+<b class="nc"><i>233</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>234</i>&nbsp;            uebung.remove(0);</b>
+<i>235</i>&nbsp;        }
+<b class="nc"><i>236</i>&nbsp;        temp = splits.size();</b>
+<b class="nc"><i>237</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>238</i>&nbsp;            splits.remove(0);</b>
+<i>239</i>&nbsp;        }
+<b class="nc"><i>240</i>&nbsp;        temp = split_uebung.size();</b>
+<b class="nc"><i>241</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>242</i>&nbsp;            split_uebung.remove(0);</b>
+<i>243</i>&nbsp;        }
+<b class="nc"><i>244</i>&nbsp;    }</b>
+<i>245</i>&nbsp;
+<i>246</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
+<b class="nc"><i>247</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
+<i>248</i>&nbsp;    }
+<i>249</i>&nbsp;
+<i>250</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>251</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>252</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>253</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>254</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>255</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>256</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>257</i>&nbsp;    }</b>
+<i>258</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-15 19:52</div>
+    <div style="float:right;">generated on 2017-05-15 21:40</div>
 </div>
 </body>
 </html>

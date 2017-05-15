@@ -275,13 +275,17 @@ public class ViewPlanActivity  extends AppCompatActivity {
     }
 
     public void AnalyzeClick(){
-        removeUebungen();
-        Bundle temp = new Bundle();
-        temp.putString("param", namePlan);
-        Intent i = new Intent(ViewPlanActivity.this, AnalyzePlanActivity.class);
-        i.putExtras(temp);
-        startActivity(i);
-        finish();
+        if(uebung.size() == 0){
+            Toast.makeText(context, R.string.errorNoExcercisesAnalyse, Toast.LENGTH_SHORT).show();
+        }else {
+            removeUebungen();
+            Bundle temp = new Bundle();
+            temp.putString("param", namePlan);
+            Intent i = new Intent(ViewPlanActivity.this, AnalyzePlanActivity.class);
+            i.putExtras(temp);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void setLocale(String lang){
