@@ -203,6 +203,8 @@ public class ViewPlanActivity  extends AppCompatActivity {
             case R.id.item_details_menu:
                 DetailsClick();
                 return true;
+            case R.id.item_analyze_menu:
+                AnalyzeClick();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -274,5 +276,15 @@ public class ViewPlanActivity  extends AppCompatActivity {
         Configuration config = res.getConfiguration();
         config.locale = myLocale;
         res.updateConfiguration(config, dm);
+    }
+
+    public void AnalyzeClick(){
+        removeUebungen();
+        Bundle temp = new Bundle();
+        temp.putString("param", namePlan);
+        Intent i = new Intent(ViewPlanActivity.this, AnalyzePlanActivity.class);
+        i.putExtras(temp);
+        startActivity(i);
+        finish();
     }
 }

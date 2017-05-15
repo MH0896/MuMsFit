@@ -6,19 +6,26 @@
         android:icon="@android:drawable/ic_media_play"
         android:title="@string/menu_start"
         android:titleCondensed="Start Training"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/item_edit_menu"
         android:icon="@android:drawable/ic_menu_edit"
         android:title="@string/menu_edit"
         android:titleCondensed="Edit"
-        app:showAsAction="ifRoom|withText"></item>
+        app:showAsAction="always"></item>
 
     <item
         android:id="@+id/item_details_menu"
         android:icon="@android:drawable/ic_menu_info_details"
         android:title="@string/menu_details"
         android:titleCondensed="Details"
+        app:showAsAction="ifRoom|withText"></item>
+
+    <item
+        android:id="@+id/item_analyze_menu"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/menu_analyze"
+        android:titleCondensed="Analyze"
         app:showAsAction="ifRoom|withText"></item>
 </menu>

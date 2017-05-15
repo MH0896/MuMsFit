@@ -45,4 +45,6 @@
     <string name="alert_editExerciseMessage">Übung bearbeiten:</string>
     <string name="hint_split">Trainingstag</string>
     <string name="menu_start">Starte Training</string>
+    <string name="analyze_graphHorizontal">\nTag</string>
+    <string name="analyze_graphVertical">Gewicht</string>
 </resources>

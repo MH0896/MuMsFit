@@ -14,11 +14,6 @@
 
     <style name="BlackTheme" parent="Theme.AppCompat">
         <item name="colorAccent">@android:color/holo_orange_dark</item>
-        <item name="android:actionModeStyle">@style/MyActionBar</item>
-    </style>
-
-    <style name="MyActionBar" parent="Base.Widget.AppCompat.ActionBar">
-        <item name="android:background">@android:color/holo_orange_light</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
