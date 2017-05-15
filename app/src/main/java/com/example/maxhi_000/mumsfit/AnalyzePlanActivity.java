@@ -44,14 +44,18 @@ public class AnalyzePlanActivity extends AppCompatActivity{
         this.namePlan = params.getString("param");
 
         setTitle(this.namePlan);
-
+        int maxX =7;
+        int maxY =20;
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(0, 1),
-                new DataPoint(1, 5),
-                new DataPoint(2, 3),
-                new DataPoint(3, 2),
-                new DataPoint(4, 6),
+                new DataPoint(1, 10),
+                new DataPoint(2, 10),
+                new DataPoint(3, 12.5),
+                new DataPoint(4, 15),
+                new DataPoint(5, 16),
+                new DataPoint(6, 17.5),
+                new DataPoint(7, 20),
+
         });
         graph.getGridLabelRenderer().setHorizontalAxisTitle(getResources().getString(R.string.analyze_graphHorizontal));
         graph.getGridLabelRenderer().setVerticalAxisTitle(getResources().getString(R.string.analyze_graphVertical));
@@ -63,6 +67,11 @@ public class AnalyzePlanActivity extends AppCompatActivity{
         graph.getViewport().setScrollableY(true);
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
+
+        graph.getViewport().setMinX(1);
+        graph.getViewport().setMaxX(maxX);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(maxY);
 
         graph.addSeries(series);
     }

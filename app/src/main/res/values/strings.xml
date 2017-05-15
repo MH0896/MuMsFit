@@ -45,6 +45,6 @@
     <string name="alert_editExerciseMessage">Edit exercise:</string>
     <string name="hint_split">Training day</string>
     <string name="menu_start">Start training</string>
-    <string name="analyze_graphHorizontal">\nDay</string>
+    <string name="analyze_graphHorizontal">Training day</string>
     <string name="analyze_graphVertical">Weight</string>
 </resources>
