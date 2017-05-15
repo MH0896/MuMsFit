@@ -47,10 +47,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    5,9%
+    5,6%
   </span>
   <span class="absValue">
-    (7/ 118)
+    (7/ 124)
   </span>
 </td>
 </tr>
@@ -297,7 +297,7 @@
     2,1%
   </span>
   <span class="absValue">
-    (7/ 326)
+    (7/ 332)
   </span>
 </td>
 </tr>
@@ -698,7 +698,7 @@
 <b class="nc"><i>389</i>&nbsp;        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(</b>
 <i>390</i>&nbsp;                    context);
 <i>391</i>&nbsp;
-<b class="nc"><i>392</i>&nbsp;        alertDialogBuilder.setTitle(&quot;Wirklich löschen?&quot;);</b>
+<b class="nc"><i>392</i>&nbsp;        alertDialogBuilder.setTitle(R.string.alert_deletePlanTitle);</b>
 <i>393</i>&nbsp;
 <b class="nc"><i>394</i>&nbsp;        alertDialogBuilder</b>
 <b class="nc"><i>395</i>&nbsp;                .setMessage(R.string.alert_deletePlanMessage)</b>
@@ -843,30 +843,35 @@
 <b class="nc"><i>534</i>&nbsp;    }</b>
 <i>535</i>&nbsp;
 <i>536</i>&nbsp;    public void AnalyzeClick(ArrayList&lt;Integer&gt; items){
-<i>537</i>&nbsp;        //Aufruf Zeile 139
-<b class="nc"><i>538</i>&nbsp;    }</b>
-<i>539</i>&nbsp;
-<i>540</i>&nbsp;    public void SettingsClick(){
-<b class="nc"><i>541</i>&nbsp;        Intent i = new Intent(MainActivity.this, SettingsActivity.class);</b>
-<b class="nc"><i>542</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>543</i>&nbsp;        finish();</b>
-<b class="nc"><i>544</i>&nbsp;    }</b>
-<i>545</i>&nbsp;
-<i>546</i>&nbsp;    public void setLocale(String lang){
-<b class="nc"><i>547</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
-<b class="nc"><i>548</i>&nbsp;        Resources res = getResources();</b>
-<b class="nc"><i>549</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
-<b class="nc"><i>550</i>&nbsp;        Configuration config = res.getConfiguration();</b>
-<b class="nc"><i>551</i>&nbsp;        config.locale = myLocale;</b>
-<b class="nc"><i>552</i>&nbsp;        res.updateConfiguration(config, dm);</b>
-<b class="nc"><i>553</i>&nbsp;    }</b>
-<i>554</i>&nbsp;}
+<b class="nc"><i>537</i>&nbsp;        Bundle temp = new Bundle();</b>
+<b class="nc"><i>538</i>&nbsp;        temp.putString(&quot;param&quot;, arrTblNames.get(items.get(0)));</b>
+<b class="nc"><i>539</i>&nbsp;        Intent i = new Intent(MainActivity.this, AnalyzePlanActivity.class);</b>
+<b class="nc"><i>540</i>&nbsp;        i.putExtras(temp);</b>
+<b class="nc"><i>541</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>542</i>&nbsp;        finish();</b>
+<b class="nc"><i>543</i>&nbsp;    }</b>
+<i>544</i>&nbsp;
+<i>545</i>&nbsp;    public void SettingsClick(){
+<b class="nc"><i>546</i>&nbsp;        Intent i = new Intent(MainActivity.this, SettingsActivity.class);</b>
+<b class="nc"><i>547</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>548</i>&nbsp;        finish();</b>
+<b class="nc"><i>549</i>&nbsp;    }</b>
+<i>550</i>&nbsp;
+<i>551</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>552</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>553</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>554</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>555</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>556</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>557</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>558</i>&nbsp;    }</b>
+<i>559</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-14 19:21</div>
+    <div style="float:right;">generated on 2017-05-15 19:52</div>
 </div>
 </body>
 </html>

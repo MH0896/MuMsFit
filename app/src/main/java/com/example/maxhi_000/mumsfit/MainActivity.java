@@ -389,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);
 
-        alertDialogBuilder.setTitle("Wirklich löschen?");
+        alertDialogBuilder.setTitle(R.string.alert_deletePlanTitle);
 
         alertDialogBuilder
                 .setMessage(R.string.alert_deletePlanMessage)
@@ -534,7 +534,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void AnalyzeClick(ArrayList<Integer> items){
-        //Aufruf Zeile 139
+        Bundle temp = new Bundle();
+        temp.putString("param", arrTblNames.get(items.get(0)));
+        Intent i = new Intent(MainActivity.this, AnalyzePlanActivity.class);
+        i.putExtras(temp);
+        startActivity(i);
+        finish();
     }
 
     public void SettingsClick(){

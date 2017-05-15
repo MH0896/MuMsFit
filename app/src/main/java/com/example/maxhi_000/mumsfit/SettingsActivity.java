@@ -116,6 +116,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 break;
         }
     }
+
     @Override
     public void onBackPressed(){
         //super.onBackPressed();

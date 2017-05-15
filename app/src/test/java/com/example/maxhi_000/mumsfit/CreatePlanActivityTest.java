@@ -28,7 +28,7 @@ public class CreatePlanActivityTest {
 
     @Test
     public void insertUebung() throws Exception {
-        Uebung u = new Uebung("toTest", "5mal", "7kg", "Beine");
+        Uebung u = new Uebung("toTest", "5mal", 7, "Beine");
         CreatePlanActivity mock = PowerMockito.mock(CreatePlanActivity.class);
         PowerMockito.whenNew(CreatePlanActivity.class).withNoArguments().thenReturn(mock);
         mock.insertUebung(u, "987");

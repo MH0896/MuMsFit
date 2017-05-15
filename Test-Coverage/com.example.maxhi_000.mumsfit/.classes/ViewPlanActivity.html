@@ -39,18 +39,18 @@
   <td class="name">ViewPlanActivity</td>
 <td class="coverageStat">
   <span class="percent">
-    35,7%
+    33,3%
   </span>
   <span class="absValue">
-    (5/ 14)
+    (5/ 15)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    18,7%
+    16,7%
   </span>
   <span class="absValue">
-    (39/ 209)
+    (39/ 234)
   </span>
 </td>
 </tr>
@@ -77,18 +77,18 @@
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    31,2%
+    29,4%
   </span>
   <span class="absValue">
-    (5/ 16)
+    (5/ 17)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    18,5%
+    16,5%
   </span>
   <span class="absValue">
-    (39/ 211)
+    (39/ 236)
   </span>
 </td>
 </tr>
@@ -175,7 +175,7 @@
 <b class="nc"><i>75</i>&nbsp;                    String reps = (c.getString(c.getColumnIndex(&quot;reps&quot;)));</b>
 <b class="nc"><i>76</i>&nbsp;                    String start = (c.getString(c.getColumnIndex(&quot;start&quot;)));</b>
 <b class="nc"><i>77</i>&nbsp;                    String split = (c.getString(c.getColumnIndex(&quot;split&quot;)));</b>
-<b class="nc"><i>78</i>&nbsp;                    uebung.add(new Uebung(name, reps, start, split));</b>
+<b class="nc"><i>78</i>&nbsp;                    uebung.add(new Uebung(name, reps, Double.parseDouble(start), split));</b>
 <b class="nc"><i>79</i>&nbsp;                    c.moveToNext();</b>
 <b class="nc"><i>80</i>&nbsp;                }</b>
 <b class="nc"><i>81</i>&nbsp;            }</b>
@@ -303,85 +303,102 @@
 <b class="nc"><i>203</i>&nbsp;            case R.id.item_details_menu:</b>
 <b class="nc"><i>204</i>&nbsp;                DetailsClick();</b>
 <b class="nc"><i>205</i>&nbsp;                return true;</b>
-<b class="nc"><i>206</i>&nbsp;            default:</b>
-<b class="nc"><i>207</i>&nbsp;                return super.onOptionsItemSelected(item);</b>
-<b class="nc"><i>208</i>&nbsp;        }</b>
-<b class="nc"><i>209</i>&nbsp;    }</b>
-<b class="nc"><i>210</i>&nbsp;    public void DetailsClick() {</b>
-<b class="nc"><i>211</i>&nbsp;        SQLiteDatabase db = null;</b>
-<i>212</i>&nbsp;        try {
-<b class="nc"><i>213</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
-<b class="nc"><i>214</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
-<b class="nc"><i>215</i>&nbsp;            dataSource.open();</b>
-<b class="nc"><i>216</i>&nbsp;</b>
-<b class="nc"><i>217</i>&nbsp;            String date_create = &quot;default&quot;;</b>
-<b class="nc"><i>218</i>&nbsp;            String date_last = &quot;default&quot;;</b>
-<b class="nc"><i>219</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT date_create,date_last FROM plan WHERE name=&#39;&quot; + namePlan + &quot;&#39;&quot;, null);</b>
-<b class="nc"><i>220</i>&nbsp;            if (c.moveToFirst()) {</b>
-<b class="nc"><i>221</i>&nbsp;                date_create = c.getString(0);</b>
-<b class="nc"><i>222</i>&nbsp;                date_last = c.getString(1);</b>
-<b class="nc"><i>223</i>&nbsp;                c.close();</b>
-<i>224</i>&nbsp;            }
-<i>225</i>&nbsp;
-<b class="nc"><i>226</i>&nbsp;            dataSource.close();</b>
-<i>227</i>&nbsp;
-<b class="nc"><i>228</i>&nbsp;            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(</b>
-<i>229</i>&nbsp;                    context);
+<b class="nc"><i>206</i>&nbsp;            case R.id.item_analyze_menu:</b>
+<b class="nc"><i>207</i>&nbsp;                AnalyzeClick();</b>
+<b class="nc"><i>208</i>&nbsp;            default:</b>
+<b class="nc"><i>209</i>&nbsp;                return super.onOptionsItemSelected(item);</b>
+<b class="nc"><i>210</i>&nbsp;        }</b>
+<b class="nc"><i>211</i>&nbsp;    }</b>
+<i>212</i>&nbsp;
+<b class="nc"><i>213</i>&nbsp;    public void DetailsClick() {</b>
+<b class="nc"><i>214</i>&nbsp;        SQLiteDatabase db = null;</b>
+<b class="nc"><i>215</i>&nbsp;        try {</b>
+<b class="nc"><i>216</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>217</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>218</i>&nbsp;            dataSource.open();</b>
+<b class="nc"><i>219</i>&nbsp;</b>
+<b class="nc"><i>220</i>&nbsp;            String date_create = &quot;default&quot;;</b>
+<b class="nc"><i>221</i>&nbsp;            String date_last = &quot;default&quot;;</b>
+<b class="nc"><i>222</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT date_create,date_last FROM plan WHERE name=&#39;&quot; + namePlan + &quot;&#39;&quot;, null);</b>
+<b class="nc"><i>223</i>&nbsp;            if (c.moveToFirst()) {</b>
+<b class="nc"><i>224</i>&nbsp;                date_create = c.getString(0);</b>
+<b class="nc"><i>225</i>&nbsp;                date_last = c.getString(1);</b>
+<b class="nc"><i>226</i>&nbsp;                c.close();</b>
+<i>227</i>&nbsp;            }
+<b class="nc"><i>228</i>&nbsp;</b>
+<b class="nc"><i>229</i>&nbsp;            dataSource.close();</b>
 <b class="nc"><i>230</i>&nbsp;</b>
-<b class="nc"><i>231</i>&nbsp;            alertDialogBuilder.setTitle(namePlan);</b>
-<i>232</i>&nbsp;
-<b class="nc"><i>233</i>&nbsp;            alertDialogBuilder</b>
-<b class="nc"><i>234</i>&nbsp;                    .setMessage(getResources().getString(R.string.alert_planInfoCreated) + &quot; &quot; + date_create + &quot;\n&quot; + getResources().getString(R.string.alert_planInfoExecuted) + &quot; &quot; + date_last)</b>
-<b class="nc"><i>235</i>&nbsp;                    .setPositiveButton(&quot;Okay&quot;, new DialogInterface.OnClickListener() {</b>
-<b class="nc"><i>236</i>&nbsp;                        @Override</b>
-<i>237</i>&nbsp;                        public void onClick(DialogInterface dialog, int which) {
-<b class="nc"><i>238</i>&nbsp;                            dialog.cancel();</b>
-<i>239</i>&nbsp;                        }
-<i>240</i>&nbsp;                    });
-<i>241</i>&nbsp;
-<b class="nc"><i>242</i>&nbsp;            AlertDialog alertDialog = alertDialogBuilder.create();</b>
-<b class="nc"><i>243</i>&nbsp;            alertDialog.show();</b>
-<i>244</i>&nbsp;        } finally {
-<b class="nc"><i>245</i>&nbsp;            if (db != null)</b>
-<b class="nc"><i>246</i>&nbsp;                db.close();</b>
-<i>247</i>&nbsp;        }
-<b class="nc"><i>248</i>&nbsp;    }</b>
-<i>249</i>&nbsp;
-<i>250</i>&nbsp;    public void EditClick() {
-<b class="nc"><i>251</i>&nbsp;        removeUebungen();</b>
-<b class="nc"><i>252</i>&nbsp;        Bundle temp = new Bundle();</b>
-<b class="nc"><i>253</i>&nbsp;        temp.putString(&quot;param&quot;, namePlan);</b>
-<b class="nc"><i>254</i>&nbsp;        Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);</b>
-<b class="nc"><i>255</i>&nbsp;        i.putExtras(temp);</b>
-<b class="nc"><i>256</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>257</i>&nbsp;        finish();</b>
-<b class="nc"><i>258</i>&nbsp;    }</b>
-<i>259</i>&nbsp;
-<i>260</i>&nbsp;    public void StartClick(){
-<b class="nc"><i>261</i>&nbsp;        removeUebungen();</b>
-<b class="nc"><i>262</i>&nbsp;        Bundle t = new Bundle();</b>
-<b class="nc"><i>263</i>&nbsp;        t.putString(&quot;param&quot;, namePlan);</b>
-<b class="nc"><i>264</i>&nbsp;        Intent in = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);</b>
-<b class="nc"><i>265</i>&nbsp;        in.putExtras(t);</b>
-<b class="nc"><i>266</i>&nbsp;        startActivity(in);</b>
-<b class="nc"><i>267</i>&nbsp;        finish();</b>
-<b class="nc"><i>268</i>&nbsp;    }</b>
-<i>269</i>&nbsp;
-<i>270</i>&nbsp;    public void setLocale(String lang){
-<b class="nc"><i>271</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
-<b class="nc"><i>272</i>&nbsp;        Resources res = getResources();</b>
-<b class="nc"><i>273</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
-<b class="nc"><i>274</i>&nbsp;        Configuration config = res.getConfiguration();</b>
-<b class="nc"><i>275</i>&nbsp;        config.locale = myLocale;</b>
-<b class="nc"><i>276</i>&nbsp;        res.updateConfiguration(config, dm);</b>
-<b class="nc"><i>277</i>&nbsp;    }</b>
-<i>278</i>&nbsp;}
+<b class="nc"><i>231</i>&nbsp;            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(</b>
+<i>232</i>&nbsp;                    context);
+<b class="nc"><i>233</i>&nbsp;</b>
+<b class="nc"><i>234</i>&nbsp;            alertDialogBuilder.setTitle(namePlan);</b>
+<b class="nc"><i>235</i>&nbsp;</b>
+<b class="nc"><i>236</i>&nbsp;            alertDialogBuilder</b>
+<b class="nc"><i>237</i>&nbsp;                    .setMessage(getResources().getString(R.string.alert_planInfoCreated) + &quot; &quot; + date_create + &quot;\n&quot; + getResources().getString(R.string.alert_planInfoExecuted) + &quot; &quot; + date_last)</b>
+<b class="nc"><i>238</i>&nbsp;                    .setPositiveButton(&quot;Okay&quot;, new DialogInterface.OnClickListener() {</b>
+<i>239</i>&nbsp;                        @Override
+<i>240</i>&nbsp;                        public void onClick(DialogInterface dialog, int which) {
+<b class="nc"><i>241</i>&nbsp;                            dialog.cancel();</b>
+<b class="nc"><i>242</i>&nbsp;                        }</b>
+<b class="nc"><i>243</i>&nbsp;                    });</b>
+<i>244</i>&nbsp;
+<b class="nc"><i>245</i>&nbsp;            AlertDialog alertDialog = alertDialogBuilder.create();</b>
+<b class="nc"><i>246</i>&nbsp;            alertDialog.show();</b>
+<i>247</i>&nbsp;        } finally {
+<b class="nc"><i>248</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>249</i>&nbsp;                db.close();</b>
+<i>250</i>&nbsp;        }
+<b class="nc"><i>251</i>&nbsp;    }</b>
+<b class="nc"><i>252</i>&nbsp;</b>
+<b class="nc"><i>253</i>&nbsp;    public void EditClick() {</b>
+<b class="nc"><i>254</i>&nbsp;        removeUebungen();</b>
+<b class="nc"><i>255</i>&nbsp;        Bundle temp = new Bundle();</b>
+<b class="nc"><i>256</i>&nbsp;        temp.putString(&quot;param&quot;, namePlan);</b>
+<b class="nc"><i>257</i>&nbsp;        Intent i = new Intent(ViewPlanActivity.this, EditPlanActivity.class);</b>
+<b class="nc"><i>258</i>&nbsp;        i.putExtras(temp);</b>
+<b class="nc"><i>259</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>260</i>&nbsp;        finish();</b>
+<b class="nc"><i>261</i>&nbsp;    }</b>
+<b class="nc"><i>262</i>&nbsp;</b>
+<b class="nc"><i>263</i>&nbsp;    public void StartClick(){</b>
+<b class="nc"><i>264</i>&nbsp;        if(uebung.size() == 0){</b>
+<b class="nc"><i>265</i>&nbsp;            Toast.makeText(context, R.string.errorNoExcercises, Toast.LENGTH_SHORT).show();</b>
+<b class="nc"><i>266</i>&nbsp;        }else{</b>
+<b class="nc"><i>267</i>&nbsp;            removeUebungen();</b>
+<b class="nc"><i>268</i>&nbsp;            Bundle t = new Bundle();</b>
+<b class="nc"><i>269</i>&nbsp;            t.putString(&quot;param&quot;, namePlan);</b>
+<b class="nc"><i>270</i>&nbsp;            Intent in = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);</b>
+<b class="nc"><i>271</i>&nbsp;            in.putExtras(t);</b>
+<b class="nc"><i>272</i>&nbsp;            startActivity(in);</b>
+<b class="nc"><i>273</i>&nbsp;            finish();</b>
+<b class="nc"><i>274</i>&nbsp;        }</b>
+<b class="nc"><i>275</i>&nbsp;    }</b>
+<b class="nc"><i>276</i>&nbsp;</b>
+<b class="nc"><i>277</i>&nbsp;    public void AnalyzeClick(){</b>
+<b class="nc"><i>278</i>&nbsp;        removeUebungen();</b>
+<b class="nc"><i>279</i>&nbsp;        Bundle temp = new Bundle();</b>
+<b class="nc"><i>280</i>&nbsp;        temp.putString(&quot;param&quot;, namePlan);</b>
+<b class="nc"><i>281</i>&nbsp;        Intent i = new Intent(ViewPlanActivity.this, AnalyzePlanActivity.class);</b>
+<b class="nc"><i>282</i>&nbsp;        i.putExtras(temp);</b>
+<b class="nc"><i>283</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>284</i>&nbsp;        finish();</b>
+<b class="nc"><i>285</i>&nbsp;    }</b>
+<i>286</i>&nbsp;
+<i>287</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>288</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>289</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>290</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>291</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>292</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>293</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>294</i>&nbsp;    }</b>
+<i>295</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-14 19:21</div>
+    <div style="float:right;">generated on 2017-05-15 19:52</div>
 </div>
 </body>
 </html>

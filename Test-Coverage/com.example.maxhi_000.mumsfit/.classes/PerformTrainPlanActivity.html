@@ -23,12 +23,9 @@
 <h1>Coverage Summary for Class: PerformTrainPlanActivity (com.example.maxhi_000.mumsfit)</h1>
 
 <table class="coverageStats">
+
 <tr>
   <th class="name">Class</th>
-<th class="coverageStat 
-">
-  Class, %
-</th>
 <th class="coverageStat 
 ">
   Method, %
@@ -42,30 +39,97 @@
   <td class="name">PerformTrainPlanActivity</td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    22,2%
   </span>
   <span class="absValue">
-    (0/ 1)
+    (2/ 9)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    0%
+    8%
   </span>
   <span class="absValue">
-    (0/ 5)
-  </span>
-</td>
-<td class="coverageStat">
-  <span class="percent">
-    0%
-  </span>
-  <span class="absValue">
-    (0/ 30)
+    (9/ 113)
   </span>
 </td>
 </tr>
-
+  <tr>
+    <td class="name">PerformTrainPlanActivity$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PerformTrainPlanActivity$2</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">PerformTrainPlanActivity$3</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 15)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    13,3%
+  </span>
+  <span class="absValue">
+    (2/ 15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    6,6%
+  </span>
+  <span class="absValue">
+    (9/ 136)
+  </span>
+</td>
+</tr>
 </table>
 
 <br/>
@@ -91,74 +155,255 @@
 <i>17</i>&nbsp;import android.view.Menu;
 <i>18</i>&nbsp;import android.view.MenuItem;
 <i>19</i>&nbsp;import android.view.View;
-<i>20</i>&nbsp;import android.widget.LinearLayout;
-<i>21</i>&nbsp;import android.widget.TextView;
-<i>22</i>&nbsp;import android.widget.Toast;
-<i>23</i>&nbsp;
-<i>24</i>&nbsp;import java.util.ArrayList;
-<i>25</i>&nbsp;import java.util.Locale;
-<i>26</i>&nbsp;
-<b class="nc"><i>27</i>&nbsp;public class PerformTrainPlanActivity extends AppCompatActivity{</b>
+<i>20</i>&nbsp;import android.widget.AdapterView;
+<i>21</i>&nbsp;import android.widget.ArrayAdapter;
+<i>22</i>&nbsp;import android.widget.Button;
+<i>23</i>&nbsp;import android.widget.EditText;
+<i>24</i>&nbsp;import android.widget.LinearLayout;
+<i>25</i>&nbsp;import android.widget.Spinner;
+<i>26</i>&nbsp;import android.widget.TextView;
+<i>27</i>&nbsp;import android.widget.Toast;
 <i>28</i>&nbsp;
-<i>29</i>&nbsp;    String namePlan;
-<i>30</i>&nbsp;    private TrainPlanDataSource dataSource;
-<b class="nc"><i>31</i>&nbsp;    final Context context = this;</b>
-<i>32</i>&nbsp;
-<b class="nc"><i>33</i>&nbsp;    static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
-<i>34</i>&nbsp;
-<i>35</i>&nbsp;    @Override
-<i>36</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
-<b class="nc"><i>37</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
-<i>38</i>&nbsp;                    &quot;MyPrefs&quot;, MODE_PRIVATE);
-<i>39</i>&nbsp;
-<b class="nc"><i>40</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
-<b class="nc"><i>41</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
-<b class="nc"><i>42</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
-<b class="nc"><i>43</i>&nbsp;        }else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
-<b class="nc"><i>44</i>&nbsp;            setTheme(R.style.LightTheme);</b>
-<b class="nc"><i>45</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
-<b class="nc"><i>46</i>&nbsp;            setTheme(R.style.AppTheme);</b>
-<i>47</i>&nbsp;        }
-<i>48</i>&nbsp;
-<b class="nc"><i>49</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
-<b class="nc"><i>50</i>&nbsp;        setLocale(appLanguage);</b>
-<i>51</i>&nbsp;
-<b class="nc"><i>52</i>&nbsp;        super.onCreate(savedInstanceState);</b>
-<i>53</i>&nbsp;
-<b class="nc"><i>54</i>&nbsp;        setContentView(R.layout.perform_plan);</b>
-<i>55</i>&nbsp;
-<b class="nc"><i>56</i>&nbsp;        Bundle params = getIntent().getExtras();</b>
-<b class="nc"><i>57</i>&nbsp;        this.namePlan = params.getString(&quot;param&quot;);</b>
-<i>58</i>&nbsp;
-<b class="nc"><i>59</i>&nbsp;        setTitle(this.namePlan);</b>
-<i>60</i>&nbsp;    }
-<i>61</i>&nbsp;
-<i>62</i>&nbsp;    @Override
-<i>63</i>&nbsp;    public void onBackPressed(){
-<i>64</i>&nbsp;        //super.onBackPressed();
-<b class="nc"><i>65</i>&nbsp;        Bundle temp = new Bundle();</b>
-<b class="nc"><i>66</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
-<b class="nc"><i>67</i>&nbsp;        Intent i = new Intent(PerformTrainPlanActivity.this, ViewPlanActivity.class);</b>
-<b class="nc"><i>68</i>&nbsp;        i.putExtras(temp);</b>
-<b class="nc"><i>69</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>70</i>&nbsp;        finish();</b>
-<i>71</i>&nbsp;    }
-<i>72</i>&nbsp;
-<i>73</i>&nbsp;    public void setLocale(String lang){
-<b class="nc"><i>74</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
-<b class="nc"><i>75</i>&nbsp;        Resources res = getResources();</b>
-<b class="nc"><i>76</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
-<b class="nc"><i>77</i>&nbsp;        Configuration config = res.getConfiguration();</b>
-<b class="nc"><i>78</i>&nbsp;        config.locale = myLocale;</b>
-<b class="nc"><i>79</i>&nbsp;        res.updateConfiguration(config, dm);</b>
-<i>80</i>&nbsp;    }
-<i>81</i>&nbsp;}
+<i>29</i>&nbsp;import java.util.ArrayList;
+<i>30</i>&nbsp;import java.util.Locale;
+<i>31</i>&nbsp;
+<b class="nc"><i>32</i>&nbsp;public class PerformTrainPlanActivity extends AppCompatActivity{</b>
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;    String namePlan;
+<i>35</i>&nbsp;    private TrainPlanDataSource dataSource;
+<b class="nc"><i>36</i>&nbsp;    final Context context = this;</b>
+<i>37</i>&nbsp;
+<b class="fc"><i>38</i>&nbsp;    static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
+<b class="fc"><i>39</i>&nbsp;    static ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;    static String current_split;
+<b class="fc"><i>42</i>&nbsp;    static ArrayList&lt;Uebung&gt; split_uebung = new ArrayList&lt;Uebung&gt;();</b>
+<i>43</i>&nbsp;
+<i>44</i>&nbsp;    ArrayAdapter dataAdapter_uebung;
+<i>45</i>&nbsp;
+<i>46</i>&nbsp;    @Override
+<i>47</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>48</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
+<i>49</i>&nbsp;                    &quot;MyPrefs&quot;, MODE_PRIVATE);
+<i>50</i>&nbsp;
+<b class="nc"><i>51</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
+<b class="nc"><i>52</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
+<b class="nc"><i>53</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
+<b class="nc"><i>54</i>&nbsp;        }else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
+<b class="nc"><i>55</i>&nbsp;            setTheme(R.style.LightTheme);</b>
+<b class="nc"><i>56</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
+<b class="nc"><i>57</i>&nbsp;            setTheme(R.style.AppTheme);</b>
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
+<b class="nc"><i>61</i>&nbsp;        setLocale(appLanguage);</b>
+<i>62</i>&nbsp;
+<b class="nc"><i>63</i>&nbsp;        super.onCreate(savedInstanceState);</b>
+<i>64</i>&nbsp;
+<b class="nc"><i>65</i>&nbsp;        setContentView(R.layout.perform_plan);</b>
+<i>66</i>&nbsp;
+<b class="nc"><i>67</i>&nbsp;        Bundle params = getIntent().getExtras();</b>
+<b class="nc"><i>68</i>&nbsp;        this.namePlan = params.getString(&quot;param&quot;);</b>
+<i>69</i>&nbsp;
+<b class="nc"><i>70</i>&nbsp;        setTitle(this.namePlan);</b>
+<i>71</i>&nbsp;
+<b class="nc"><i>72</i>&nbsp;        SQLiteDatabase db = null;</b>
+<i>73</i>&nbsp;        try {
+<b class="nc"><i>74</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>75</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>76</i>&nbsp;            dataSource.open();</b>
+<i>77</i>&nbsp;
+<b class="nc"><i>78</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT uebung.uebung_id, uebung.plan_id, uebung.name, uebung.reps, uebung.start, uebung.split &quot; +</b>
+<i>79</i>&nbsp;                    &quot;FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name=&#39;&quot;+
+<i>80</i>&nbsp;                    this.namePlan+&quot;&#39;&quot;, null);
+<i>81</i>&nbsp;
+<b class="nc"><i>82</i>&nbsp;            if (c.moveToFirst()) {</b>
+<b class="nc"><i>83</i>&nbsp;                while (!c.isAfterLast()) {</b>
+<b class="nc"><i>84</i>&nbsp;                    String uid = (c.getString(c.getColumnIndex(&quot;uebung_id&quot;)));</b>
+<b class="nc"><i>85</i>&nbsp;                    String pid = (c.getString(c.getColumnIndex(&quot;plan_id&quot;)));</b>
+<b class="nc"><i>86</i>&nbsp;                    String name = (c.getString(c.getColumnIndex(&quot;name&quot;)));</b>
+<b class="nc"><i>87</i>&nbsp;                    String reps = (c.getString(c.getColumnIndex(&quot;reps&quot;)));</b>
+<b class="nc"><i>88</i>&nbsp;                    String start = (c.getString(c.getColumnIndex(&quot;start&quot;)));</b>
+<b class="nc"><i>89</i>&nbsp;                    String split = (c.getString(c.getColumnIndex(&quot;split&quot;)));</b>
+<b class="nc"><i>90</i>&nbsp;                    boolean temp = alreadyIn(split, splits);</b>
+<b class="nc"><i>91</i>&nbsp;                    if(!temp){</b>
+<b class="nc"><i>92</i>&nbsp;                        splits.add(split);</b>
+<i>93</i>&nbsp;                    }
+<b class="nc"><i>94</i>&nbsp;                    uebung.add(new Uebung(Integer.parseInt(uid), Integer.parseInt(pid), name, reps, Double.parseDouble(start), split));</b>
+<b class="nc"><i>95</i>&nbsp;                    c.moveToNext();</b>
+<b class="nc"><i>96</i>&nbsp;                }</b>
+<i>97</i>&nbsp;            }
+<b class="nc"><i>98</i>&nbsp;            dataSource.close();</b>
+<i>99</i>&nbsp;        }finally {
+<b class="nc"><i>100</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>101</i>&nbsp;                db.close();</b>
+<i>102</i>&nbsp;        }
+<i>103</i>&nbsp;
+<b class="nc"><i>104</i>&nbsp;        current_split = splits.get(0);</b>
+<i>105</i>&nbsp;
+<b class="nc"><i>106</i>&nbsp;        Spinner spinner_splits = (Spinner) findViewById(R.id.spinner_split);</b>
+<b class="nc"><i>107</i>&nbsp;        ArrayAdapter dataAdapter_split = new ArrayAdapter(this,android.R.layout.simple_spinner_item, splits);</b>
+<b class="nc"><i>108</i>&nbsp;        dataAdapter_split.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</b>
+<b class="nc"><i>109</i>&nbsp;        spinner_splits.setAdapter(dataAdapter_split);</b>
+<b class="nc"><i>110</i>&nbsp;        spinner_splits.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
+<i>111</i>&nbsp;
+<i>112</i>&nbsp;            @Override
+<i>113</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc"><i>114</i>&nbsp;                String selected = parent.getItemAtPosition(position).toString();</b>
+<b class="nc"><i>115</i>&nbsp;                current_split = selected;</b>
+<b class="nc"><i>116</i>&nbsp;                createSplitUebung();</b>
+<b class="nc"><i>117</i>&nbsp;                dataAdapter_uebung.notifyDataSetChanged();</b>
+<b class="nc"><i>118</i>&nbsp;                fillGUI();</b>
+<i>119</i>&nbsp;            }
+<i>120</i>&nbsp;
+<i>121</i>&nbsp;            @Override
+<i>122</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
+<i>123</i>&nbsp;
+<i>124</i>&nbsp;            }
+<i>125</i>&nbsp;        });
+<i>126</i>&nbsp;
+<i>127</i>&nbsp;
+<b class="nc"><i>128</i>&nbsp;        createSplitUebung();</b>
+<b class="nc"><i>129</i>&nbsp;        Spinner spinner_uebung = (Spinner) findViewById(R.id.spinner_uebung);</b>
+<b class="nc"><i>130</i>&nbsp;        dataAdapter_uebung = new ArrayAdapter(this,android.R.layout.simple_spinner_item, split_uebung);</b>
+<b class="nc"><i>131</i>&nbsp;        dataAdapter_uebung.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</b>
+<b class="nc"><i>132</i>&nbsp;        spinner_uebung.setAdapter(dataAdapter_uebung);</b>
+<b class="nc"><i>133</i>&nbsp;        spinner_uebung.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;            @Override
+<i>136</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
+<b class="nc"><i>137</i>&nbsp;                fillGUI();</b>
+<i>138</i>&nbsp;            }
+<i>139</i>&nbsp;
+<i>140</i>&nbsp;            @Override
+<i>141</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
+<i>142</i>&nbsp;
+<i>143</i>&nbsp;            }
+<i>144</i>&nbsp;        });
+<i>145</i>&nbsp;
+<b class="nc"><i>146</i>&nbsp;        Button btn_okay = (Button) findViewById(R.id.button_ok);</b>
+<b class="nc"><i>147</i>&nbsp;        btn_okay.setOnClickListener(new View.OnClickListener() {</b>
+<i>148</i>&nbsp;            public void onClick(View v) {
+<b class="nc"><i>149</i>&nbsp;                EditText input_weight = (EditText) findViewById(R.id.input_weight);</b>
+<b class="nc"><i>150</i>&nbsp;                double newGewicht = Double.parseDouble(input_weight.getText().toString());</b>
+<b class="nc"><i>151</i>&nbsp;                SQLiteDatabase db = null;</b>
+<i>152</i>&nbsp;                try {
+<b class="nc"><i>153</i>&nbsp;                    db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>154</i>&nbsp;                    dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>155</i>&nbsp;                    dataSource.open();</b>
+<i>156</i>&nbsp;
+<b class="nc"><i>157</i>&nbsp;                    Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();</b>
+<i>158</i>&nbsp;
+<b class="nc"><i>159</i>&nbsp;                    db.execSQL(&quot;INSERT INTO gewicht (uebung_id, gewicht)&quot; +</b>
+<b class="nc"><i>160</i>&nbsp;                            &quot; VALUES (&#39;&quot;+test.getUebung_id()+&quot;&#39;, &#39;&quot;+newGewicht+&quot;&#39;)&quot;);</b>
+<i>161</i>&nbsp;
+<b class="nc"><i>162</i>&nbsp;                    dataSource.close();</b>
+<i>163</i>&nbsp;                }finally {
+<b class="nc"><i>164</i>&nbsp;                    if (db != null)</b>
+<b class="nc"><i>165</i>&nbsp;                        db.close();</b>
+<i>166</i>&nbsp;                }
+<b class="nc"><i>167</i>&nbsp;                input_weight.setText(&quot;&quot;);</b>
+<b class="nc"><i>168</i>&nbsp;                fillGUI();</b>
+<i>169</i>&nbsp;            }
+<i>170</i>&nbsp;        });
+<b class="nc"><i>171</i>&nbsp;        fillGUI();</b>
+<b class="nc"><i>172</i>&nbsp;    }</b>
+<i>173</i>&nbsp;
+<i>174</i>&nbsp;    public void fillGUI(){
+<b class="nc"><i>175</i>&nbsp;        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();</b>
+<b class="nc"><i>176</i>&nbsp;        TextView text_reps = (TextView) findViewById(R.id.textView_reps);</b>
+<b class="nc"><i>177</i>&nbsp;        text_reps.setText(getString(R.string.hint_reps) + &quot;: &quot;+ test.getReps());</b>
+<i>178</i>&nbsp;
+<b class="nc"><i>179</i>&nbsp;        String gewicht = &quot;&quot;;</b>
+<b class="nc"><i>180</i>&nbsp;        SQLiteDatabase db = null;</b>
+<i>181</i>&nbsp;        try {
+<b class="nc"><i>182</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>183</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>184</i>&nbsp;            dataSource.open();</b>
+<i>185</i>&nbsp;
+<b class="nc"><i>186</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT gewicht.gewicht FROM plan, gewicht, uebung WHERE &quot; +</b>
+<b class="nc"><i>187</i>&nbsp;                    &quot;uebung.name=&#39;&quot;+test.getName()+&quot;&#39; AND uebung.uebung_id=gewicht.uebung_id &quot; +</b>
+<i>188</i>&nbsp;                    &quot;AND plan.name=&#39;&quot;+this.namePlan+&quot;&#39; AND plan.plan_id=uebung.plan_id&quot;, null);
+<i>189</i>&nbsp;
+<b class="nc"><i>190</i>&nbsp;            if (c.moveToLast()) {</b>
+<b class="nc"><i>191</i>&nbsp;                gewicht = c.getString(c.getColumnIndex(&quot;gewicht&quot;));</b>
+<i>192</i>&nbsp;            } else{
+<b class="nc"><i>193</i>&nbsp;                gewicht = test.getStart()+&quot;&quot;;</b>
+<i>194</i>&nbsp;            }
+<b class="nc"><i>195</i>&nbsp;            dataSource.close();</b>
+<i>196</i>&nbsp;        }finally {
+<b class="nc"><i>197</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>198</i>&nbsp;                db.close();</b>
+<i>199</i>&nbsp;        }
+<i>200</i>&nbsp;
+<b class="nc"><i>201</i>&nbsp;        EditText input_weight = (EditText) findViewById(R.id.input_weight);</b>
+<b class="nc"><i>202</i>&nbsp;        input_weight.setHint(gewicht);</b>
+<b class="nc"><i>203</i>&nbsp;    }</b>
+<i>204</i>&nbsp;
+<i>205</i>&nbsp;
+<i>206</i>&nbsp;    public static void createSplitUebung() {
+<b class="fc"><i>207</i>&nbsp;        int temp = split_uebung.size();</b>
+<b class="fc"><i>208</i>&nbsp;        for(int i = 0; i &lt; temp; i++){</b>
+<b class="nc"><i>209</i>&nbsp;            split_uebung.remove(0);</b>
+<i>210</i>&nbsp;        }
+<b class="fc"><i>211</i>&nbsp;        for(int j = 0; j &lt; uebung.size(); j++){</b>
+<b class="fc"><i>212</i>&nbsp;            if(uebung.get(j).getSplit().equals(current_split)){</b>
+<b class="fc"><i>213</i>&nbsp;                split_uebung.add(uebung.get(j));</b>
+<i>214</i>&nbsp;            }
+<i>215</i>&nbsp;        }
+<b class="fc"><i>216</i>&nbsp;    }</b>
+<i>217</i>&nbsp;
+<i>218</i>&nbsp;    public static  boolean alreadyIn(String split, ArrayList&lt;String&gt; list){
+<b class="nc"><i>219</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++){</b>
+<b class="nc"><i>220</i>&nbsp;            if(list.get(i).equals(split)){</b>
+<b class="nc"><i>221</i>&nbsp;                return true;</b>
+<i>222</i>&nbsp;            }
+<i>223</i>&nbsp;        }
+<b class="nc"><i>224</i>&nbsp;        return false;</b>
+<i>225</i>&nbsp;    }
+<i>226</i>&nbsp;
+<i>227</i>&nbsp;    public static void removeUebungen(){
+<b class="nc"><i>228</i>&nbsp;        int temp = uebung.size();</b>
+<b class="nc"><i>229</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>230</i>&nbsp;            uebung.remove(0);</b>
+<i>231</i>&nbsp;        }
+<b class="nc"><i>232</i>&nbsp;        temp = splits.size();</b>
+<b class="nc"><i>233</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>234</i>&nbsp;            splits.remove(0);</b>
+<i>235</i>&nbsp;        }
+<b class="nc"><i>236</i>&nbsp;        temp = split_uebung.size();</b>
+<b class="nc"><i>237</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>238</i>&nbsp;            split_uebung.remove(0);</b>
+<i>239</i>&nbsp;        }
+<b class="nc"><i>240</i>&nbsp;    }</b>
+<i>241</i>&nbsp;
+<i>242</i>&nbsp;    @Override
+<i>243</i>&nbsp;    public void onBackPressed(){
+<i>244</i>&nbsp;        //super.onBackPressed();
+<b class="nc"><i>245</i>&nbsp;        removeUebungen();</b>
+<b class="nc"><i>246</i>&nbsp;        Bundle temp = new Bundle();</b>
+<b class="nc"><i>247</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
+<b class="nc"><i>248</i>&nbsp;        Intent i = new Intent(PerformTrainPlanActivity.this, ViewPlanActivity.class);</b>
+<b class="nc"><i>249</i>&nbsp;        i.putExtras(temp);</b>
+<b class="nc"><i>250</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>251</i>&nbsp;        finish();</b>
+<b class="nc"><i>252</i>&nbsp;    }</b>
+<i>253</i>&nbsp;
+<i>254</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>255</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>256</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>257</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>258</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>259</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>260</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>261</i>&nbsp;    }</b>
+<i>262</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-14 19:21</div>
+    <div style="float:right;">generated on 2017-05-15 19:52</div>
 </div>
 </body>
 </html>

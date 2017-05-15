@@ -1,6 +1,7 @@
 package com.example.maxhi_000.mumsfit;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -50,10 +51,10 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     public View getView(int position, View convertView, ViewGroup parent)
     {
         View v = super.getView(position, convertView, parent);//let the adapter handle setting up the row views
-        v.setBackgroundColor(mContext.getResources().getColor(android.R.color.background_light)); //default color
+        v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
 
         if (mSelection.get(position) != null) {
-            v.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
+            v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.holo_blue_light));
         }
 
         return v;

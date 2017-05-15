@@ -39,18 +39,18 @@
   <td class="name">EditPlanActivity</td>
 <td class="coverageStat">
   <span class="percent">
-    38,5%
+    46,2%
   </span>
   <span class="absValue">
-    (5/ 13)
+    (6/ 13)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    19,2%
+    23,7%
   </span>
   <span class="absValue">
-    (39/ 203)
+    (58/ 245)
   </span>
 </td>
 </tr>
@@ -107,7 +107,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 10)
+    (0/ 11)
   </span>
 </td>
   </tr>
@@ -164,7 +164,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 11)
+    (0/ 19)
   </span>
 </td>
   </tr>
@@ -221,7 +221,7 @@
     0%
   </span>
   <span class="absValue">
-    (0/ 15)
+    (0/ 25)
   </span>
 </td>
   </tr>
@@ -229,18 +229,18 @@
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    16,1%
+    19,4%
   </span>
   <span class="absValue">
-    (5/ 31)
+    (6/ 31)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    12,5%
+    15,5%
   </span>
   <span class="absValue">
-    (39/ 313)
+    (58/ 374)
   </span>
 </td>
 </tr>
@@ -331,7 +331,7 @@
 <b class="nc"><i>79</i>&nbsp;                    String reps = (c.getString(c.getColumnIndex(&quot;reps&quot;)));</b>
 <b class="nc"><i>80</i>&nbsp;                    String start = (c.getString(c.getColumnIndex(&quot;start&quot;)));</b>
 <b class="nc"><i>81</i>&nbsp;                    String split = (c.getString(c.getColumnIndex(&quot;split&quot;)));</b>
-<b class="nc"><i>82</i>&nbsp;                    uebung.add(new Uebung(name, reps, start, split));</b>
+<b class="nc"><i>82</i>&nbsp;                    uebung.add(new Uebung(name, reps, Double.parseDouble(start), split));</b>
 <b class="nc"><i>83</i>&nbsp;                    c.moveToNext();</b>
 <b class="nc"><i>84</i>&nbsp;                }</b>
 <b class="nc"><i>85</i>&nbsp;            }</b>
@@ -375,7 +375,7 @@
 <b class="nc"><i>123</i>&nbsp;                                    if (db != null)</b>
 <b class="nc"><i>124</i>&nbsp;                                        db.close();</b>
 <i>125</i>&nbsp;                                }
-<i>126</i>&nbsp;
+<b class="nc"><i>126</i>&nbsp;                                removeUebungen();</b>
 <b class="nc"><i>127</i>&nbsp;                                finish();</b>
 <b class="nc"><i>128</i>&nbsp;                                startActivity(getIntent());</b>
 <i>129</i>&nbsp;                            }
@@ -422,8 +422,8 @@
 <b class="nc"><i>170</i>&nbsp;                layout.addView(e_reps);</b>
 <i>171</i>&nbsp;
 <b class="nc"><i>172</i>&nbsp;                final EditText e_sw = new EditText(context);</b>
-<b class="nc"><i>173</i>&nbsp;                e_sw.setText(uebung.get(toEdit).getStart());</b>
-<b class="nc"><i>174</i>&nbsp;                e_sw.setInputType(InputType.TYPE_CLASS_TEXT);</b>
+<b class="nc"><i>173</i>&nbsp;                e_sw.setText(uebung.get(toEdit).getStart()+&quot;&quot;);</b>
+<b class="nc"><i>174</i>&nbsp;                e_sw.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);</b>
 <b class="nc"><i>175</i>&nbsp;                e_sw.setId(R.id.c_sw);</b>
 <b class="nc"><i>176</i>&nbsp;                layout.addView(e_sw);</b>
 <b class="nc"><i>177</i>&nbsp;                alertDialogBuilder.setView(layout);</b>
@@ -434,247 +434,286 @@
 <b class="nc"><i>182</i>&nbsp;                        .setPositiveButton(&quot;Okay&quot;, new DialogInterface.OnClickListener() {</b>
 <i>183</i>&nbsp;                            @Override
 <i>184</i>&nbsp;                            public void onClick(DialogInterface dialog, int which) {
-<b class="nc"><i>185</i>&nbsp;                                SQLiteDatabase db = null;</b>
-<i>186</i>&nbsp;                                try {
-<b class="nc"><i>187</i>&nbsp;                                    db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
-<i>188</i>&nbsp;
-<b class="nc"><i>189</i>&nbsp;                                    TrainPlanDataSource dataSource = new TrainPlanDataSource(context);</b>
-<b class="nc"><i>190</i>&nbsp;                                    db.execSQL(&quot;UPDATE uebung SET name=&#39;&quot;+ e_name.getText().toString() +&quot;&#39; , reps=&#39;&quot;+ e_reps.getText().toString() +&quot;&#39; , start=&#39;&quot;+ e_sw.getText().toString() +&quot;&#39; , split=&#39;&quot;+ uebung.get(toEdit).getSplit() +&quot;&#39; WHERE name=&#39;&quot;+ uebung.get(toEdit).getName() +&quot;&#39; &quot;);</b>
-<i>191</i>&nbsp;
-<b class="nc"><i>192</i>&nbsp;                                    dataSource.close();</b>
-<i>193</i>&nbsp;                                }finally {
-<b class="nc"><i>194</i>&nbsp;                                    if (db != null)</b>
-<b class="nc"><i>195</i>&nbsp;                                        db.close();</b>
-<i>196</i>&nbsp;                                }
-<b class="nc"><i>197</i>&nbsp;                                removeUebungen();</b>
-<b class="nc"><i>198</i>&nbsp;                                finish();</b>
-<b class="nc"><i>199</i>&nbsp;                                startActivity(getIntent());</b>
-<i>200</i>&nbsp;                            }
-<i>201</i>&nbsp;                        })
-<b class="nc"><i>202</i>&nbsp;                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {</b>
-<i>203</i>&nbsp;                            public void onClick(DialogInterface dialog, int id) {
-<b class="nc"><i>204</i>&nbsp;                                dialog.cancel();</b>
-<b class="nc"><i>205</i>&nbsp;                            }</b>
-<i>206</i>&nbsp;                        });
-<i>207</i>&nbsp;
-<b class="nc"><i>208</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
-<b class="nc"><i>209</i>&nbsp;                alertDialog.show();</b>
-<b class="nc"><i>210</i>&nbsp;            }</b>
-<b class="nc"><i>211</i>&nbsp;        });</b>
-<b class="nc"><i>212</i>&nbsp;    }</b>
-<b class="nc"><i>213</i>&nbsp;</b>
-<i>214</i>&nbsp;    public void createExerciseButton(){
-<b class="nc"><i>215</i>&nbsp;        Button exerciseButton = new Button(this);</b>
-<b class="nc"><i>216</i>&nbsp;        exerciseButton.setText(R.string.alert_addExerciseTitle);</b>
-<b class="nc"><i>217</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);;</b>
-<b class="nc"><i>218</i>&nbsp;        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);</b>
-<b class="nc"><i>219</i>&nbsp;        ll.addView(exerciseButton, lp);</b>
-<b class="nc"><i>220</i>&nbsp;        exerciseButton.setOnClickListener(new View.OnClickListener() {</b>
-<i>221</i>&nbsp;            public void onClick(View view) {
-<b class="nc"><i>222</i>&nbsp;                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(</b>
-<i>223</i>&nbsp;                        context);
-<i>224</i>&nbsp;
-<b class="nc"><i>225</i>&nbsp;                alertDialogBuilder.setTitle(R.string.alert_addExerciseTitle);</b>
-<i>226</i>&nbsp;
-<b class="nc"><i>227</i>&nbsp;                LinearLayout layout = new LinearLayout(context);</b>
-<b class="nc"><i>228</i>&nbsp;                layout.setOrientation(LinearLayout.VERTICAL);</b>
-<i>229</i>&nbsp;
-<b class="nc"><i>230</i>&nbsp;                final EditText e_name = new EditText(context);</b>
-<b class="nc"><i>231</i>&nbsp;                e_name.setHint(R.string.hint_name);</b>
-<b class="nc"><i>232</i>&nbsp;                e_name.setInputType(InputType.TYPE_CLASS_TEXT);</b>
-<b class="nc"><i>233</i>&nbsp;                e_name.setId(R.id.c_name);</b>
-<b class="nc"><i>234</i>&nbsp;                layout.addView(e_name);</b>
-<i>235</i>&nbsp;
-<b class="nc"><i>236</i>&nbsp;                final EditText e_reps = new EditText(context);</b>
-<b class="nc"><i>237</i>&nbsp;                e_reps.setHint(R.string.hint_reps);</b>
-<b class="nc"><i>238</i>&nbsp;                e_reps.setInputType(InputType.TYPE_CLASS_TEXT);</b>
-<b class="nc"><i>239</i>&nbsp;                e_reps.setId(R.id.c_reps);</b>
-<b class="nc"><i>240</i>&nbsp;                layout.addView(e_reps);</b>
+<b class="nc"><i>185</i>&nbsp;                                String name = checkEingabe(e_name.getText().toString());</b>
+<b class="nc"><i>186</i>&nbsp;                                String reps = checkEingabe(e_reps.getText().toString());</b>
+<i>187</i>&nbsp;                                try{
+<b class="nc"><i>188</i>&nbsp;                                    Double start = Double.parseDouble(e_sw.getText().toString());</b>
+<i>189</i>&nbsp;
+<b class="nc"><i>190</i>&nbsp;                                    if(name == null || reps == null){</b>
+<b class="nc"><i>191</i>&nbsp;                                        Toast.makeText(context, R.string.errorEnterAll, Toast.LENGTH_SHORT).show();</b>
+<i>192</i>&nbsp;                                    }else {
+<b class="nc"><i>193</i>&nbsp;                                        SQLiteDatabase db = null;</b>
+<i>194</i>&nbsp;                                        try {
+<b class="nc"><i>195</i>&nbsp;                                            db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<i>196</i>&nbsp;
+<b class="nc"><i>197</i>&nbsp;                                            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>198</i>&nbsp;                                            db.execSQL(&quot;UPDATE uebung SET name=&#39;&quot; + name + &quot;&#39; , reps=&#39;&quot; + reps + &quot;&#39; , start=&#39;&quot; + start + &quot;&#39; , split=&#39;&quot; + uebung.get(toEdit).getSplit() + &quot;&#39; WHERE name=&#39;&quot; + uebung.get(toEdit).getName() + &quot;&#39; &quot;);</b>
+<i>199</i>&nbsp;
+<b class="nc"><i>200</i>&nbsp;                                            dataSource.close();</b>
+<i>201</i>&nbsp;                                        } finally {
+<b class="nc"><i>202</i>&nbsp;                                            if (db != null)</b>
+<b class="nc"><i>203</i>&nbsp;                                                db.close();</b>
+<i>204</i>&nbsp;                                        }
+<b class="nc"><i>205</i>&nbsp;                                    }</b>
+<b class="nc"><i>206</i>&nbsp;                                    removeUebungen();</b>
+<b class="nc"><i>207</i>&nbsp;                                    finish();</b>
+<b class="nc"><i>208</i>&nbsp;                                    startActivity(getIntent());</b>
+<b class="nc"><i>209</i>&nbsp;                                } catch (Exception e){</b>
+<b class="nc"><i>210</i>&nbsp;                                    Toast.makeText(context, R.string.errorEnterStart, Toast.LENGTH_SHORT).show();</b>
+<b class="nc"><i>211</i>&nbsp;                                }</b>
+<b class="nc"><i>212</i>&nbsp;                            }</b>
+<b class="nc"><i>213</i>&nbsp;                        })</b>
+<b class="nc"><i>214</i>&nbsp;                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {</b>
+<b class="nc"><i>215</i>&nbsp;                            public void onClick(DialogInterface dialog, int id) {</b>
+<b class="nc"><i>216</i>&nbsp;                                dialog.cancel();</b>
+<b class="nc"><i>217</i>&nbsp;                            }</b>
+<b class="nc"><i>218</i>&nbsp;                        });</b>
+<b class="nc"><i>219</i>&nbsp;</b>
+<b class="nc"><i>220</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
+<b class="nc"><i>221</i>&nbsp;                alertDialog.show();</b>
+<i>222</i>&nbsp;            }
+<i>223</i>&nbsp;        });
+<b class="nc"><i>224</i>&nbsp;    }</b>
+<i>225</i>&nbsp;
+<i>226</i>&nbsp;    public void createExerciseButton(){
+<b class="nc"><i>227</i>&nbsp;        Button exerciseButton = new Button(this);</b>
+<b class="nc"><i>228</i>&nbsp;        exerciseButton.setText(R.string.alert_addExerciseTitle);</b>
+<b class="nc"><i>229</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);;</b>
+<b class="nc"><i>230</i>&nbsp;        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);</b>
+<b class="nc"><i>231</i>&nbsp;        ll.addView(exerciseButton, lp);</b>
+<b class="nc"><i>232</i>&nbsp;        exerciseButton.setOnClickListener(new View.OnClickListener() {</b>
+<i>233</i>&nbsp;            public void onClick(View view) {
+<b class="nc"><i>234</i>&nbsp;                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(</b>
+<i>235</i>&nbsp;                        context);
+<i>236</i>&nbsp;
+<b class="nc"><i>237</i>&nbsp;                alertDialogBuilder.setTitle(R.string.alert_addExerciseTitle);</b>
+<i>238</i>&nbsp;
+<b class="nc"><i>239</i>&nbsp;                LinearLayout layout = new LinearLayout(context);</b>
+<b class="nc"><i>240</i>&nbsp;                layout.setOrientation(LinearLayout.VERTICAL);</b>
 <i>241</i>&nbsp;
-<b class="nc"><i>242</i>&nbsp;                final EditText e_sw = new EditText(context);</b>
-<b class="nc"><i>243</i>&nbsp;                e_sw.setHint(R.string.hint_weight);</b>
-<b class="nc"><i>244</i>&nbsp;                e_sw.setInputType(InputType.TYPE_CLASS_TEXT);</b>
-<b class="nc"><i>245</i>&nbsp;                e_sw.setId(R.id.c_sw);</b>
-<b class="nc"><i>246</i>&nbsp;                layout.addView(e_sw);</b>
+<b class="nc"><i>242</i>&nbsp;                final EditText e_name = new EditText(context);</b>
+<b class="nc"><i>243</i>&nbsp;                e_name.setHint(R.string.hint_name);</b>
+<b class="nc"><i>244</i>&nbsp;                e_name.setInputType(InputType.TYPE_CLASS_TEXT);</b>
+<b class="nc"><i>245</i>&nbsp;                e_name.setId(R.id.c_name);</b>
+<b class="nc"><i>246</i>&nbsp;                layout.addView(e_name);</b>
 <i>247</i>&nbsp;
-<b class="nc"><i>248</i>&nbsp;                final EditText e_split = new EditText(context);</b>
-<b class="nc"><i>249</i>&nbsp;                e_split.setHint(R.string.hint_split);</b>
-<b class="nc"><i>250</i>&nbsp;                e_split.setInputType(InputType.TYPE_CLASS_TEXT);</b>
-<b class="nc"><i>251</i>&nbsp;                e_split.setId(R.id.c_split);</b>
-<b class="nc"><i>252</i>&nbsp;                layout.addView(e_split);</b>
+<b class="nc"><i>248</i>&nbsp;                final EditText e_reps = new EditText(context);</b>
+<b class="nc"><i>249</i>&nbsp;                e_reps.setHint(R.string.hint_reps);</b>
+<b class="nc"><i>250</i>&nbsp;                e_reps.setInputType(InputType.TYPE_CLASS_TEXT);</b>
+<b class="nc"><i>251</i>&nbsp;                e_reps.setId(R.id.c_reps);</b>
+<b class="nc"><i>252</i>&nbsp;                layout.addView(e_reps);</b>
 <i>253</i>&nbsp;
-<b class="nc"><i>254</i>&nbsp;                alertDialogBuilder.setView(layout);</b>
-<i>255</i>&nbsp;
-<b class="nc"><i>256</i>&nbsp;                alertDialogBuilder</b>
-<b class="nc"><i>257</i>&nbsp;                        .setMessage(R.string.alert_addExerciseMessage)</b>
-<b class="nc"><i>258</i>&nbsp;                        .setPositiveButton(&quot;Okay&quot;, new DialogInterface.OnClickListener() {</b>
-<i>259</i>&nbsp;                            @Override
-<i>260</i>&nbsp;                            public void onClick(DialogInterface dialog, int which) {
-<b class="nc"><i>261</i>&nbsp;                                SQLiteDatabase db = null;</b>
-<i>262</i>&nbsp;                                try {
-<b class="nc"><i>263</i>&nbsp;                                    db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
-<i>264</i>&nbsp;
-<b class="nc"><i>265</i>&nbsp;                                    TrainPlanDataSource dataSource = new TrainPlanDataSource(context);</b>
-<i>266</i>&nbsp;
-<b class="nc"><i>267</i>&nbsp;                                    dataSource.open();</b>
-<b class="nc"><i>268</i>&nbsp;                                    Cursor c = db.rawQuery(&quot;SELECT plan_id FROM plan WHERE name=&#39;&quot;+namePlan+&quot;&#39;&quot;, null);</b>
-<b class="nc"><i>269</i>&nbsp;                                    c.moveToFirst();</b>
-<b class="nc"><i>270</i>&nbsp;                                    String id = c.getString(c.getColumnIndex(&quot;plan_id&quot;));</b>
-<b class="nc"><i>271</i>&nbsp;                                    db.execSQL(&quot;INSERT INTO uebung (plan_id, name, reps, start, split) VALUES (&#39;&quot;+id+&quot;&#39;, &#39;&quot;+e_name.getText().toString()+&quot;&#39;, &#39;&quot;+e_reps.getText().toString()+&quot;&#39;, &#39;&quot;+e_sw.getText().toString()+&quot;&#39;, &#39;&quot;+e_split.getText().toString().toUpperCase()+&quot;&#39;)&quot;);</b>
-<i>272</i>&nbsp;
-<b class="nc"><i>273</i>&nbsp;                                    dataSource.close();</b>
-<i>274</i>&nbsp;                                }finally {
-<b class="nc"><i>275</i>&nbsp;                                    if (db != null)</b>
-<b class="nc"><i>276</i>&nbsp;                                        db.close();</b>
-<i>277</i>&nbsp;                                }
-<b class="nc"><i>278</i>&nbsp;                                removeUebungen();</b>
-<b class="nc"><i>279</i>&nbsp;                                finish();</b>
-<b class="nc"><i>280</i>&nbsp;                                startActivity(getIntent());</b>
-<i>281</i>&nbsp;                            }
-<i>282</i>&nbsp;                        })
-<b class="nc"><i>283</i>&nbsp;                        .setNegativeButton(&quot;R.string.cancel&quot;, new DialogInterface.OnClickListener() {</b>
-<i>284</i>&nbsp;                            public void onClick(DialogInterface dialog, int id) {
-<b class="nc"><i>285</i>&nbsp;                                dialog.cancel();</b>
-<i>286</i>&nbsp;                            }
-<i>287</i>&nbsp;                        });
-<b class="fc"><i>288</i>&nbsp;</b>
-<b class="pc"><i>289</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
-<b class="pc"><i>290</i>&nbsp;                alertDialog.show();</b>
-<i>291</i>&nbsp;            }
-<i>292</i>&nbsp;        });
-<b class="fc"><i>293</i>&nbsp;    }</b>
-<i>294</i>&nbsp;
-<i>295</i>&nbsp;    public static boolean alreadyIn(String split, ArrayList&lt;String&gt; list){
-<b class="fc"><i>296</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++) {</b>
-<b class="fc"><i>297</i>&nbsp;            if (list.get(i).equals(split)) {</b>
-<b class="fc"><i>298</i>&nbsp;                return true;</b>
-<b class="fc"><i>299</i>&nbsp;            }</b>
-<b class="fc"><i>300</i>&nbsp;        }</b>
-<b class="fc"><i>301</i>&nbsp;        return false;</b>
-<b class="fc"><i>302</i>&nbsp;    }</b>
-<b class="fc"><i>303</i>&nbsp;</b>
-<b class="fc"><i>304</i>&nbsp;    public static void createOrderOfUebung(){</b>
-<b class="fc"><i>305</i>&nbsp;        ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
-<b class="fc"><i>306</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
-<b class="fc"><i>307</i>&nbsp;            if (i==0){</b>
-<b class="fc"><i>308</i>&nbsp;                splits.add(uebung.get(i).getSplit());</b>
-<b class="fc"><i>309</i>&nbsp;            }</b>
-<b class="fc"><i>310</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
-<b class="fc"><i>311</i>&nbsp;                boolean result = alreadyIn(uebung.get(i).getSplit(), splits);</b>
-<b class="fc"><i>312</i>&nbsp;                if(result){</b>
-<b class="fc"><i>313</i>&nbsp;                    boolean breakOut = false;</b>
-<b class="fc"><i>314</i>&nbsp;                    int count = 0;</b>
-<b class="fc"><i>315</i>&nbsp;                    while(!breakOut) {</b>
-<b class="fc"><i>316</i>&nbsp;                        if (uebung.get(i).getSplit().equals(uebung.get(count).getSplit())) {</b>
-<b class="fc"><i>317</i>&nbsp;                            breakOut = true;</b>
-<i>318</i>&nbsp;                        }else{
-<b class="fc"><i>319</i>&nbsp;                            count++;</b>
-<i>320</i>&nbsp;                        }
-<i>321</i>&nbsp;                    }
-<b class="fc"><i>322</i>&nbsp;                    Uebung temp = uebung.get(i);</b>
-<b class="fc"><i>323</i>&nbsp;                    uebung.remove(i);</b>
-<b class="fc"><i>324</i>&nbsp;                    uebung.add(count, temp);</b>
-<b class="fc"><i>325</i>&nbsp;                }</b>
-<b class="nc"><i>326</i>&nbsp;                else{</b>
-<b class="fc"><i>327</i>&nbsp;                    splits.add(uebung.get(i).getSplit());</b>
-<b class="nc"><i>328</i>&nbsp;                }</b>
-<b class="nc"><i>329</i>&nbsp;            }</b>
-<b class="nc"><i>330</i>&nbsp;        }</b>
-<b class="fc"><i>331</i>&nbsp;    }</b>
-<b class="nc"><i>332</i>&nbsp;</b>
-<b class="nc"><i>333</i>&nbsp;    public void drawGUI(){</b>
-<b class="nc"><i>334</i>&nbsp;        createOrderOfUebung();</b>
-<b class="nc"><i>335</i>&nbsp;</b>
-<b class="nc"><i>336</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);</b>
-<b class="nc"><i>337</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
-<b class="nc"><i>338</i>&nbsp;            if(i == 0){</b>
-<b class="nc"><i>339</i>&nbsp;</b>
-<b class="nc"><i>340</i>&nbsp;                TextView textView = new TextView(this);</b>
-<b class="nc"><i>341</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
-<b class="nc"><i>342</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
-<b class="nc"><i>343</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
-<b class="nc"><i>344</i>&nbsp;                ll.addView(textView);</b>
-<b class="nc"><i>345</i>&nbsp;            }</b>
-<b class="nc"><i>346</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
-<b class="nc"><i>347</i>&nbsp;                View v = new View(this);</b>
-<b class="nc"><i>348</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
-<b class="nc"><i>349</i>&nbsp;                    LinearLayout.LayoutParams.MATCH_PARENT,</b>
-<b class="nc"><i>350</i>&nbsp;                    5</b>
-<b class="nc"><i>351</i>&nbsp;                ));</b>
-<b class="nc"><i>352</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
-<b class="nc"><i>353</i>&nbsp;                ll.addView(v);</b>
-<b class="nc"><i>354</i>&nbsp;</b>
-<b class="nc"><i>355</i>&nbsp;                TextView textView = new TextView(this);</b>
-<b class="nc"><i>356</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
-<b class="nc"><i>357</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
-<b class="nc"><i>358</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
-<b class="nc"><i>359</i>&nbsp;                ll.addView(textView);</b>
-<b class="nc"><i>360</i>&nbsp;            }else{</b>
-<b class="nc"><i>361</i>&nbsp;                View v = new View(this);</b>
-<b class="nc"><i>362</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
-<b class="nc"><i>363</i>&nbsp;                        LinearLayout.LayoutParams.MATCH_PARENT,</b>
-<b class="nc"><i>364</i>&nbsp;                        2</b>
-<b class="nc"><i>365</i>&nbsp;                ));</b>
-<b class="nc"><i>366</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
-<b class="nc"><i>367</i>&nbsp;                ll.addView(v);</b>
+<b class="nc"><i>254</i>&nbsp;                final EditText e_sw = new EditText(context);</b>
+<b class="nc"><i>255</i>&nbsp;                e_sw.setHint(R.string.hint_weight);</b>
+<b class="nc"><i>256</i>&nbsp;                e_sw.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);</b>
+<b class="nc"><i>257</i>&nbsp;                e_sw.setId(R.id.c_sw);</b>
+<b class="nc"><i>258</i>&nbsp;                layout.addView(e_sw);</b>
+<i>259</i>&nbsp;
+<b class="nc"><i>260</i>&nbsp;                final EditText e_split = new EditText(context);</b>
+<b class="nc"><i>261</i>&nbsp;                e_split.setHint(R.string.hint_split);</b>
+<b class="nc"><i>262</i>&nbsp;                e_split.setInputType(InputType.TYPE_CLASS_TEXT);</b>
+<b class="nc"><i>263</i>&nbsp;                e_split.setId(R.id.c_split);</b>
+<b class="nc"><i>264</i>&nbsp;                layout.addView(e_split);</b>
+<i>265</i>&nbsp;
+<b class="nc"><i>266</i>&nbsp;                alertDialogBuilder.setView(layout);</b>
+<i>267</i>&nbsp;
+<b class="nc"><i>268</i>&nbsp;                alertDialogBuilder</b>
+<b class="nc"><i>269</i>&nbsp;                        .setMessage(R.string.alert_addExerciseMessage)</b>
+<b class="nc"><i>270</i>&nbsp;                        .setPositiveButton(&quot;Okay&quot;, new DialogInterface.OnClickListener() {</b>
+<i>271</i>&nbsp;                            @Override
+<i>272</i>&nbsp;                            public void onClick(DialogInterface dialog, int which) {
+<b class="nc"><i>273</i>&nbsp;                                String name = checkEingabe(e_name.getText().toString());</b>
+<b class="nc"><i>274</i>&nbsp;                                String reps = checkEingabe(e_reps.getText().toString());</b>
+<b class="nc"><i>275</i>&nbsp;                                String split = checkEingabe(e_split.getText().toString());</b>
+<i>276</i>&nbsp;                                try{
+<b class="nc"><i>277</i>&nbsp;                                        Double start = Double.parseDouble(e_sw.getText().toString());</b>
+<i>278</i>&nbsp;
+<b class="nc"><i>279</i>&nbsp;                                        if(name == null || reps == null || split == null){</b>
+<b class="nc"><i>280</i>&nbsp;                                            Toast.makeText(context, R.string.errorEnterAll, Toast.LENGTH_SHORT).show();</b>
+<i>281</i>&nbsp;                                        }else{
+<b class="nc"><i>282</i>&nbsp;                                            SQLiteDatabase db = null;</b>
+<i>283</i>&nbsp;                                            try {
+<b class="nc"><i>284</i>&nbsp;                                                db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>285</i>&nbsp;</b>
+<b class="nc"><i>286</i>&nbsp;                                                TrainPlanDataSource dataSource = new TrainPlanDataSource(context);</b>
+<i>287</i>&nbsp;
+<b class="pc"><i>288</i>&nbsp;                                                dataSource.open();</b>
+<b class="pc"><i>289</i>&nbsp;                                                Cursor c = db.rawQuery(&quot;SELECT plan_id FROM plan WHERE name=&#39;&quot;+namePlan+&quot;&#39;&quot;, null);</b>
+<b class="pc"><i>290</i>&nbsp;                                                c.moveToFirst();</b>
+<b class="nc"><i>291</i>&nbsp;                                                String id = c.getString(c.getColumnIndex(&quot;plan_id&quot;));</b>
+<b class="nc"><i>292</i>&nbsp;                                                db.execSQL(&quot;INSERT INTO uebung (plan_id, name, reps, start, split) VALUES (&#39;&quot;+id+&quot;&#39;, &#39;&quot;+name+&quot;&#39;, &#39;&quot;+reps+&quot;&#39;, &#39;&quot;+start+&quot;&#39;, &#39;&quot;+split.toUpperCase()+&quot;&#39;)&quot;);</b>
+<b class="fc"><i>293</i>&nbsp;</b>
+<b class="nc"><i>294</i>&nbsp;                                                dataSource.close();</b>
+<i>295</i>&nbsp;                                            }finally {
+<b class="nc"><i>296</i>&nbsp;                                                if (db != null)</b>
+<b class="pc"><i>297</i>&nbsp;                                                    db.close();</b>
+<b class="fc"><i>298</i>&nbsp;                                        }</b>
+<b class="pc"><i>299</i>&nbsp;                                        removeUebungen();</b>
+<b class="pc"><i>300</i>&nbsp;                                        finish();</b>
+<b class="nc"><i>301</i>&nbsp;                                        startActivity(getIntent());</b>
+<b class="pc"><i>302</i>&nbsp;                                            dialog.cancel();</b>
+<b class="fc"><i>303</i>&nbsp;                                        }</b>
+<b class="pc"><i>304</i>&nbsp;                                    } catch (Exception e){</b>
+<b class="pc"><i>305</i>&nbsp;                                        Toast.makeText(context, R.string.errorEnterStart, Toast.LENGTH_SHORT).show();</b>
+<b class="pc"><i>306</i>&nbsp;                                    }</b>
+<b class="fc"><i>307</i>&nbsp;</b>
+<b class="fc"><i>308</i>&nbsp;                            }</b>
+<b class="fc"><i>309</i>&nbsp;                        })</b>
+<b class="nc"><i>310</i>&nbsp;                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {</b>
+<b class="nc"><i>311</i>&nbsp;                            public void onClick(DialogInterface dialog, int id) {</b>
+<b class="nc"><i>312</i>&nbsp;                                dialog.cancel();</b>
+<b class="nc"><i>313</i>&nbsp;                            }</b>
+<b class="fc"><i>314</i>&nbsp;                        });</b>
+<b class="fc"><i>315</i>&nbsp;</b>
+<b class="pc"><i>316</i>&nbsp;                AlertDialog alertDialog = alertDialogBuilder.create();</b>
+<b class="pc"><i>317</i>&nbsp;                alertDialog.show();</b>
+<i>318</i>&nbsp;            }
+<b class="fc"><i>319</i>&nbsp;        });</b>
+<b class="nc"><i>320</i>&nbsp;    }</b>
+<i>321</i>&nbsp;
+<b class="nc"><i>322</i>&nbsp;    public static String checkEingabe(String input){</b>
+<b class="fc"><i>323</i>&nbsp;        if(input.isEmpty()){</b>
+<b class="nc"><i>324</i>&nbsp;            return null;</b>
+<b class="nc"><i>325</i>&nbsp;        }</b>
+<b class="fc"><i>326</i>&nbsp;        String newInput = input.trim();</b>
+<b class="fc"><i>327</i>&nbsp;        if(newInput == &quot;&quot; || newInput.isEmpty()){</b>
+<b class="fc"><i>328</i>&nbsp;            return null;</b>
+<b class="nc"><i>329</i>&nbsp;        }</b>
+<b class="nc"><i>330</i>&nbsp;</b>
+<b class="fc"><i>331</i>&nbsp;        return newInput;</b>
+<b class="nc"><i>332</i>&nbsp;    }</b>
+<b class="nc"><i>333</i>&nbsp;</b>
+<b class="nc"><i>334</i>&nbsp;    public static boolean alreadyIn(String split, ArrayList&lt;String&gt; list){</b>
+<b class="fc"><i>335</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++) {</b>
+<b class="fc"><i>336</i>&nbsp;            if (list.get(i).equals(split)) {</b>
+<b class="fc"><i>337</i>&nbsp;                return true;</b>
+<b class="nc"><i>338</i>&nbsp;            }</b>
+<b class="nc"><i>339</i>&nbsp;        }</b>
+<b class="fc"><i>340</i>&nbsp;        return false;</b>
+<b class="nc"><i>341</i>&nbsp;    }</b>
+<b class="nc"><i>342</i>&nbsp;</b>
+<b class="nc"><i>343</i>&nbsp;    public static void createOrderOfUebung(){</b>
+<b class="fc"><i>344</i>&nbsp;        ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>345</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
+<b class="fc"><i>346</i>&nbsp;            if (i==0){</b>
+<b class="fc"><i>347</i>&nbsp;                splits.add(uebung.get(i).getSplit());</b>
+<b class="nc"><i>348</i>&nbsp;            }</b>
+<b class="fc"><i>349</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
+<b class="fc"><i>350</i>&nbsp;                boolean result = alreadyIn(uebung.get(i).getSplit(), splits);</b>
+<b class="fc"><i>351</i>&nbsp;                if(result){</b>
+<b class="fc"><i>352</i>&nbsp;                    boolean breakOut = false;</b>
+<b class="fc"><i>353</i>&nbsp;                    int count = 0;</b>
+<b class="fc"><i>354</i>&nbsp;                    while(!breakOut) {</b>
+<b class="fc"><i>355</i>&nbsp;                        if (uebung.get(i).getSplit().equals(uebung.get(count).getSplit())) {</b>
+<b class="fc"><i>356</i>&nbsp;                            breakOut = true;</b>
+<b class="nc"><i>357</i>&nbsp;                        }else{</b>
+<b class="nc"><i>358</i>&nbsp;                            count++;</b>
+<b class="nc"><i>359</i>&nbsp;                        }</b>
+<b class="nc"><i>360</i>&nbsp;                    }</b>
+<b class="fc"><i>361</i>&nbsp;                    Uebung temp = uebung.get(i);</b>
+<b class="fc"><i>362</i>&nbsp;                    uebung.remove(i);</b>
+<b class="fc"><i>363</i>&nbsp;                    uebung.add(count, temp);</b>
+<b class="fc"><i>364</i>&nbsp;                }</b>
+<b class="nc"><i>365</i>&nbsp;                else{</b>
+<b class="fc"><i>366</i>&nbsp;                    splits.add(uebung.get(i).getSplit());</b>
+<b class="nc"><i>367</i>&nbsp;                }</b>
 <b class="nc"><i>368</i>&nbsp;            }</b>
-<b class="nc"><i>369</i>&nbsp;            LinearLayout tempLL = new LinearLayout(this);</b>
-<b class="nc"><i>370</i>&nbsp;</b>
-<b class="nc"><i>371</i>&nbsp;            createExerciseDeleteButton(i, tempLL);</b>
-<b class="nc"><i>372</i>&nbsp;            createExerciseEditButton(i, tempLL);</b>
-<b class="nc"><i>373</i>&nbsp;            TextView exerView = new TextView(this);</b>
-<b class="nc"><i>374</i>&nbsp;            exerView.setPadding(10,2,10,2);</b>
-<b class="nc"><i>375</i>&nbsp;</b>
-<b class="nc"><i>376</i>&nbsp;            String reps = getResources().getString(R.string.hint_reps)+&quot;: &quot;;</b>
-<b class="nc"><i>377</i>&nbsp;            String weight = getResources().getString(R.string.hint_weight)+&quot;: &quot;;</b>
-<b class="nc"><i>378</i>&nbsp;            String toShow = uebung.get(i).getName() + reps + uebung.get(i).getReps()</b>
-<b class="nc"><i>379</i>&nbsp;                    + weight + uebung.get(i).getStart();</b>
-<b class="nc"><i>380</i>&nbsp;            exerView.setText(toShow);</b>
-<b class="nc"><i>381</i>&nbsp;            tempLL.addView(exerView);</b>
-<b class="nc"><i>382</i>&nbsp;            ll.addView(tempLL);</b>
-<b class="nc"><i>383</i>&nbsp;        }</b>
-<b class="nc"><i>384</i>&nbsp;</b>
-<b class="nc"><i>385</i>&nbsp;        createExerciseButton();</b>
-<b class="nc"><i>386</i>&nbsp;    }</b>
-<b class="nc"><i>387</i>&nbsp;</b>
-<i>388</i>&nbsp;    public static void removeUebungen(){
-<b class="fc"><i>389</i>&nbsp;        int temp = uebung.size();</b>
-<b class="fc"><i>390</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
-<b class="fc"><i>391</i>&nbsp;            uebung.remove(0);</b>
-<i>392</i>&nbsp;        }
-<b class="fc"><i>393</i>&nbsp;    }</b>
-<i>394</i>&nbsp;
-<i>395</i>&nbsp;    @Override
-<i>396</i>&nbsp;    public void onBackPressed(){
-<i>397</i>&nbsp;        //super.onBackPressed();
-<b class="nc"><i>398</i>&nbsp;        removeUebungen();</b>
-<b class="nc"><i>399</i>&nbsp;        Bundle temp = new Bundle();</b>
-<b class="nc"><i>400</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
-<b class="nc"><i>401</i>&nbsp;        Intent i = new Intent(EditPlanActivity.this, ViewPlanActivity.class);</b>
-<b class="nc"><i>402</i>&nbsp;        i.putExtras(temp);</b>
-<b class="nc"><i>403</i>&nbsp;        startActivity(i);</b>
-<b class="nc"><i>404</i>&nbsp;        finish();</b>
-<b class="nc"><i>405</i>&nbsp;    }</b>
-<i>406</i>&nbsp;
-<i>407</i>&nbsp;    public void setLocale(String lang){
-<b class="nc"><i>408</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
-<b class="nc"><i>409</i>&nbsp;        Resources res = getResources();</b>
-<b class="nc"><i>410</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
-<b class="nc"><i>411</i>&nbsp;        Configuration config = res.getConfiguration();</b>
-<b class="nc"><i>412</i>&nbsp;        config.locale = myLocale;</b>
-<b class="nc"><i>413</i>&nbsp;        res.updateConfiguration(config, dm);</b>
-<b class="nc"><i>414</i>&nbsp;    }</b>
-<i>415</i>&nbsp;
-<i>416</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
-<b class="nc"><i>417</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
-<i>418</i>&nbsp;    }
-<i>419</i>&nbsp;}
+<b class="nc"><i>369</i>&nbsp;        }</b>
+<b class="fc"><i>370</i>&nbsp;    }</b>
+<b class="nc"><i>371</i>&nbsp;</b>
+<b class="nc"><i>372</i>&nbsp;    public void drawGUI(){</b>
+<b class="nc"><i>373</i>&nbsp;        createOrderOfUebung();</b>
+<b class="nc"><i>374</i>&nbsp;</b>
+<b class="nc"><i>375</i>&nbsp;        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);</b>
+<b class="nc"><i>376</i>&nbsp;        for(int i = 0; i &lt; uebung.size(); i++){</b>
+<b class="nc"><i>377</i>&nbsp;            if(i == 0){</b>
+<b class="nc"><i>378</i>&nbsp;</b>
+<b class="nc"><i>379</i>&nbsp;                TextView textView = new TextView(this);</b>
+<b class="nc"><i>380</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
+<b class="nc"><i>381</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
+<b class="nc"><i>382</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
+<b class="nc"><i>383</i>&nbsp;                ll.addView(textView);</b>
+<b class="nc"><i>384</i>&nbsp;            }</b>
+<b class="nc"><i>385</i>&nbsp;            else if(!uebung.get(i).getSplit().equals(uebung.get(i-1).getSplit())){</b>
+<b class="nc"><i>386</i>&nbsp;                View v = new View(this);</b>
+<b class="nc"><i>387</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
+<i>388</i>&nbsp;                    LinearLayout.LayoutParams.MATCH_PARENT,
+<b class="fc"><i>389</i>&nbsp;                    5</b>
+<b class="fc"><i>390</i>&nbsp;                ));</b>
+<b class="fc"><i>391</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
+<b class="nc"><i>392</i>&nbsp;                ll.addView(v);</b>
+<b class="fc"><i>393</i>&nbsp;</b>
+<b class="nc"><i>394</i>&nbsp;                TextView textView = new TextView(this);</b>
+<b class="nc"><i>395</i>&nbsp;                String sourceString = &quot;&lt;b&gt;&quot; + uebung.get(i).getSplit() + &quot;&lt;/b&gt;&quot;;</b>
+<b class="nc"><i>396</i>&nbsp;                textView.setText(Html.fromHtml(sourceString));</b>
+<b class="nc"><i>397</i>&nbsp;                textView.setPadding(16, 5, 16, 2);</b>
+<b class="nc"><i>398</i>&nbsp;                ll.addView(textView);</b>
+<b class="nc"><i>399</i>&nbsp;            }else{</b>
+<b class="nc"><i>400</i>&nbsp;                View v = new View(this);</b>
+<b class="nc"><i>401</i>&nbsp;                v.setLayoutParams(new LinearLayout.LayoutParams(</b>
+<b class="nc"><i>402</i>&nbsp;                        LinearLayout.LayoutParams.MATCH_PARENT,</b>
+<b class="nc"><i>403</i>&nbsp;                        2</b>
+<b class="nc"><i>404</i>&nbsp;                ));</b>
+<b class="nc"><i>405</i>&nbsp;                v.setBackgroundColor(Color.parseColor(&quot;#B3B3B3&quot;));</b>
+<b class="nc"><i>406</i>&nbsp;                ll.addView(v);</b>
+<i>407</i>&nbsp;            }
+<b class="nc"><i>408</i>&nbsp;            LinearLayout tempLL = new LinearLayout(this);</b>
+<b class="nc"><i>409</i>&nbsp;</b>
+<b class="nc"><i>410</i>&nbsp;            createExerciseDeleteButton(i, tempLL);</b>
+<b class="nc"><i>411</i>&nbsp;            createExerciseEditButton(i, tempLL);</b>
+<b class="nc"><i>412</i>&nbsp;            TextView exerView = new TextView(this);</b>
+<b class="nc"><i>413</i>&nbsp;            exerView.setPadding(10,2,10,2);</b>
+<b class="nc"><i>414</i>&nbsp;</b>
+<b class="nc"><i>415</i>&nbsp;            String reps = getResources().getString(R.string.hint_reps)+&quot;: &quot;;</b>
+<b class="nc"><i>416</i>&nbsp;            String weight = getResources().getString(R.string.hint_weight)+&quot;: &quot;;</b>
+<b class="nc"><i>417</i>&nbsp;            String toShow = uebung.get(i).getName() + reps + uebung.get(i).getReps()</b>
+<b class="nc"><i>418</i>&nbsp;                    + weight + uebung.get(i).getStart();</b>
+<b class="nc"><i>419</i>&nbsp;            exerView.setText(toShow);</b>
+<b class="nc"><i>420</i>&nbsp;            tempLL.addView(exerView);</b>
+<b class="nc"><i>421</i>&nbsp;            ll.addView(tempLL);</b>
+<i>422</i>&nbsp;        }
+<i>423</i>&nbsp;
+<b class="nc"><i>424</i>&nbsp;        createExerciseButton();</b>
+<b class="nc"><i>425</i>&nbsp;    }</b>
+<i>426</i>&nbsp;
+<i>427</i>&nbsp;    public static void removeUebungen(){
+<b class="fc"><i>428</i>&nbsp;        int temp = uebung.size();</b>
+<b class="fc"><i>429</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="fc"><i>430</i>&nbsp;            uebung.remove(0);</b>
+<i>431</i>&nbsp;        }
+<b class="fc"><i>432</i>&nbsp;    }</b>
+<i>433</i>&nbsp;
+<i>434</i>&nbsp;    @Override
+<i>435</i>&nbsp;    public void onBackPressed(){
+<i>436</i>&nbsp;        //super.onBackPressed();
+<b class="nc"><i>437</i>&nbsp;        removeUebungen();</b>
+<b class="nc"><i>438</i>&nbsp;        Bundle temp = new Bundle();</b>
+<b class="nc"><i>439</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
+<b class="nc"><i>440</i>&nbsp;        Intent i = new Intent(EditPlanActivity.this, ViewPlanActivity.class);</b>
+<b class="nc"><i>441</i>&nbsp;        i.putExtras(temp);</b>
+<b class="nc"><i>442</i>&nbsp;        startActivity(i);</b>
+<b class="nc"><i>443</i>&nbsp;        finish();</b>
+<b class="nc"><i>444</i>&nbsp;    }</b>
+<i>445</i>&nbsp;
+<i>446</i>&nbsp;    public void setLocale(String lang){
+<b class="nc"><i>447</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>448</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>449</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>450</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>451</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>452</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>453</i>&nbsp;    }</b>
+<i>454</i>&nbsp;
+<i>455</i>&nbsp;    public static float pxFromDp(float dp, Context mContext) {
+<b class="nc"><i>456</i>&nbsp;        return dp * mContext.getResources().getDisplayMetrics().density;</b>
+<i>457</i>&nbsp;    }
+<i>458</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-14 19:21</div>
+    <div style="float:right;">generated on 2017-05-15 19:52</div>
 </div>
 </body>
 </html>

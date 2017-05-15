@@ -45,4 +45,11 @@
     <string name="alert_editExerciseMessage">Übung bearbeiten:</string>
     <string name="hint_split">Trainingstag</string>
     <string name="menu_start">Starte Training</string>
+    <string name="analyze_graphHorizontal">Trainingstag</string>
+    <string name="analyze_graphVertical">Gewicht</string>
+    <string name="excercise_name_perform">Übung:</string>
+    <string name="error_no_double">Bitte einen double-Wert eingeben</string>
+    <string name="errorEnterAll">Bitte alle Felder ausfüllen</string>
+    <string name="errorEnterStart">Bitte ein Startgewicht angeben</string>
+    <string name="errorNoExcercises">Übungen erstellen, um Training zu beginnen</string>
 </resources>

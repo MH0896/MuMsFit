@@ -4,7 +4,7 @@
     <item
         android:id="@+id/item_start_training"
         android:icon="@android:drawable/ic_media_play"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/menu_start"
         android:titleCondensed="Start Training">
     </item>
@@ -12,7 +12,7 @@
     <item
         android:id="@+id/item_edit_menu"
         android:icon="@android:drawable/ic_menu_edit"
-        app:showAsAction="ifRoom"
+        app:showAsAction="always"
         android:title="@string/menu_edit"
         android:titleCondensed="Edit">
     </item>
@@ -20,8 +20,16 @@
     <item
         android:id="@+id/item_details_menu"
         android:icon="@android:drawable/ic_menu_info_details"
-        app:showAsAction="ifRoom"
+        app:showAsAction="ifRoom|withText"
         android:title="@string/menu_details"
         android:titleCondensed="Details">
+    </item>
+
+    <item
+        android:id="@+id/item_analyze_menu"
+        android:icon="@android:drawable/ic_menu_sort_by_size"
+        android:title="@string/menu_analyze"
+        android:titleCondensed="Analyze"
+        app:showAsAction="ifRoom|withText">
     </item>
 </menu>

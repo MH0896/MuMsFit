@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollview"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
@@ -13,23 +14,88 @@
         android:scrollbarAlwaysDrawVerticalTrack="true">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:scrollbars="vertical"
-            android:scrollbarAlwaysDrawVerticalTrack="true"
             android:id="@+id/rlView"
-            android:layout_height="512dp">
+            android:layout_width="match_parent"
+            android:layout_height="512dp"
+            android:scrollbarAlwaysDrawVerticalTrack="true"
+            android:scrollbars="vertical">
 
 
-            <LinearLayout
-                android:orientation="vertical"
+            <Spinner
+                android:id="@+id/spinner_split"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/linearView"
-                android:weightSum="1"
-                android:scrollbars="vertical">
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:layout_below="@+id/textView4"
+                android:layout_marginTop="13dp"
+                android:visibility="visible" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="11dp"
+                android:text="Split:"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:layout_alignParentTop="true"
+                android:layout_alignLeft="@+id/textView6"
+                android:layout_alignStart="@+id/textView6" />
 
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/excercise_name_perform"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:layout_below="@+id/spinner_split"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp" />
+
+            <Spinner
+                android:id="@+id/spinner_uebung"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView6"
+                android:gravity="center"
+                android:layout_marginTop="21dp" />
+
+            <Button
+                android:id="@+id/button_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_weight"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="61dp"
+                android:text="OKAY" />
+
+            <EditText
+                android:id="@+id/input_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinner_uebung"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:allowUndo="true"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="numberDecimal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+            <TextView
+                android:id="@+id/textView_reps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_weight"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="TextView"/>
         </RelativeLayout>
 
     </LinearLayout>

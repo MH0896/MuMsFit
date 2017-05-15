@@ -1,8 +1,5 @@
 package com.example.maxhi_000.mumsfit;
 
-
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 
 public class Uebung  extends AppCompatActivity {
@@ -10,10 +7,10 @@ public class Uebung  extends AppCompatActivity {
     private int plan_id;
     private String name;
     private String reps;
-    private String start;
+    private double start;
     private String split;
 
-    public Uebung(int uebung_id, int plan_id, String name, String reps, String start, String split) {
+    public Uebung(int uebung_id, int plan_id, String name, String reps, double start, String split) {
         this.uebung_id = uebung_id;
         this.plan_id = plan_id;
         this.name = name;
@@ -22,7 +19,7 @@ public class Uebung  extends AppCompatActivity {
         this.split = split;
     }
 
-    public Uebung(String name, String reps, String start, String split) {
+    public Uebung(String name, String reps, double start, String split) {
         this.uebung_id = 0;
         this.plan_id = 0;
         this.name = name;
@@ -63,11 +60,11 @@ public class Uebung  extends AppCompatActivity {
         this.reps = reps;
     }
 
-    public String getStart() {
+    public double getStart() {
         return start;
     }
 
-    public void setStart(String start) {
+    public void setStart(double start) {
         this.start = start;
     }
 
@@ -79,5 +76,8 @@ public class Uebung  extends AppCompatActivity {
         this.split = split;
     }
 
-
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -74,51 +74,47 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package com.example.maxhi_000.mumsfit;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;/**
-<i>4</i>&nbsp; * Created by maxhi_000 on 05.05.2017.
-<i>5</i>&nbsp; */
-<i>6</i>&nbsp;
-<i>7</i>&nbsp;public class Gewicht {
-<i>8</i>&nbsp;    private int uebung_id;
-<i>9</i>&nbsp;    private int gewicht_id;
-<i>10</i>&nbsp;    private String gewicht;
-<i>11</i>&nbsp;
-<b class="fc"><i>12</i>&nbsp;    public Gewicht(int uebung_id, String gewicht) {</b>
-<b class="fc"><i>13</i>&nbsp;        this.uebung_id = uebung_id;</b>
-<b class="fc"><i>14</i>&nbsp;        this.gewicht_id = 0;</b>
-<b class="fc"><i>15</i>&nbsp;        this.gewicht = gewicht;</b>
-<b class="fc"><i>16</i>&nbsp;    }</b>
+<i>3</i>&nbsp;public class Gewicht {
+<i>4</i>&nbsp;    private int uebung_id;
+<i>5</i>&nbsp;    private int gewicht_id;
+<i>6</i>&nbsp;    private double gewicht;
+<i>7</i>&nbsp;
+<b class="fc"><i>8</i>&nbsp;    public Gewicht(int uebung_id, double gewicht) {</b>
+<b class="fc"><i>9</i>&nbsp;        this.uebung_id = uebung_id;</b>
+<b class="fc"><i>10</i>&nbsp;        this.gewicht_id = 0;</b>
+<b class="fc"><i>11</i>&nbsp;        this.gewicht = gewicht;</b>
+<b class="fc"><i>12</i>&nbsp;    }</b>
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public int getUebung_id() {
+<b class="fc"><i>15</i>&nbsp;        return uebung_id;</b>
+<i>16</i>&nbsp;    }
 <i>17</i>&nbsp;
-<i>18</i>&nbsp;    public int getUebung_id() {
-<b class="fc"><i>19</i>&nbsp;        return uebung_id;</b>
-<i>20</i>&nbsp;    }
+<i>18</i>&nbsp;    public void setUebung_id(int uebung_id) {
+<b class="fc"><i>19</i>&nbsp;        this.uebung_id = uebung_id;</b>
+<b class="fc"><i>20</i>&nbsp;    }</b>
 <i>21</i>&nbsp;
-<i>22</i>&nbsp;    public void setUebung_id(int uebung_id) {
-<b class="fc"><i>23</i>&nbsp;        this.uebung_id = uebung_id;</b>
-<b class="fc"><i>24</i>&nbsp;    }</b>
+<i>22</i>&nbsp;    public int getGewicht_id() {
+<b class="fc"><i>23</i>&nbsp;        return gewicht_id;</b>
+<i>24</i>&nbsp;    }
 <i>25</i>&nbsp;
-<i>26</i>&nbsp;    public int getGewicht_id() {
-<b class="fc"><i>27</i>&nbsp;        return gewicht_id;</b>
-<i>28</i>&nbsp;    }
+<i>26</i>&nbsp;    public void setGewicht_id(int gewicht_id) {
+<b class="fc"><i>27</i>&nbsp;        this.gewicht_id = gewicht_id;</b>
+<b class="fc"><i>28</i>&nbsp;    }</b>
 <i>29</i>&nbsp;
-<i>30</i>&nbsp;    public void setGewicht_id(int gewicht_id) {
-<b class="fc"><i>31</i>&nbsp;        this.gewicht_id = gewicht_id;</b>
-<b class="fc"><i>32</i>&nbsp;    }</b>
+<i>30</i>&nbsp;    public double getGewicht() {
+<b class="fc"><i>31</i>&nbsp;        return gewicht;</b>
+<i>32</i>&nbsp;    }
 <i>33</i>&nbsp;
-<i>34</i>&nbsp;    public String getGewicht() {
-<b class="fc"><i>35</i>&nbsp;        return gewicht;</b>
-<i>36</i>&nbsp;    }
-<i>37</i>&nbsp;
-<i>38</i>&nbsp;    public void setGewicht(String gewicht) {
-<b class="fc"><i>39</i>&nbsp;        this.gewicht = gewicht;</b>
-<b class="fc"><i>40</i>&nbsp;    }</b>
-<i>41</i>&nbsp;}
+<i>34</i>&nbsp;    public void setGewicht(double gewicht) {
+<b class="fc"><i>35</i>&nbsp;        this.gewicht = gewicht;</b>
+<b class="fc"><i>36</i>&nbsp;    }</b>
+<i>37</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-14 19:21</div>
+    <div style="float:right;">generated on 2017-05-15 19:52</div>
 </div>
 </body>
 </html>
