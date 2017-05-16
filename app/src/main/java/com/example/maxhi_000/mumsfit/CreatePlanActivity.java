@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.Exchanger;
 
 public class CreatePlanActivity extends AppCompatActivity {
 
@@ -210,7 +211,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
                 final EditText e_sw = new EditText(context);
                 e_sw.setHint(R.string.hint_weight);
-                e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
+                e_sw.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
 
@@ -221,11 +222,21 @@ public class CreatePlanActivity extends AppCompatActivity {
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                uebungen.add(new Uebung(e_name.getText().toString(),
-                                        e_reps.getText().toString(),
-                                        e_sw.getText().toString(), temp_plan));
-                                redrawGUI();
-                                dialog.cancel();
+                                String name = checkEingabe(e_name.getText().toString());
+                                String reps = checkEingabe(e_reps.getText().toString());
+                                try{
+                                    Double start = Double.parseDouble(e_sw.getText().toString());
+
+                                    if(name == null || reps == null){
+                                        Toast.makeText(context, R.string.errorEnterAll, Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        uebungen.add(new Uebung(name, reps, start, temp_plan));
+                                        redrawGUI();
+                                        dialog.cancel();
+                                    }
+                                } catch (Exception e){
+                                    Toast.makeText(context, R.string.errorEnterStart, Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

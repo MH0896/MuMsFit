@@ -31,9 +31,9 @@ Feature: Create Training Plan
     And I press "Übung hinzufügen"
     And I enter text "Übung 1" into field with id "c_name"
     And I enter text "8 mal" into field with id "c_reps"
-    And I enter text "42kg" into field with id "c_sw"
+    And I enter text "42" into field with id "c_sw"
     And I press the "Okay" button
-    And I see "Übung 1 Reps: 8 mal Startgewicht: 42kg"
+    And I see "Übung 1 Reps: 8 mal Startgewicht: 42"
     And I press "readyButton"
     And I press the "Okay" button
     Then I see "testPlan2"

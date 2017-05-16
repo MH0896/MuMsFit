@@ -1,15 +1,11 @@
 package com.example.maxhi_000.mumsfit;
 
-/**
- * Created by maxhi_000 on 05.05.2017.
- */
-
 public class Gewicht {
     private int uebung_id;
     private int gewicht_id;
-    private String gewicht;
+    private double gewicht;
 
-    public Gewicht(int uebung_id, String gewicht) {
+    public Gewicht(int uebung_id, double gewicht) {
         this.uebung_id = uebung_id;
         this.gewicht_id = 0;
         this.gewicht = gewicht;
@@ -31,11 +27,11 @@ public class Gewicht {
         this.gewicht_id = gewicht_id;
     }
 
-    public String getGewicht() {
+    public double getGewicht() {
         return gewicht;
     }
 
-    public void setGewicht(String gewicht) {
+    public void setGewicht(double gewicht) {
         this.gewicht = gewicht;
     }
 }

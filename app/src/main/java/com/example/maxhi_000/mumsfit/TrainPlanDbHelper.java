@@ -44,13 +44,13 @@ public class TrainPlanDbHelper extends SQLiteOpenHelper {
             COLUMN_PId+ " TEXT NOT NULL, " +
             COLUMN_UNAME + " TEXT NOT NULL, "+
             COLUMN_REPS + " TEXT NOT NULL, "+
-            COLUMN_START + " TEXT NOT NULL, "+
+            COLUMN_START + " REAL NOT NULL, "+
             COLUMN_SPLIT + " TEXT NOT NULL);";
 
     public String SQL_CREATE_GEWICHT = "CREATE TABLE " + TABLE_GEWICHT +
             "(" + COLUMN_GID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             COLUMN_UID+ " TEXT NOT NULL, " +
-            COLUMN_GEWICHT + " TEXT NOT NULL);";
+            COLUMN_GEWICHT + " REAL NOT NULL);";
 
     private boolean created = false;
 

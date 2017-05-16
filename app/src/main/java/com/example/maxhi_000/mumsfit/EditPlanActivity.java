@@ -79,7 +79,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                     String reps = (c.getString(c.getColumnIndex("reps")));
                     String start = (c.getString(c.getColumnIndex("start")));
                     String split = (c.getString(c.getColumnIndex("split")));
-                    uebung.add(new Uebung(name, reps, start, split));
+                    uebung.add(new Uebung(name, reps, Double.parseDouble(start), split));
                     c.moveToNext();
                 }
             }
@@ -123,7 +123,7 @@ public class EditPlanActivity  extends AppCompatActivity {
                                     if (db != null)
                                         db.close();
                                 }
-
+                                removeUebungen();
                                 finish();
                                 startActivity(getIntent());
                             }
@@ -170,8 +170,8 @@ public class EditPlanActivity  extends AppCompatActivity {
                 layout.addView(e_reps);
 
                 final EditText e_sw = new EditText(context);
-                e_sw.setText(uebung.get(toEdit).getStart());
-                e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
+                e_sw.setText(uebung.get(toEdit).getStart()+"");
+                e_sw.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
                 alertDialogBuilder.setView(layout);
@@ -182,21 +182,33 @@ public class EditPlanActivity  extends AppCompatActivity {
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SQLiteDatabase db = null;
-                                try {
-                                    db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                                String name = checkEingabe(e_name.getText().toString());
+                                String reps = checkEingabe(e_reps.getText().toString());
+                                try{
+                                    Double start = Double.parseDouble(e_sw.getText().toString());
 
-                                    TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
-                                    db.execSQL("UPDATE uebung SET name='"+ e_name.getText().toString() +"' , reps='"+ e_reps.getText().toString() +"' , start='"+ e_sw.getText().toString() +"' , split='"+ uebung.get(toEdit).getSplit() +"' WHERE name='"+ uebung.get(toEdit).getName() +"' ");
+                                    if(name == null || reps == null){
+                                        Toast.makeText(context, R.string.errorEnterAll, Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        SQLiteDatabase db = null;
+                                        try {
+                                            db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
-                                    dataSource.close();
-                                }finally {
-                                    if (db != null)
-                                        db.close();
+                                            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+                                            db.execSQL("UPDATE uebung SET name='" + name + "' , reps='" + reps + "' , start='" + start + "' , split='" + uebung.get(toEdit).getSplit() + "' WHERE name='" + uebung.get(toEdit).getName() + "' ");
+
+                                            dataSource.close();
+                                        } finally {
+                                            if (db != null)
+                                                db.close();
+                                        }
+                                    }
+                                    removeUebungen();
+                                    finish();
+                                    startActivity(getIntent());
+                                } catch (Exception e){
+                                    Toast.makeText(context, R.string.errorEnterStart, Toast.LENGTH_SHORT).show();
                                 }
-                                removeUebungen();
-                                finish();
-                                startActivity(getIntent());
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -241,7 +253,7 @@ public class EditPlanActivity  extends AppCompatActivity {
 
                 final EditText e_sw = new EditText(context);
                 e_sw.setHint(R.string.hint_weight);
-                e_sw.setInputType(InputType.TYPE_CLASS_TEXT);
+                e_sw.setRawInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 e_sw.setId(R.id.c_sw);
                 layout.addView(e_sw);
 
@@ -258,26 +270,41 @@ public class EditPlanActivity  extends AppCompatActivity {
                         .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                SQLiteDatabase db = null;
-                                try {
-                                    db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                                String name = checkEingabe(e_name.getText().toString());
+                                String reps = checkEingabe(e_reps.getText().toString());
+                                String split = checkEingabe(e_split.getText().toString());
+                                try{
+                                        Double start = Double.parseDouble(e_sw.getText().toString());
 
-                                    TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+                                        if(name == null || reps == null || split == null){
+                                            Toast.makeText(context, R.string.errorEnterAll, Toast.LENGTH_SHORT).show();
+                                        }else{
+                                            SQLiteDatabase db = null;
+                                            try {
+                                                db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
 
-                                    dataSource.open();
-                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+namePlan+"'", null);
-                                    c.moveToFirst();
-                                    String id = c.getString(c.getColumnIndex("plan_id"));
-                                    db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split) VALUES ('"+id+"', '"+e_name.getText().toString()+"', '"+e_reps.getText().toString()+"', '"+e_sw.getText().toString()+"', '"+e_split.getText().toString().toUpperCase()+"')");
+                                                TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
 
-                                    dataSource.close();
-                                }finally {
-                                    if (db != null)
-                                        db.close();
-                                }
-                                removeUebungen();
-                                finish();
-                                startActivity(getIntent());
+                                                dataSource.open();
+                                                Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+namePlan+"'", null);
+                                                c.moveToFirst();
+                                                String id = c.getString(c.getColumnIndex("plan_id"));
+                                                db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split) VALUES ('"+id+"', '"+name+"', '"+reps+"', '"+start+"', '"+split.toUpperCase()+"')");
+
+                                                dataSource.close();
+                                            }finally {
+                                                if (db != null)
+                                                    db.close();
+                                        }
+                                        removeUebungen();
+                                        finish();
+                                        startActivity(getIntent());
+                                            dialog.cancel();
+                                        }
+                                    } catch (Exception e){
+                                        Toast.makeText(context, R.string.errorEnterStart, Toast.LENGTH_SHORT).show();
+                                    }
+
                             }
                         })
                         .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -290,6 +317,18 @@ public class EditPlanActivity  extends AppCompatActivity {
                 alertDialog.show();
             }
         });
+    }
+
+    public static String checkEingabe(String input){
+        if(input.isEmpty()){
+            return null;
+        }
+        String newInput = input.trim();
+        if(newInput == "" || newInput.isEmpty()){
+            return null;
+        }
+
+        return newInput;
     }
 
     public static boolean alreadyIn(String split, ArrayList<String> list){

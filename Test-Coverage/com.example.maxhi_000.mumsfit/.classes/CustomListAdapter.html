@@ -75,70 +75,71 @@
 <div class="sourceCode"><i>1</i>&nbsp;package com.example.maxhi_000.mumsfit;
 <i>2</i>&nbsp;
 <i>3</i>&nbsp;import android.content.Context;
-<i>4</i>&nbsp;import android.view.View;
-<i>5</i>&nbsp;import android.view.ViewGroup;
-<i>6</i>&nbsp;import android.widget.ArrayAdapter;
-<i>7</i>&nbsp;
-<i>8</i>&nbsp;import java.util.HashMap;
-<i>9</i>&nbsp;import java.util.List;
-<i>10</i>&nbsp;import java.util.Set;
-<i>11</i>&nbsp;
-<i>12</i>&nbsp;public class CustomListAdapter extends ArrayAdapter&lt;String&gt; {
-<i>13</i>&nbsp;
-<b class="fc"><i>14</i>&nbsp;    private HashMap&lt;Integer, Boolean&gt; mSelection = new HashMap&lt;Integer, Boolean&gt;();</b>
-<i>15</i>&nbsp;    private Context mContext;
-<i>16</i>&nbsp;    private int countChecked;
-<i>17</i>&nbsp;
-<i>18</i>&nbsp;    public CustomListAdapter(Context context,int resource, int textViewResourceId , List&lt;String&gt; list )
-<i>19</i>&nbsp;    {
-<b class="fc"><i>20</i>&nbsp;        super(context, resource, textViewResourceId, list);</b>
-<b class="fc"><i>21</i>&nbsp;        mContext = context;</b>
-<b class="fc"><i>22</i>&nbsp;    }</b>
-<i>23</i>&nbsp;
-<i>24</i>&nbsp;    public void setNewSelection(int position, boolean value) {
-<b class="fc"><i>25</i>&nbsp;        mSelection.put(position, value);</b>
-<b class="fc"><i>26</i>&nbsp;        countChecked = position;</b>
-<b class="fc"><i>27</i>&nbsp;        notifyDataSetChanged();</b>
-<b class="fc"><i>28</i>&nbsp;    }</b>
-<i>29</i>&nbsp;
-<i>30</i>&nbsp;    public boolean isPositionChecked(int position) {
-<b class="fc"><i>31</i>&nbsp;        Boolean result = mSelection.get(position);</b>
-<b class="fc"><i>32</i>&nbsp;        return result == null ? false : result;</b>
-<i>33</i>&nbsp;    }
-<i>34</i>&nbsp;
-<i>35</i>&nbsp;    public Set&lt;Integer&gt; getCurrentCheckedPosition() {
-<b class="fc"><i>36</i>&nbsp;        return mSelection.keySet();</b>
-<i>37</i>&nbsp;    }
-<i>38</i>&nbsp;
-<i>39</i>&nbsp;    public void removeSelection(int position) {
-<b class="fc"><i>40</i>&nbsp;        mSelection.remove(position);</b>
-<b class="fc"><i>41</i>&nbsp;        notifyDataSetChanged();</b>
-<b class="fc"><i>42</i>&nbsp;    }</b>
-<i>43</i>&nbsp;
-<i>44</i>&nbsp;    public void clearSelection() {
-<b class="fc"><i>45</i>&nbsp;        mSelection = new HashMap&lt;Integer, Boolean&gt;();</b>
-<b class="fc"><i>46</i>&nbsp;        notifyDataSetChanged();</b>
-<b class="fc"><i>47</i>&nbsp;    }</b>
-<i>48</i>&nbsp;
-<i>49</i>&nbsp;    @Override
-<i>50</i>&nbsp;    public View getView(int position, View convertView, ViewGroup parent)
-<i>51</i>&nbsp;    {
-<b class="nc"><i>52</i>&nbsp;        View v = super.getView(position, convertView, parent);//let the adapter handle setting up the row views</b>
-<b class="nc"><i>53</i>&nbsp;        v.setBackgroundColor(mContext.getResources().getColor(android.R.color.background_light)); //default color</b>
-<i>54</i>&nbsp;
-<b class="nc"><i>55</i>&nbsp;        if (mSelection.get(position) != null) {</b>
-<b class="nc"><i>56</i>&nbsp;            v.setBackgroundColor(mContext.getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red</b>
-<i>57</i>&nbsp;        }
-<i>58</i>&nbsp;
-<b class="nc"><i>59</i>&nbsp;        return v;</b>
-<i>60</i>&nbsp;    }
-<i>61</i>&nbsp;}
+<i>4</i>&nbsp;import android.support.v4.content.ContextCompat;
+<i>5</i>&nbsp;import android.view.View;
+<i>6</i>&nbsp;import android.view.ViewGroup;
+<i>7</i>&nbsp;import android.widget.ArrayAdapter;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.util.HashMap;
+<i>10</i>&nbsp;import java.util.List;
+<i>11</i>&nbsp;import java.util.Set;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;public class CustomListAdapter extends ArrayAdapter&lt;String&gt; {
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;    private HashMap&lt;Integer, Boolean&gt; mSelection = new HashMap&lt;Integer, Boolean&gt;();</b>
+<i>16</i>&nbsp;    private Context mContext;
+<i>17</i>&nbsp;    private int countChecked;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public CustomListAdapter(Context context,int resource, int textViewResourceId , List&lt;String&gt; list )
+<i>20</i>&nbsp;    {
+<b class="fc"><i>21</i>&nbsp;        super(context, resource, textViewResourceId, list);</b>
+<b class="fc"><i>22</i>&nbsp;        mContext = context;</b>
+<b class="fc"><i>23</i>&nbsp;    }</b>
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;    public void setNewSelection(int position, boolean value) {
+<b class="fc"><i>26</i>&nbsp;        mSelection.put(position, value);</b>
+<b class="fc"><i>27</i>&nbsp;        countChecked = position;</b>
+<b class="fc"><i>28</i>&nbsp;        notifyDataSetChanged();</b>
+<b class="fc"><i>29</i>&nbsp;    }</b>
+<i>30</i>&nbsp;
+<i>31</i>&nbsp;    public boolean isPositionChecked(int position) {
+<b class="fc"><i>32</i>&nbsp;        Boolean result = mSelection.get(position);</b>
+<b class="fc"><i>33</i>&nbsp;        return result == null ? false : result;</b>
+<i>34</i>&nbsp;    }
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    public Set&lt;Integer&gt; getCurrentCheckedPosition() {
+<b class="fc"><i>37</i>&nbsp;        return mSelection.keySet();</b>
+<i>38</i>&nbsp;    }
+<i>39</i>&nbsp;
+<i>40</i>&nbsp;    public void removeSelection(int position) {
+<b class="fc"><i>41</i>&nbsp;        mSelection.remove(position);</b>
+<b class="fc"><i>42</i>&nbsp;        notifyDataSetChanged();</b>
+<b class="fc"><i>43</i>&nbsp;    }</b>
+<i>44</i>&nbsp;
+<i>45</i>&nbsp;    public void clearSelection() {
+<b class="fc"><i>46</i>&nbsp;        mSelection = new HashMap&lt;Integer, Boolean&gt;();</b>
+<b class="fc"><i>47</i>&nbsp;        notifyDataSetChanged();</b>
+<b class="fc"><i>48</i>&nbsp;    }</b>
+<i>49</i>&nbsp;
+<i>50</i>&nbsp;    @Override
+<i>51</i>&nbsp;    public View getView(int position, View convertView, ViewGroup parent)
+<i>52</i>&nbsp;    {
+<b class="nc"><i>53</i>&nbsp;        View v = super.getView(position, convertView, parent);//let the adapter handle setting up the row views</b>
+<b class="nc"><i>54</i>&nbsp;        v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));</b>
+<i>55</i>&nbsp;
+<b class="nc"><i>56</i>&nbsp;        if (mSelection.get(position) != null) {</b>
+<b class="nc"><i>57</i>&nbsp;            v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.holo_blue_light));</b>
+<i>58</i>&nbsp;        }
+<i>59</i>&nbsp;
+<b class="nc"><i>60</i>&nbsp;        return v;</b>
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-14 19:21</div>
+    <div style="float:right;">generated on 2017-05-15 21:40</div>
 </div>
 </body>
 </html>

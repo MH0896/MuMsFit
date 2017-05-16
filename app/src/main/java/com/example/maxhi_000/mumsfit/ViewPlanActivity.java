@@ -75,7 +75,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
                     String reps = (c.getString(c.getColumnIndex("reps")));
                     String start = (c.getString(c.getColumnIndex("start")));
                     String split = (c.getString(c.getColumnIndex("split")));
-                    uebung.add(new Uebung(name, reps, start, split));
+                    uebung.add(new Uebung(name, reps, Double.parseDouble(start), split));
                     c.moveToNext();
                 }
             }
@@ -209,6 +209,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
     public void DetailsClick() {
         SQLiteDatabase db = null;
         try {
@@ -260,13 +261,31 @@ public class ViewPlanActivity  extends AppCompatActivity {
     }
 
     public void StartClick(){
-        removeUebungen();
-        Bundle t = new Bundle();
-        t.putString("param", namePlan);
-        Intent in = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);
-        in.putExtras(t);
-        startActivity(in);
-        finish();
+        if(uebung.size() == 0){
+            Toast.makeText(context, R.string.errorNoExcercises, Toast.LENGTH_SHORT).show();
+        }else{
+            removeUebungen();
+            Bundle t = new Bundle();
+            t.putString("param", namePlan);
+            Intent in = new Intent(ViewPlanActivity.this, PerformTrainPlanActivity.class);
+            in.putExtras(t);
+            startActivity(in);
+            finish();
+        }
+    }
+
+    public void AnalyzeClick(){
+        if(uebung.size() == 0){
+            Toast.makeText(context, R.string.errorNoExcercisesAnalyse, Toast.LENGTH_SHORT).show();
+        }else {
+            removeUebungen();
+            Bundle temp = new Bundle();
+            temp.putString("param", namePlan);
+            Intent i = new Intent(ViewPlanActivity.this, AnalyzePlanActivity.class);
+            i.putExtras(temp);
+            startActivity(i);
+            finish();
+        }
     }
 
     public void setLocale(String lang){
@@ -276,15 +295,5 @@ public class ViewPlanActivity  extends AppCompatActivity {
         Configuration config = res.getConfiguration();
         config.locale = myLocale;
         res.updateConfiguration(config, dm);
-    }
-
-    public void AnalyzeClick(){
-        removeUebungen();
-        Bundle temp = new Bundle();
-        temp.putString("param", namePlan);
-        Intent i = new Intent(ViewPlanActivity.this, AnalyzePlanActivity.class);
-        i.putExtras(temp);
-        startActivity(i);
-        finish();
     }
 }

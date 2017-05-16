@@ -37,7 +37,7 @@
     <string name="hint_reps">Wiederholungen</string>
     <string name="hint_weight">Startgewicht</string>
     <string name="alert_cancelAddingTitle">Plan anlegen abbrechen?</string>
-    <string name="alert_cancelAddingMessage">Plan anlegen wirklich beenden? \nAlle Änderungen gehen verloren</string>
+    <string name="alert_cancelAddingMessage">Plan anlegen wirklich beenden? \nAlle Änderungen gehen verloren.</string>
     <string name="yes">Ja</string>
     <string name="alert_deleteExerciseTitle">Übung wirklich löschen</string>
     <string name="alert_deleteExerciseMessage">Wollen Sie diese Übung sicher löschen? \nDies kann nicht rückgängig gemacht werden!</string>
@@ -47,4 +47,10 @@
     <string name="menu_start">Starte Training</string>
     <string name="analyze_graphHorizontal">Trainingstag</string>
     <string name="analyze_graphVertical">Gewicht</string>
+    <string name="excercise_name_perform">Übung:</string>
+    <string name="error_no_double">Bitte einen double-Wert eingeben</string>
+    <string name="errorEnterAll">Bitte alle Felder ausfüllen</string>
+    <string name="errorEnterStart">Bitte ein Startgewicht angeben</string>
+    <string name="errorNoExcercises">Übungen erstellen, um Training zu beginnen</string>
+    <string name="errorNoExcercisesAnalyse">Übungen hinzufügen, um zu Analysieren</string>
 </resources>
