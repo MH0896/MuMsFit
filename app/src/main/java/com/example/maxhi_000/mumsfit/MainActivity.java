@@ -237,6 +237,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     });
             AlertDialog alertDialog = alertDialogBuilder.create();
             alertDialog.show();
+            break;
+        default:
+            break;
         }
 
     }
