@@ -54,4 +54,5 @@
     <string name="errorNoExcercisesAnalyse">Please add excercises to analyse</string>
     <string name="menu_import">Import</string>
     <string name="saved">Saved</string>
+    <string name="actionMode_selected">selected</string>
 </resources>

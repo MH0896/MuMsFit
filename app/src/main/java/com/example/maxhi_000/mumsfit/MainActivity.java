@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
                         int i = selected.indexOf(position);
                         selected.remove(i);
                     }
-                    mode.setTitle(nr + " selected");
+                    mode.setTitle(nr + " " + getResources().getString(R.string.actionMode_selected));
 
                     mode.invalidate();
                 }
@@ -491,7 +491,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void shareClick(ArrayList<Integer> items){
         String planName = arrTblNames.get(items.get(0));
-        File file = getDocumentStorageDir(context,"MuMs Fit Plans");
+        File file = getDocumentStorageDir(context,"MuM's-Fit exported plans");
 
         File testplan = new File(file,planName+".txt");
         if(!testplan.exists()){
@@ -511,7 +511,7 @@ public class MainActivity extends AppCompatActivity {
             outStream.write(planName.getBytes());
             outStream.flush();
             outStream.close();
-            Toast.makeText(context,"Saved",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.saved,Toast.LENGTH_SHORT).show();
         }
         catch (FileNotFoundException e){
             e.printStackTrace();
