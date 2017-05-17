@@ -11,8 +11,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class CustomListAdapterTest {
-    Context c;
-    List<String> list = new ArrayList<>();
+    public Context c;
+    public List<String> list = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {

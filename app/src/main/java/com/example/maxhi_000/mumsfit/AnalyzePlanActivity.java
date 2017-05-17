@@ -34,7 +34,7 @@ public class AnalyzePlanActivity extends AppCompatActivity{
     public static String current_split;
     public static ArrayList<Uebung> split_uebung = new ArrayList<Uebung>();
 
-    ArrayAdapter dataAdapter_uebung;
+    public ArrayAdapter dataAdapter_uebung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

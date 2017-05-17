@@ -42,18 +42,18 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         Button save = (Button) findViewById(R.id.btn_settings_save);
         RadioGroup radioGroupTheme = (RadioGroup) findViewById(R.id.radioGroupTheme);
 
-        if (themeName.equals("BlackTheme")) {
+        if ("BlackTheme".equals(themeName)) {
             radioGroupTheme.check(R.id.rbtn_darkTheme);
-        } else if (themeName.equals("LightTheme")) {
+        } else if ("LightTheme".equals(themeName)) {
             radioGroupTheme.check(R.id.rbtn_lightTheme);
-        }else if(themeName.equals("Default")){
+        }else if("Default".equals(themeName)){
             radioGroupTheme.check(R.id.rbtn_defaultTheme);
         }
 
         RadioGroup radioGroupLanguage = (RadioGroup) findViewById(R.id.radioGroupLanguage);
-        if(appLanguage.equals("de")){
+        if("de".equals(appLanguage)){
             radioGroupLanguage.check(R.id.rbtn_lang_de);
-        }else if(appLanguage.equals("en-US")){
+        }else if("en-US".equals(appLanguage)){
             radioGroupLanguage.check(R.id.rbtn_lang_en);
         }
 

@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class DBTest {
-    Context c;
+    public Context c;
 
     @Test
     public void getOpened() throws Exception {

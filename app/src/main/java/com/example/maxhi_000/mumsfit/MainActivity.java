@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 db.close();
         }
 
-        public FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
+        FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
         addPlan.setOnClickListener(this);
     }
 
