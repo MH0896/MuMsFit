@@ -33,12 +33,12 @@ import java.util.Locale;
 
 public class CreatePlanActivity extends AppCompatActivity {
 
-    final Context context = this;
+    public final Context context = this;
 
-    static List<String> splits = new ArrayList<String>();
-    String currentPlan = "";
+    public static List<String> splits = new ArrayList<String>();
+    public String currentPlan = "";
 
-    static List<Uebung> uebungen = new ArrayList<Uebung>();
+    public static List<Uebung> uebungen = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +46,11 @@ public class CreatePlanActivity extends AppCompatActivity {
                 "MyPrefs", MODE_PRIVATE);
 
         String themeName = prefs.getString("Theme", "Default");
-        if (themeName.equals("BlackTheme")) {
+        if ("BlackTheme".equals(themeName)) {
             setTheme(R.style.BlackTheme);
-        } else if (themeName.equals("LightTheme")) {
+        } else if ("LightTheme".equals(themeName)) {
             setTheme(R.style.LightTheme);
-        }else if(themeName.equals("Default")){
+        }else if("Default".equals(themeName)){
             setTheme(R.style.AppTheme);
         }
 

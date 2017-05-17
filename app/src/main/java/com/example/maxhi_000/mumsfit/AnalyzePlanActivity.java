@@ -24,15 +24,15 @@ import java.util.Locale;
 
 public class AnalyzePlanActivity extends AppCompatActivity{
 
-    String namePlan;
-    final Context context = this;
+    public String namePlan;
+    public final Context context = this;
     private TrainPlanDataSource dataSource;
 
-    static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
-    static ArrayList<String> splits = new ArrayList<String>();
+    public static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
+    public static ArrayList<String> splits = new ArrayList<String>();
 
-    static String current_split;
-    static ArrayList<Uebung> split_uebung = new ArrayList<Uebung>();
+    public static String current_split;
+    public static ArrayList<Uebung> split_uebung = new ArrayList<Uebung>();
 
     ArrayAdapter dataAdapter_uebung;
 
@@ -42,11 +42,11 @@ public class AnalyzePlanActivity extends AppCompatActivity{
                 "MyPrefs", MODE_PRIVATE);
 
         String themeName = prefs.getString("Theme", "Default");
-        if (themeName.equals("BlackTheme")) {
+        if ("BlackTheme".equals(themeName)) {
             setTheme(R.style.BlackTheme);
-        } else if (themeName.equals("LightTheme")) {
+        } else if ("LightTheme".equals(themeName)) {
             setTheme(R.style.LightTheme);
-        }else if(themeName.equals("Default")){
+        }else if("Default".equals(themeName)){
             setTheme(R.style.AppTheme);
         }
 
@@ -112,7 +112,7 @@ public class AnalyzePlanActivity extends AppCompatActivity{
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //wird niemals aufgerufen
             }
         });
 
@@ -131,7 +131,7 @@ public class AnalyzePlanActivity extends AppCompatActivity{
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //wird niemals aufgerufen
             }
         });
 
