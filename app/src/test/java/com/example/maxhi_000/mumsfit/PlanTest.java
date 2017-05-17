@@ -5,21 +5,21 @@ import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 
 public class PlanTest {
     @Test
-    public void getPlan_id() throws Exception {
+    public void getPlanID() throws Exception {
         Plan testPlan = new Plan("toTest");
-        assertEquals(0, testPlan.getPlan_id());
+        assertEquals(0, testPlan.getPlanID());
     }
 
     @Test
-    public void setPlan_id() throws Exception {
+    public void setPlanID() throws Exception {
         Plan testPlan = new Plan("toTest");
-        testPlan.setPlan_id(87);
-        assertEquals(87, testPlan.getPlan_id());
+        testPlan.setPlanID(87);
+        assertEquals(87, testPlan.getPlanID());
     }
 
     @Test
@@ -36,39 +36,39 @@ public class PlanTest {
     }
 
     @Test
-    public void getDate_create() throws Exception {
+    public void getDateCreate() throws Exception {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         Plan testPlan = new Plan("toTest", date, "-");
-        assertEquals(date, testPlan.getDate_create());
+        assertEquals(date, testPlan.getDateCreate());
     }
 
     @Test
-    public void setDate_create() throws Exception {
+    public void setDateCreate() throws Exception {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         Plan testPlan = new Plan("toTest", date, "-");
-        testPlan.setDate_create("newDate");
-        assertEquals("newDate", testPlan.getDate_create());
+        testPlan.setDateCreate("newDate");
+        assertEquals("newDate", testPlan.getDateCreate());
     }
 
     @Test
-    public void getDate_last() throws Exception {
+    public void getDateLast() throws Exception {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         Plan testPlan = new Plan("toTest", "today", date);
-        assertEquals(date, testPlan.getDate_last());
+        assertEquals(date, testPlan.getDateLast());
     }
 
     @Test
-    public void setDate_last() throws Exception {
+    public void setDateLast() throws Exception {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         Plan testPlan = new Plan("toTest", "today", date);
-        testPlan.setDate_last("newDate");
-        assertEquals("newDate", testPlan.getDate_last());
+        testPlan.setDateLast("newDate");
+        assertEquals("newDate", testPlan.getDateLast());
     }
 
     @Test
     public void newPlan() throws Exception {
         Plan testPlan = new Plan(87, "toTest", "today", "date");
-        assertEquals("date", testPlan.getDate_last());
+        assertEquals("date", testPlan.getDateLast());
     }
 
 }

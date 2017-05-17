@@ -24,9 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 public class EditPlanActivity  extends AppCompatActivity {
@@ -226,7 +224,7 @@ public class EditPlanActivity  extends AppCompatActivity {
     public void createExerciseButton(){
         Button exerciseButton = new Button(this);
         exerciseButton.setText(R.string.alert_addExerciseTitle);
-        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);;
+        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         ll.addView(exerciseButton, lp);
         exerciseButton.setOnClickListener(new View.OnClickListener() {

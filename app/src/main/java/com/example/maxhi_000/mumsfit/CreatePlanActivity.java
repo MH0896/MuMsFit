@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Exchanger;
 
 public class CreatePlanActivity extends AppCompatActivity {
 
@@ -428,8 +427,8 @@ public class CreatePlanActivity extends AppCompatActivity {
 
             dataSource.open();
             db.execSQL("INSERT INTO plan (name, date_create, date_last) " +
-                    "VALUES ('"+plan.getName()+"','"+plan.getDate_create()+
-                    "', '"+plan.getDate_last()+"')");
+                    "VALUES ('"+plan.getName()+"','"+plan.getDateCreate()+
+                    "', '"+plan.getDateLast()+"')");
 
             dataSource.close();
         }finally {

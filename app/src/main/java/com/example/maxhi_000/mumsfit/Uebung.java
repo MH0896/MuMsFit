@@ -28,19 +28,19 @@ public class Uebung  extends AppCompatActivity {
         this.split = split;
     }
 
-    public int getUebung_id() {
+    public int getUebungID() {
         return uebung_id;
     }
 
-    public void setUebung_id(int uebung_id) {
+    public void setUebungID(int uebung_id) {
         this.uebung_id = uebung_id;
     }
 
-    public int getPlan_id() {
+    public int getPlanID() {
         return plan_id;
     }
 
-    public void setPlan_id(int plan_id) {
+    public void setPlanID(int plan_id) {
         this.plan_id = plan_id;
     }
 

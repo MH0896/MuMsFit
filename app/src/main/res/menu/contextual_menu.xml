@@ -49,4 +49,5 @@
         android:titleCondensed="Analyze"
         android:visible="false"
         app:showAsAction="ifRoom|withText"></item>
+
 </menu>

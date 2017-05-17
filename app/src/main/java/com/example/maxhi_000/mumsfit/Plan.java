@@ -1,9 +1,5 @@
 package com.example.maxhi_000.mumsfit;
 
-
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 
 public class Plan  extends AppCompatActivity {
@@ -32,11 +28,11 @@ public class Plan  extends AppCompatActivity {
         this.date_last = date_last;
     }
 
-    public int getPlan_id() {
+    public int getPlanID() {
         return plan_id;
     }
 
-    public void setPlan_id(int plan_id) {
+    public void setPlanID(int plan_id) {
         this.plan_id = plan_id;
     }
 
@@ -48,19 +44,19 @@ public class Plan  extends AppCompatActivity {
         this.name = name;
     }
 
-    public String getDate_create() {
+    public String getDateCreate() {
         return date_create;
     }
 
-    public void setDate_create(String date_create) {
+    public void setDateCreate(String date_create) {
         this.date_create = date_create;
     }
 
-    public String getDate_last() {
+    public String getDateLast() {
         return date_last;
     }
 
-    public void setDate_last(String date_last) {
+    public void setDateLast(String date_last) {
         this.date_last = date_last;
     }
 

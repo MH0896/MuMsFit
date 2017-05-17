@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class RemoveTest {
 
     @Test
-    public void RemoveEPA() throws Exception {
+    public void removeEPA() throws Exception {
         int temp = EditPlanActivity.uebung.size();
         for(int i = 0; i< temp; i++){
             EditPlanActivity.uebung.remove(0);
@@ -28,7 +28,7 @@ public class RemoveTest {
     }
 
     @Test
-    public void RemoveVPA() throws Exception {
+    public void removeVPA() throws Exception {
         int temp = ViewPlanActivity.uebung.size();
         for(int i = 0; i< temp; i++){
             ViewPlanActivity.uebung.remove(0);
@@ -48,7 +48,7 @@ public class RemoveTest {
     }
 
     @Test
-    public void RemoveCPA() throws Exception {
+    public void removeCPA() throws Exception {
         int temp = CreatePlanActivity.uebungen.size();
         for(int i = 0; i< temp; i++){
             CreatePlanActivity.uebungen.remove(0);
