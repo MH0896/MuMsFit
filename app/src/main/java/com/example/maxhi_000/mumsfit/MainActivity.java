@@ -38,7 +38,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     public final Context context = this;
-    private String eingabe;
 
     private CustomListAdapter adapter;
 
@@ -166,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (db != null)
                 db.close();
         }
-
         FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
         addPlan.setOnClickListener(this);
     }
@@ -189,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            eingabe = input.getText().toString();
+                            String eingabe = input.getText().toString();
                             String returned = checkEingabe(eingabe);
                             if(returned == null) {
                                 Toast.makeText(context, R.string.toast_errorEnterName, Toast.LENGTH_SHORT).show();

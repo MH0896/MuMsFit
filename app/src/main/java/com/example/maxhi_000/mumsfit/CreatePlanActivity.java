@@ -122,6 +122,7 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
+                break;
             default:
                 break;
         }
