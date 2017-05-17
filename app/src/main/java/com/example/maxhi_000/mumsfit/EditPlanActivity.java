@@ -67,17 +67,19 @@ public class EditPlanActivity  extends AppCompatActivity {
             dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
-            Cursor c = db.rawQuery("SELECT uebung.name, uebung.reps, uebung.start, uebung.split " +
+            Cursor c = db.rawQuery("SELECT uebung.uebung_id, plan.plan_id, uebung.name, uebung.reps, uebung.start, uebung.split " +
                     "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name='"+
                     this.namePlan+"'", null);
 
             if (c.moveToFirst()) {
                 while (!c.isAfterLast()) {
+                    String uid = (c.getString(c.getColumnIndex("uebung_id")));
+                    String pid = (c.getString(c.getColumnIndex("plan_id")));
                     String name = (c.getString(c.getColumnIndex("name")));
                     String reps = (c.getString(c.getColumnIndex("reps")));
                     String start = (c.getString(c.getColumnIndex("start")));
                     String split = (c.getString(c.getColumnIndex("split")));
-                    uebung.add(new Uebung(name, reps, Double.parseDouble(start), split));
+                    uebung.add(new Uebung(Integer.parseInt(uid), Integer.parseInt(pid),name, reps, Double.parseDouble(start), split));
                     c.moveToNext();
                 }
             }
@@ -115,6 +117,7 @@ public class EditPlanActivity  extends AppCompatActivity {
 
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
                                     db.execSQL("DELETE FROM uebung WHERE name='"+uebung.get(toDel).getName()+"'");
+                                    db.execSQL("DELETE FROM gewicht WHERE uebung_id='"+uebung.get(toDel).getUebungID()+"'");
 
                                     dataSource.close();
                                 }finally {
