@@ -1,6 +1,5 @@
 package com.example.maxhi_000.mumsfit;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -195,22 +194,23 @@ public class ViewPlanActivity  extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_edit_menu:
-                EditClick();
+                editClick();
                 return true;
             case R.id.item_start_training:
-                StartClick();
+                startClick();
                 return true;
             case R.id.item_details_menu:
-                DetailsClick();
+                detailsClick();
                 return true;
             case R.id.item_analyze_menu:
-                AnalyzeClick();
+                analyzeClick();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    public void DetailsClick() {
+    public void detailsClick() {
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
@@ -250,7 +250,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }
     }
 
-    public void EditClick() {
+    public void editClick() {
         removeUebungen();
         Bundle temp = new Bundle();
         temp.putString("param", namePlan);
@@ -260,7 +260,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
         finish();
     }
 
-    public void StartClick(){
+    public void startClick(){
         if(uebung.size() == 0){
             Toast.makeText(context, R.string.errorNoExcercises, Toast.LENGTH_SHORT).show();
         }else{
@@ -274,7 +274,7 @@ public class ViewPlanActivity  extends AppCompatActivity {
         }
     }
 
-    public void AnalyzeClick(){
+    public void analyzeClick(){
         if(uebung.size() == 0){
             Toast.makeText(context, R.string.errorNoExcercisesAnalyse, Toast.LENGTH_SHORT).show();
         }else {

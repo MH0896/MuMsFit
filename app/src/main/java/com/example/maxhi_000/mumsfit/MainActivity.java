@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +28,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -188,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.item_delete:
-                            DeleteClick(selected);
+                            deleteClick(selected);
                             nr = 0;
                             mode.finish();
                             return true;
@@ -196,20 +202,20 @@ public class MainActivity extends AppCompatActivity {
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            AnalyzeClick(selected);
+                            analyzeClick(selected);
                             selected.clear();
                             return true;
                         case R.id.item_details:
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            DetailsClick(selected);
+                            detailsClick(selected);
                             selected.clear();
                             return true;
                         case R.id.item_edit:
                             nr = 0;
                             mode.finish();
-                            EditClick(selected);
+                            editClick(selected);
                             return true;
                         case R.id.item_select_all:
                             for (int i=0; i < ViewPlan.getAdapter().getCount(); i++) {
@@ -221,9 +227,11 @@ public class MainActivity extends AppCompatActivity {
                             nr = 0;
                             adapter.clearSelection();
                             mode.finish();
-                            ShareClick(selected);
+                            shareClick(selected);
                             selected.clear();
                             return true;
+                        default:
+                            break;
                     }
                     return false;
                 }
@@ -357,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_settings:
-                SettingsClick();
+                settingsClick();
                 return true;
         }
         return false;
@@ -385,7 +393,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void DeleteClick(final ArrayList<Integer> items){
+    public void deleteClick(final ArrayList<Integer> items){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                     context);
 
@@ -441,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void DetailsClick(ArrayList<Integer> items){
+    public void detailsClick(ArrayList<Integer> items){
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
@@ -481,11 +489,49 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void ShareClick(ArrayList<Integer> items){
-        //Aufruf Zeile 166
+    public void shareClick(ArrayList<Integer> items){
+        String planName = arrTblNames.get(items.get(0));
+        File file = getDocumentStorageDir(context,"MuMs Fit Plans");
+
+        if(isExternalStorageWritable()){
+
+        }
+        OutputStream outStream;
+        try {
+            outStream = new FileOutputStream(file);
+            outStream.write(planName.getBytes());
+            outStream.flush();
+            outStream.close();
+            Toast.makeText(context, R.string.saved,Toast.LENGTH_SHORT).show();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
+        }catch (IOException e){
+            e.printStackTrace();
+            Toast.makeText(context, e.toString(),Toast.LENGTH_SHORT).show();
+        }
+
     }
 
-    public void EditClick(final ArrayList<Integer> items){
+    public File getDocumentStorageDir(Context context, String albumName) {
+        // Get the directory for the app's private documents directory.
+        File file = new File(context.getExternalFilesDir(
+                Environment.DIRECTORY_DOCUMENTS), albumName);
+        if (!file.mkdirs()) {
+            Toast.makeText(context,"Directory not created",Toast.LENGTH_SHORT).show();
+        }
+        return file;
+    }
+
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    public void editClick(final ArrayList<Integer> items){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 context);
 
@@ -533,7 +579,7 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    public void AnalyzeClick(ArrayList<Integer> items){
+    public void analyzeClick(ArrayList<Integer> items){
         SQLiteDatabase db = null;
         ArrayList<Uebung> uebung = new ArrayList<Uebung>();
         try {
@@ -570,7 +616,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void SettingsClick(){
+    public void settingsClick(){
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(i);
         finish();

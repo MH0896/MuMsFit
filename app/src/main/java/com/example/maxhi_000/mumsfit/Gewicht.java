@@ -11,19 +11,19 @@ public class Gewicht {
         this.gewicht = gewicht;
     }
 
-    public int getUebung_id() {
+    public int getUebungID() {
         return uebung_id;
     }
 
-    public void setUebung_id(int uebung_id) {
+    public void setUebungID(int uebung_id) {
         this.uebung_id = uebung_id;
     }
 
-    public int getGewicht_id() {
+    public int getGewichtID() {
         return gewicht_id;
     }
 
-    public void setGewicht_id(int gewicht_id) {
+    public void setGewichtID(int gewicht_id) {
         this.gewicht_id = gewicht_id;
     }
 

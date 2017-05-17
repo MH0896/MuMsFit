@@ -14,7 +14,6 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
     private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
     private Context mContext;
-    private int countChecked;
 
     public CustomListAdapter(Context context,int resource, int textViewResourceId , List<String> list )
     {
@@ -24,7 +23,6 @@ public class CustomListAdapter extends ArrayAdapter<String> {
 
     public void setNewSelection(int position, boolean value) {
         mSelection.put(position, value);
-        countChecked = position;
         notifyDataSetChanged();
     }
 

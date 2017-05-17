@@ -6,16 +6,12 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -76,6 +72,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     case R.id.rbtn_defaultTheme:
                         editor.putString("Theme", "Default");
                         break;
+                    default:
+                        editor.putString("Theme", "Default");
+                        break;
                 }
                 editor.commit();
             }
@@ -89,6 +88,9 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                         editor.putString("Language", "de");
                         break;
                     case R.id.rbtn_lang_en:
+                        editor.putString("Language", "en-US");
+                        break;
+                    default:
                         editor.putString("Language", "en-US");
                         break;
                 }
@@ -113,6 +115,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                 Intent i = new Intent(SettingsActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
+                break;
+            default:
                 break;
         }
     }

@@ -2,7 +2,8 @@ package com.example.maxhi_000.mumsfit;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class UebungTest {
     @Test
@@ -12,29 +13,29 @@ public class UebungTest {
     }
 
     @Test
-    public void getUebung_id() throws Exception {
+    public void getUebungID() throws Exception {
         Uebung testU = new Uebung("toTest", "5mal", 7, "Beine");
-        assertEquals(0, testU.getUebung_id());
+        assertEquals(0, testU.getUebungID());
     }
 
     @Test
-    public void setUebung_id() throws Exception {
+    public void setUebungID() throws Exception {
         Uebung testU = new Uebung("toTest", "5mal", 7, "Beine");
-        testU.setUebung_id(65);
-        assertEquals(65, testU.getUebung_id());
+        testU.setUebungID(65);
+        assertEquals(65, testU.getUebungID());
     }
 
     @Test
-    public void getPlan_id() throws Exception {
+    public void getPlanID() throws Exception {
         Uebung testU = new Uebung("toTest", "5mal", 7, "Beine");
-        assertEquals(0, testU.getPlan_id());
+        assertEquals(0, testU.getPlanID());
     }
 
     @Test
-    public void setPlan_id() throws Exception {
+    public void setPlanID() throws Exception {
         Uebung testU = new Uebung("toTest", "5mal", 7, "Beine");
-        testU.setPlan_id(65);
-        assertEquals(65, testU.getPlan_id());
+        testU.setPlanID(65);
+        assertEquals(65, testU.getPlanID());
     }
 
     @Test
