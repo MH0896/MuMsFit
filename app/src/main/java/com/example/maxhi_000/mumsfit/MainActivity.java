@@ -493,42 +493,40 @@ public class MainActivity extends AppCompatActivity {
         String planName = arrTblNames.get(items.get(0));
         File file = getDocumentStorageDir(context,"MuMs Fit Plans");
 
-        if(isExternalStorageWritable()){
-
+        File testplan = new File(file,planName+".txt");
+        if(!testplan.exists()){
+            try{
+                testplan.createNewFile();
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+                Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
+            }catch (IOException e){
+                e.printStackTrace();
+                Toast.makeText(context, e.toString(),Toast.LENGTH_SHORT).show();
+            }
         }
         OutputStream outStream;
         try {
-            outStream = new FileOutputStream(file);
+            outStream = new FileOutputStream(testplan);
             outStream.write(planName.getBytes());
             outStream.flush();
             outStream.close();
-            Toast.makeText(context, R.string.saved,Toast.LENGTH_SHORT).show();
-        }catch (FileNotFoundException e){
+            Toast.makeText(context,"Saved",Toast.LENGTH_SHORT).show();
+        }
+        catch (FileNotFoundException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
         }catch (IOException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public File getDocumentStorageDir(Context context, String albumName) {
         // Get the directory for the app's private documents directory.
         File file = new File(context.getExternalFilesDir(
                 Environment.DIRECTORY_DOCUMENTS), albumName);
-        if (!file.mkdirs()) {
-            Toast.makeText(context,"Directory not created",Toast.LENGTH_SHORT).show();
-        }
         return file;
-    }
-
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
     }
 
     public void editClick(final ArrayList<Integer> items){
