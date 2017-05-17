@@ -24,9 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Locale;
 
 public class EditPlanActivity  extends AppCompatActivity {
@@ -226,7 +224,7 @@ public class EditPlanActivity  extends AppCompatActivity {
     public void createExerciseButton(){
         Button exerciseButton = new Button(this);
         exerciseButton.setText(R.string.alert_addExerciseTitle);
-        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);;
+        LinearLayout ll = (LinearLayout)findViewById(R.id.linearView);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         ll.addView(exerciseButton, lp);
         exerciseButton.setOnClickListener(new View.OnClickListener() {
@@ -416,6 +414,7 @@ public class EditPlanActivity  extends AppCompatActivity {
             String weight = getResources().getString(R.string.hint_weight)+": ";
             String toShow = uebung.get(i).getName() + reps + uebung.get(i).getReps()
                     + weight + uebung.get(i).getStart();
+
             exerView.setText(toShow);
             tempLL.addView(exerView);
             ll.addView(tempLL);
@@ -443,6 +442,10 @@ public class EditPlanActivity  extends AppCompatActivity {
         finish();
     }
 
+    public static float pxFromDp(float dp, Context mContext) {
+        return dp * mContext.getResources().getDisplayMetrics().density;
+    }
+
     public void setLocale(String lang){
         Locale myLocale = new Locale(lang);
         Resources res = getResources();
@@ -450,9 +453,5 @@ public class EditPlanActivity  extends AppCompatActivity {
         Configuration config = res.getConfiguration();
         config.locale = myLocale;
         res.updateConfiguration(config, dm);
-    }
-
-    public static float pxFromDp(float dp, Context mContext) {
-        return dp * mContext.getResources().getDisplayMetrics().density;
     }
 }

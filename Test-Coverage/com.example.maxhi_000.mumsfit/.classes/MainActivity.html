@@ -666,7 +666,7 @@
 <i>357</i>&nbsp;    public boolean onOptionsItemSelected(MenuItem item) {
 <b class="nc"><i>358</i>&nbsp;        switch (item.getItemId()) {</b>
 <i>359</i>&nbsp;            case R.id.item_settings:
-<b class="nc"><i>360</i>&nbsp;                SettingsClick();</b>
+<b class="nc"><i>360</i>&nbsp;                settingsClick();</b>
 <b class="nc"><i>361</i>&nbsp;                return true;</b>
 <i>362</i>&nbsp;        }
 <b class="nc"><i>363</i>&nbsp;        return false;</b>
@@ -879,7 +879,7 @@
 <i>570</i>&nbsp;        }
 <b class="nc"><i>571</i>&nbsp;    }</b>
 <i>572</i>&nbsp;
-<i>573</i>&nbsp;    public void SettingsClick(){
+<i>573</i>&nbsp;    public void settingsClick(){
 <b class="nc"><i>574</i>&nbsp;        Intent i = new Intent(MainActivity.this, SettingsActivity.class);</b>
 <b class="nc"><i>575</i>&nbsp;        startActivity(i);</b>
 <b class="nc"><i>576</i>&nbsp;        finish();</b>

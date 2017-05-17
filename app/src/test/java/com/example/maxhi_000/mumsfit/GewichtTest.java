@@ -2,33 +2,34 @@ package com.example.maxhi_000.mumsfit;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class GewichtTest {
     @Test
-    public void getUebung_id() throws Exception {
+    public void getUebungID() throws Exception {
         Gewicht g = new Gewicht(87, 15);
-        assertEquals(87, g.getUebung_id());
+        assertEquals(87, g.getUebungID());
     }
 
     @Test
-    public void setUebung_id() throws Exception {
+    public void setUebungID() throws Exception {
         Gewicht g = new Gewicht(87, 15);
-        g.setUebung_id(987);
-        assertEquals(987, g.getUebung_id());
+        g.setUebungID(987);
+        assertEquals(987, g.getUebungID());
     }
 
     @Test
-    public void getGewicht_id() throws Exception {
+    public void getGewichtID() throws Exception {
         Gewicht g = new Gewicht(87, 15);
-        assertEquals(0, g.getGewicht_id());
+        assertEquals(0, g.getGewichtID());
     }
 
     @Test
-    public void setGewicht_id() throws Exception {
+    public void setGewichtID() throws Exception {
         Gewicht g = new Gewicht(87, 15);
-        g.setGewicht_id(987);
-        assertEquals(987, g.getGewicht_id());
+        g.setGewichtID(987);
+        assertEquals(987, g.getGewichtID());
     }
 
     @Test

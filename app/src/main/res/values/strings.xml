@@ -48,9 +48,10 @@
     <string name="analyze_graphHorizontal">Training day</string>
     <string name="analyze_graphVertical">Weight</string>
     <string name="excercise_name_perform">Exercise:</string>
-    <string name="error_no_double">Please insert a double value</string>
     <string name="errorEnterAll">Please enter all information</string>
     <string name="errorEnterStart">Please enter a starting weight</string>
     <string name="errorNoExcercises">Add exercises to start the training</string>
     <string name="errorNoExcercisesAnalyse">Please add excercises to analyse</string>
+    <string name="menu_import">Import</string>
+    <string name="saved">Saved</string>
 </resources>
