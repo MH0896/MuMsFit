@@ -31,10 +31,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class CreatePlanActivity extends AppCompatActivity {
+public class CreatePlanActivity extends AppCompatActivity implements View.OnClickListener{
 
     final Context context = this;
-
+    public Plan newPlan;
     static List<String> splits = new ArrayList<String>();
     String currentPlan = "";
 
@@ -63,15 +63,19 @@ public class CreatePlanActivity extends AppCompatActivity {
 
         Bundle params = getIntent().getExtras();
         final String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        final Plan newPlan = new Plan(params.getString("param"), date, "-");
+        newPlan = new Plan(params.getString("param"), date, "-");
 
         setTitle(newPlan.getName());
 
         createSplitButton();
         FloatingActionButton readyButton = (FloatingActionButton) findViewById(R.id.readyButton);
-        readyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        readyButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v){
+        switch (v.getId()) {
+            case R.id.readyButton:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         context);
 
@@ -90,15 +94,15 @@ public class CreatePlanActivity extends AppCompatActivity {
                                     TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
 
                                     dataSource.open();
-                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='"+newPlan.getName()+"'", null);
+                                    Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='" + newPlan.getName() + "'", null);
                                     c.moveToFirst();
                                     String id = c.getString(c.getColumnIndex("plan_id"));
 
-                                    for(int i = 0; i<uebungen.size(); i++){
+                                    for (int i = 0; i < uebungen.size(); i++) {
                                         insertUebung(uebungen.get(i), id);
                                     }
                                     dataSource.close();
-                                }finally {
+                                } finally {
                                     if (db != null)
                                         db.close();
                                 }
@@ -117,8 +121,7 @@ public class CreatePlanActivity extends AppCompatActivity {
 
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 alertDialog.show();
-            }
-        });
+        }
     }
 
     public static void removeUebungen(){
@@ -485,5 +488,3 @@ public class CreatePlanActivity extends AppCompatActivity {
     }
 
 }
-
-
