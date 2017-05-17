@@ -15,8 +15,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
     private Context mContext;
 
-    public CustomListAdapter(Context context,int resource, int textViewResourceId , List<String> list )
-    {
+    public CustomListAdapter(Context context,int resource, int textViewResourceId , List<String> list ) {
         super(context, resource, textViewResourceId, list);
         mContext = context;
     }
@@ -46,8 +45,7 @@ public class CustomListAdapter extends ArrayAdapter<String> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         View v = super.getView(position, convertView, parent);//let the adapter handle setting up the row views
         v.setBackgroundColor(ContextCompat.getColor(mContext, android.R.color.transparent));
 

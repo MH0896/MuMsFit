@@ -17,18 +17,19 @@ import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
-    final Context context = this;
+    public final Context context = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(
                 "MyPrefs", MODE_PRIVATE);
 
         String themeName = prefs.getString("Theme", "Default");
-        if (themeName.equals("BlackTheme")) {
+        if ("BlackTheme".equals(themeName)) {
             setTheme(R.style.BlackTheme);
-        } else if (themeName.equals("LightTheme")) {
+        } else if ("LightTheme".equals(themeName)) {
             setTheme(R.style.LightTheme);
-        }else if(themeName.equals("Default")){
+        }else if("Default".equals(themeName)){
             setTheme(R.style.AppTheme);
         }
 
