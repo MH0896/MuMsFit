@@ -23,17 +23,17 @@ import java.util.Locale;
 
 public class PerformTrainPlanActivity extends AppCompatActivity{
 
-    String namePlan;
+    public String namePlan;
     private TrainPlanDataSource dataSource;
-    final Context context = this;
+    public final Context context = this;
 
-    static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
-    static ArrayList<String> splits = new ArrayList<String>();
+    public static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
+    public static ArrayList<String> splits = new ArrayList<String>();
 
-    static String current_split;
-    static ArrayList<Uebung> split_uebung = new ArrayList<Uebung>();
+    public static String current_split;
+    public static ArrayList<Uebung> split_uebung = new ArrayList<Uebung>();
 
-    ArrayAdapter dataAdapter_uebung;
+    public ArrayAdapter dataAdapter_uebung;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,11 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
                     "MyPrefs", MODE_PRIVATE);
 
         String themeName = prefs.getString("Theme", "Default");
-        if (themeName.equals("BlackTheme")) {
+        if ("BlackTheme".equals(themeName)) {
             setTheme(R.style.BlackTheme);
-        }else if (themeName.equals("LightTheme")) {
+        } else if ("LightTheme".equals(themeName)) {
             setTheme(R.style.LightTheme);
-        }else if(themeName.equals("Default")){
+        }else if("Default".equals(themeName)){
             setTheme(R.style.AppTheme);
         }
 
@@ -112,7 +112,7 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                //wird niemals aufgerufen
             }
         });
 
@@ -130,7 +130,7 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
+                // wird niemals aufgerufen
             }
         });
 

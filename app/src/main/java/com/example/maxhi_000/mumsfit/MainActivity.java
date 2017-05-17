@@ -37,33 +37,34 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    final Context context = this;
+    public final Context context = this;
     private String eingabe;
 
     private CustomListAdapter adapter;
 
     private TrainPlanDataSource dataSource;
 
+    public int nr = 0;
+  
+    public ArrayList<String> arrTblNames = new ArrayList<String>();
+    public ArrayList<Integer> selected = new ArrayList<Integer>();
+
+    public ListView ViewPlan;
+
     private boolean canClose = false;
     private static int zeit = 2000;
-
-    int nr = 0;
-
-    ArrayList<String> arrTblNames = new ArrayList<String>();
-    ArrayList<Integer> selected = new ArrayList<Integer>();
-
-    ListView ViewPlan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences prefs = getApplicationContext().getSharedPreferences(
                 "MyPrefs", MODE_PRIVATE);
+
         String themeName = prefs.getString("Theme", "Default");
-        if (themeName.equals("BlackTheme")) {
+        if ("BlackTheme".equals(themeName)) {
             setTheme(R.style.BlackTheme);
-        } else if (themeName.equals("LightTheme")) {
+        } else if ("LightTheme".equals(themeName)) {
             setTheme(R.style.LightTheme);
-        }else if(themeName.equals("Default")){
+        }else if("Default".equals(themeName)){
             setTheme(R.style.AppTheme);
         }
 
@@ -166,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 db.close();
         }
 
-        FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
+        public FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
         addPlan.setOnClickListener(this);
     }
 
@@ -374,6 +375,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.item_settings:
                 settingsClick();
                 return true;
+            default:
+                break;
         }
         return false;
     }
