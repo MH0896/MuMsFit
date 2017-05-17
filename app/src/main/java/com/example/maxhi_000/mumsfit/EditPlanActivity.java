@@ -30,10 +30,9 @@ import java.util.Locale;
 public class EditPlanActivity  extends AppCompatActivity {
 
     public String namePlan;
-    private TrainPlanDataSource dataSource;
     public final Context context = this;
 
-    static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
+    public static ArrayList<Uebung> uebung = new ArrayList<Uebung>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,7 @@ public class EditPlanActivity  extends AppCompatActivity {
         SQLiteDatabase db = null;
         try {
             db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
-            dataSource = new TrainPlanDataSource(context);
+            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
             dataSource.open();
 
             Cursor c = db.rawQuery("SELECT uebung.uebung_id, plan.plan_id, uebung.name, uebung.reps, uebung.start, uebung.split " +
