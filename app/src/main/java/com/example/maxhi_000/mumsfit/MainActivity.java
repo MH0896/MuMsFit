@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         String newInput = input.trim();
-        if(newInput == "" || newInput.isEmpty()){
+        if("".equals(newInput) || newInput.isEmpty()){
             return null;
         }
 
@@ -502,7 +502,7 @@ public class MainActivity extends AppCompatActivity {
             outStream.write(planName.getBytes());
             outStream.flush();
             outStream.close();
-            Toast.makeText(context, R.string.saved,Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.saved ,Toast.LENGTH_SHORT).show();
         }catch (FileNotFoundException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
