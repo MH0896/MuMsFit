@@ -21,7 +21,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class PerformTrainPlanActivity extends AppCompatActivity{
+public class PerformTrainPlanActivity extends AppCompatActivity implements View.OnClickListener{
 
     public String namePlan;
     private TrainPlanDataSource dataSource;
@@ -111,9 +111,7 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                //wird niemals aufgerufen
-            }
+            public void onNothingSelected(AdapterView<?> parent) { /* wird niemals aufgerufen*/ }
         });
 
         createSplitUebung();
@@ -129,14 +127,18 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                // wird niemals aufgerufen
-            }
+            public void onNothingSelected(AdapterView<?> parent) { /* wird niemals aufgerufen*/ }
         });
 
         Button btn_okay = (Button) findViewById(R.id.button_ok);
-        btn_okay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        btn_okay.setOnClickListener(this);
+        fillGUI();
+    }
+
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.button_ok:
                 EditText input_weight = (EditText) findViewById(R.id.input_weight);
                 double newGewicht = Double.parseDouble(input_weight.getText().toString());
                 SQLiteDatabase db = null;
@@ -156,10 +158,11 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
                         db.close();
                 }
                 input_weight.setText("");
-                fillGUI();
-            }
-        });
-        fillGUI();
+            fillGUI();
+                break;
+            default:
+                break;
+        }
     }
 
     public void fillGUI(){
@@ -192,7 +195,6 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
         EditText input_weight = (EditText) findViewById(R.id.input_weight);
         input_weight.setHint(gewicht);
     }
-
 
     public static void createSplitUebung() {
         int temp = split_uebung.size();
