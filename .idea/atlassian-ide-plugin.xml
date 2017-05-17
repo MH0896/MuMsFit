@@ -1,5 +1,15 @@
 <atlassian-ide-plugin>
   <project-configuration id="1">
-    <servers id="2" />
+    <servers id="2">
+      <jira id="3">
+        <server-id id="4">9d7d5490-3a36-41dc-9bfd-0f77a96e5065</server-id>
+        <name>MuMs Fit</name>
+        <url>http://193.196.7.27:8080</url>
+        <shared>false</shared>
+        <useSessionCookies>false</useSessionCookies>
+      </jira>
+    </servers>
+    <fisheye-project-path>https://github.com/MH0896/MuM-s-Fit</fisheye-project-path>
+    <default-jira-server reference="4" />
   </project-configuration>
 </atlassian-ide-plugin>
