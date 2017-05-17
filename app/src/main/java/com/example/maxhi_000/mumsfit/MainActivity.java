@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
 import android.text.InputType;
 import android.util.DisplayMetrics;
 import android.view.ActionMode;
@@ -36,7 +35,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     public final Context context = this;
     private String eingabe;
@@ -45,10 +44,11 @@ public class MainActivity extends AppCompatActivity {
 
     private TrainPlanDataSource dataSource;
 
+    public int nr = 0;
+  
     public ArrayList<String> arrTblNames = new ArrayList<String>();
     public ArrayList<Integer> selected = new ArrayList<Integer>();
 
-    public FloatingActionButton addPlan;
     public ListView ViewPlan;
 
     private boolean canClose = false;
@@ -110,69 +110,9 @@ public class MainActivity extends AppCompatActivity {
 
             ViewPlan.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
 
-                private int nr = 0;
-
                 @Override
                 public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                    MenuItem item;
-                    if(nr == 1 && arrTblNames.size()==1){
-                        item = menu.findItem(R.id.item_delete);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_share);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_select_all);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_edit);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_details);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_analyze);
-                        item.setVisible(true);
-                    }
-                    else if (nr == 1){
-                        item = menu.findItem(R.id.item_delete);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_share);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_select_all);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_edit);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_details);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_analyze);
-                        item.setVisible(true);
-                        return true;
-                    } else if(nr > 1 && nr!=arrTblNames.size()) {
-                        item = menu.findItem(R.id.item_details);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_analyze);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_edit);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_delete);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_share);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_select_all);
-                        item.setVisible(true);
-                        return true;
-                    }else if(nr == arrTblNames.size()){
-                        item = menu.findItem(R.id.item_select_all);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_details);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_analyze);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_edit);
-                        item.setVisible(false);
-                        item = menu.findItem(R.id.item_delete);
-                        item.setVisible(true);
-                        item = menu.findItem(R.id.item_share);
-                        item.setVisible(true);
-                        return true;
-                    }
-                    return false;
+                   return enableDisableContextualMenu(nr, arrTblNames, menu);
                 }
 
                 @Override
@@ -191,48 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                    switch (item.getItemId()) {
-                        case R.id.item_delete:
-                            deleteClick(selected);
-                            nr = 0;
-                            mode.finish();
-                            return true;
-                        case R.id.item_analyze:
-                            nr = 0;
-                            adapter.clearSelection();
-                            mode.finish();
-                            analyzeClick(selected);
-                            selected.clear();
-                            return true;
-                        case R.id.item_details:
-                            nr = 0;
-                            adapter.clearSelection();
-                            mode.finish();
-                            detailsClick(selected);
-                            selected.clear();
-                            return true;
-                        case R.id.item_edit:
-                            nr = 0;
-                            mode.finish();
-                            editClick(selected);
-                            return true;
-                        case R.id.item_select_all:
-                            for (int i=0; i < ViewPlan.getAdapter().getCount(); i++) {
-                                ViewPlan.setItemChecked(i, true);
-                                nr = i + 1;
-                            }
-                            return true;
-                        case R.id.item_share:
-                            nr = 0;
-                            adapter.clearSelection();
-                            mode.finish();
-                            shareClick(selected);
-                            selected.clear();
-                            return true;
-                        default:
-                            break;
-                    }
-                    return false;
+                    return actionModeItemClicked(mode, item);
                 }
 
                 @Override
@@ -268,25 +167,28 @@ public class MainActivity extends AppCompatActivity {
                 db.close();
         }
 
-        addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
-        addPlan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.setId(R.id.u_view);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        context);
+        public FloatingActionButton addPlan = (FloatingActionButton) findViewById(R.id.addPlan);
+        addPlan.setOnClickListener(this);
+    }
 
-                alertDialogBuilder.setTitle(R.string.alert_createPlanTitle);
-                final EditText input = new EditText(context);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                input.setId(R.id.calabash);
-                alertDialogBuilder.setView(input);
+    @Override
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.addPlan:
+            AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                    context);
 
-                alertDialogBuilder
-                        .setMessage(R.string.alert_createPlanName)
-                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+            alertDialogBuilder.setTitle(R.string.alert_createPlanTitle);
+            final EditText input = new EditText(context);
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            input.setId(R.id.calabash);
+            alertDialogBuilder.setView(input);
+
+            alertDialogBuilder
+                    .setMessage(R.string.alert_createPlanName)
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
                             eingabe = input.getText().toString();
                             String returned = checkEingabe(eingabe);
                             if(returned == null) {
@@ -328,18 +230,125 @@ public class MainActivity extends AppCompatActivity {
                                 }
                             }
 
-                            }
-                        })
-                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                        }
+                    })
+                    .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
+        }
 
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
-            }
-        });
+    }
+
+    public boolean enableDisableContextualMenu(int nr, ArrayList<String> arrTblNames, Menu menu){
+        MenuItem item;
+        if(nr == 1 && arrTblNames.size()==1){
+            item = menu.findItem(R.id.item_delete);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_share);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_select_all);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_edit);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_details);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_analyze);
+            item.setVisible(true);
+            return true;
+        }
+        else if (nr == 1){
+            item = menu.findItem(R.id.item_delete);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_share);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_select_all);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_edit);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_details);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_analyze);
+            item.setVisible(true);
+            return true;
+        } else if(nr > 1 && nr!=arrTblNames.size()) {
+            item = menu.findItem(R.id.item_details);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_analyze);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_edit);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_delete);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_share);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_select_all);
+            item.setVisible(true);
+            return true;
+        }else if(nr == arrTblNames.size()){
+            item = menu.findItem(R.id.item_select_all);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_details);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_analyze);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_edit);
+            item.setVisible(false);
+            item = menu.findItem(R.id.item_delete);
+            item.setVisible(true);
+            item = menu.findItem(R.id.item_share);
+            item.setVisible(true);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean actionModeItemClicked(ActionMode mode, MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.item_delete:
+                deleteClick(selected);
+                nr = 0;
+                mode.finish();
+                return true;
+            case R.id.item_analyze:
+                nr = 0;
+                adapter.clearSelection();
+                mode.finish();
+                analyzeClick(selected);
+                selected.clear();
+                return true;
+            case R.id.item_details:
+                nr = 0;
+                adapter.clearSelection();
+                mode.finish();
+                detailsClick(selected);
+                selected.clear();
+                return true;
+            case R.id.item_edit:
+                nr = 0;
+                mode.finish();
+                editClick(selected);
+                return true;
+            case R.id.item_select_all:
+                for (int i=0; i < ViewPlan.getAdapter().getCount(); i++) {
+                    ViewPlan.setItemChecked(i, true);
+                    nr = i + 1;
+                }
+                return true;
+            case R.id.item_share:
+                nr = 0;
+                adapter.clearSelection();
+                mode.finish();
+                shareClick(selected);
+                selected.clear();
+                return true;
+            default:
+                break;
+        }
+        return false;
     }
 
     public static String checkEingabe(String input){

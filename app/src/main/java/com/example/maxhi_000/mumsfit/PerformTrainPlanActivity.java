@@ -116,7 +116,6 @@ public class PerformTrainPlanActivity extends AppCompatActivity{
             }
         });
 
-
         createSplitUebung();
         Spinner spinner_uebung = (Spinner) findViewById(R.id.spinner_uebung);
         dataAdapter_uebung = new ArrayAdapter(this,android.R.layout.simple_spinner_item, split_uebung);
