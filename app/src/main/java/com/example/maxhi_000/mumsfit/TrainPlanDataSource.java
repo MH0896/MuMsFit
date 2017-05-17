@@ -2,13 +2,11 @@ package com.example.maxhi_000.mumsfit;
 
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class TrainPlanDataSource {
     private final static  String LOG_TAG = TrainPlanDataSource.class.getSimpleName();
 
-    private SQLiteDatabase database;
     private TrainPlanDbHelper dbHelper;
     private boolean opened = false;
     private boolean closed = false;
@@ -20,7 +18,7 @@ public class TrainPlanDataSource {
 
     public void open() {
         Log.d(LOG_TAG, "Eine Referenz auf die Datenbank wird jetzt angefragt.");
-        database = dbHelper.getWritableDatabase();
+        dbHelper.getWritableDatabase();
 //        Log.d(LOG_TAG, "Datenbank-Referenz erhalten. Pfad zur Datenbank: " + database.getPath());
         opened = true;
     }

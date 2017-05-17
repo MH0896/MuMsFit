@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -40,7 +39,6 @@ public class CustomListAdapterTest {
         CustomListAdapter cla = new CustomListAdapter(c, 10, 87, list);
         cla.setNewSelection(5, true);
         cla.setNewSelection(7, true);
-        Set temp = cla.getCurrentCheckedPosition();
         assertEquals(true, cla.isPositionChecked(5));
     }
 

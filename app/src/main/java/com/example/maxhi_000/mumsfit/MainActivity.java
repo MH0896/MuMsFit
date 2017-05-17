@@ -348,7 +348,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
         String newInput = input.trim();
-        if(newInput == "" || newInput.isEmpty()){
+        if("".equals(newInput) || newInput.isEmpty()){
             return null;
         }
 
