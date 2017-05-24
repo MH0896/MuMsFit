@@ -56,4 +56,8 @@
     <string name="saved">Gespeichert</string>
     <string name="actionMode_selected">ausgewählt</string>
     <string name="toast_errorFillWeight">Bitte Gewicht eintragen</string>
+    <string name="fileChooserTitle">Wählen Sie eine Datei!</string>
+    <string name="toast_noPermissions">Sie müssen der Applikation die Befugnis geben, auf den Speicher zuzugreifen!</string>
+    <string name="toast_fileChooser">Bitte installieren Sie einen Dateimanager!</string>
+    <string name="toast_permissionsGranted">Berechtigungen erteilt! Sie können von nun an Pläne exportieren!</string>
 </resources>
