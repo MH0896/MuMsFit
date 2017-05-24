@@ -55,4 +55,5 @@
     <string name="menu_import">Importieren</string>
     <string name="saved">Gespeichert</string>
     <string name="actionMode_selected">ausgewählt</string>
+    <string name="toast_errorFillWeight">Bitte Gewicht eintragen</string>
 </resources>
