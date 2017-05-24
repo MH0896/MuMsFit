@@ -17,8 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 
 public class PerformTrainPlanActivity extends AppCompatActivity implements View.OnClickListener{
@@ -140,25 +143,38 @@ public class PerformTrainPlanActivity extends AppCompatActivity implements View.
         switch(v.getId()){
             case R.id.button_ok:
                 EditText input_weight = (EditText) findViewById(R.id.input_weight);
-                double newGewicht = Double.parseDouble(input_weight.getText().toString());
-                SQLiteDatabase db = null;
                 try {
-                    db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
-                    dataSource = new TrainPlanDataSource(context);
-                    dataSource.open();
+                    double newGewicht = Double.parseDouble(input_weight.getText().toString());
+                    SQLiteDatabase db = null;
+                    try {
+                        db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                        dataSource = new TrainPlanDataSource(context);
+                        dataSource.open();
 
-                    Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();
+                        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();
 
-                    db.execSQL("INSERT INTO gewicht (uebung_id, gewicht)" +
-                            " VALUES ('"+test.getUebungID()+"', '"+newGewicht+"')");
+                        db.execSQL("INSERT INTO gewicht (uebung_id, gewicht)" +
+                                " VALUES ('"+test.getUebungID()+"', '"+newGewicht+"')");
 
-                    dataSource.close();
-                }finally {
-                    if (db != null)
-                        db.close();
+                        final String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+                        Cursor c = db.rawQuery("SELECT plan.plan_id FROM plan, uebung WHERE uebung.uebung_id='"+test.getUebungID()+"' " +
+                                "AND plan.plan_id = uebung.plan_id", null);
+                        c.moveToFirst();
+                        int planID = Integer.parseInt(c.getString(c.getColumnIndex("plan_id")));
+
+                        db.execSQL("UPDATE plan SET date_last='"+date+"' WHERE " +
+                                "plan_id ='"+planID+"'");
+
+                        dataSource.close();
+                    }finally {
+                        if (db != null)
+                            db.close();
+                    }
+                    input_weight.setText("");
+                    fillGUI();
+                } catch(Exception e){
+                    Toast.makeText(context, R.string.toast_errorFillWeight, Toast.LENGTH_SHORT).show();
                 }
-                input_weight.setText("");
-            fillGUI();
                 break;
             default:
                 break;

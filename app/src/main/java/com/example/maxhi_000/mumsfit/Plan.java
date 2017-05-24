@@ -2,6 +2,9 @@ package com.example.maxhi_000.mumsfit;
 
 import android.support.v7.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Plan  extends AppCompatActivity {
     private int plan_id;
     private String name;
@@ -18,8 +21,8 @@ public class Plan  extends AppCompatActivity {
     public Plan(String name) {
         this.plan_id = 0;
         this.name = name;
-        this.date_create = "default";
-        this.date_last = "default";
+        this.date_create = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        this.date_last = "-";
     }
 
     public Plan(String name, String date_create, String date_last) {

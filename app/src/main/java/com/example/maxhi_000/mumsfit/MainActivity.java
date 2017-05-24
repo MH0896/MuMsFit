@@ -524,9 +524,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         OutputStream outStream;
+        ArrayList<Uebung> uebung = new ArrayList<Uebung>();
         try {
             outStream = new FileOutputStream(savedFile);
             outStream.write(planName.getBytes());
+            outStream.write("\n".getBytes());
+
+            SQLiteDatabase db = null;
+            try {
+                db = this.openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+                dataSource = new TrainPlanDataSource(context);
+                dataSource.open();
+
+                Cursor c = db.rawQuery("SELECT uebung.name, uebung.reps, uebung.start, uebung.split " +
+                        "FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name='"+
+                        planName+"'", null);
+
+                if (c.moveToFirst()) {
+                    while (!c.isAfterLast()) {
+                        String name = (c.getString(c.getColumnIndex("name")));
+                        String reps = (c.getString(c.getColumnIndex("reps")));
+                        String start = (c.getString(c.getColumnIndex("start")));
+                        String split = (c.getString(c.getColumnIndex("split")));
+                        uebung.add(new Uebung(name, reps, Double.parseDouble(start), split));
+                        c.moveToNext();
+                    }
+                }
+                dataSource.close();
+            }finally {
+                if (db != null)
+                    db.close();
+            }
+
+            for(int i = 0; i < uebung.size(); i++){
+                String out = uebung.get(i).getName() + "|" + uebung.get(i).getReps() + "|" +
+                        uebung.get(i).getStart() + "|" + uebung.get(i).getSplit() + "\n";
+                outStream.write(out.getBytes());
+            }
+
             outStream.flush();
             outStream.close();
             Toast.makeText(context,R.string.saved,Toast.LENGTH_SHORT).show();
@@ -667,10 +702,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 fileContent.add(line + System.getProperty("line.separator"));
             }
             inputStream.close();
+
+            createNewPlan(fileContent);
+
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+            Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
             Toast.makeText(context, fileContent.toString(),Toast.LENGTH_LONG).show();
         }catch (IOException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void createNewPlan (ArrayList conts){
+        SQLiteDatabase db = null;
+        try {
+            db = openOrCreateDatabase("plans.db", MODE_PRIVATE, null);
+            TrainPlanDataSource dataSource = new TrainPlanDataSource(context);
+
+            Plan plan = new Plan(conts.get(0).toString());
+
+            dataSource.open();
+            db.execSQL("INSERT INTO plan (name, date_create, date_last) " +
+                    "VALUES ('"+plan.getName()+"','"+plan.getDateCreate()+
+                    "', '"+plan.getDateLast()+"')");
+
+            Cursor c = db.rawQuery("SELECT plan_id FROM plan WHERE name='" + plan.getName() + "'", null);
+            c.moveToFirst();
+            String id = c.getString(c.getColumnIndex("plan_id"));
+
+            for(int i = 1; i < conts.size(); i++){
+                String[] parts = conts.get(i).toString().split("|");
+                db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split)" +
+                        " VALUES ('"+id+"', '"+parts[0]+
+                        "', '"+parts[1]+"', '"+
+                        parts[2]+"', '"+
+                        parts[3]+"')");
+            }
+
+            dataSource.close();
+        }finally {
+            if (db != null)
+                db.close();
         }
     }
 
