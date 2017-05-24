@@ -1,12 +1,12 @@
 package com.example.maxhi_000.mumsfit;
 
-import android.app.DownloadManager;
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -16,14 +16,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,22 +33,15 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -66,14 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public ArrayList<String> arrTblNames = new ArrayList<String>();
     public ArrayList<Integer> selected = new ArrayList<Integer>();
 
-    private static final int REQUEST_CODE = 6384;
-
     public ListView ViewPlan;
 
     private boolean canClose = false;
     private static int zeit = 2000;
-
-    final static String LOG_TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -362,11 +349,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 return true;
             case R.id.item_share:
-                nr = 0;
-                adapter.clearSelection();
-                mode.finish();
-                shareClick(selected);
-                selected.clear();
+                if(isStoragePermissionGranted()) {
+                    nr = 0;
+                    mode.finish();
+                    adapter.clearSelection();
+                    shareClick(selected);
+                    selected.clear();
+                }
                 return true;
             default:
                 break;
@@ -529,9 +518,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(!savedFile.exists()){
             try{
                 savedFile.createNewFile();
-            }catch (FileNotFoundException e){
-                e.printStackTrace();
-                Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
             }catch (IOException e){
                 e.printStackTrace();
                 Toast.makeText(context, e.toString(),Toast.LENGTH_SHORT).show();
@@ -548,9 +534,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         catch (FileNotFoundException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
-        }catch (IOException e){
+        }catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(context, e.toString(),Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return true;
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else {
+            //permission is automatically granted on sdk<23 upon installation
+            return true;
         }
     }
 
@@ -645,11 +647,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
+            Toast.makeText(context,R.string.toast_permissionsGranted, Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(context,R.string.toast_noPermissions, Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void importFile(Uri uri){
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(
-                    inputStream));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             ArrayList<String> fileContent = new ArrayList<>();
             String line;
             while ((line = bufferedReader.readLine()) != null) {
@@ -657,9 +668,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             inputStream.close();
             Toast.makeText(context, fileContent.toString(),Toast.LENGTH_LONG).show();
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-            Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
         }catch (IOException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
@@ -672,25 +680,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         intent.setType("text/plain");
         try {
-            startActivityForResult(Intent.createChooser(intent, "Select a file"),REQUEST_CODE);
+            startActivityForResult(Intent.createChooser(intent, getResources().getString(R.string.fileChooserTitle)),1);
         } catch (ActivityNotFoundException e) {
-            Toast.makeText(context, "Please install a File Manger!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.toast_fileChooser, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CODE:
-                // If the file selection was successful
-                if (resultCode == RESULT_OK) {
-                    if (data != null) {
-                        // Get the URI of the selected file
-                        final Uri uri = data.getData();
-                        importFile(uri);
-                    }
-                }
-                break;
+        if (resultCode == RESULT_OK) {
+            if (data != null) {
+                // Get the URI of the selected file
+                final Uri uri = data.getData();
+                importFile(uri);
+            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
