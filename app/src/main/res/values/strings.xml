@@ -55,4 +55,8 @@
     <string name="menu_import">Import</string>
     <string name="saved">Saved</string>
     <string name="actionMode_selected">selected</string>
+    <string name="fileChooserTitle">Select a file!</string>
+    <string name="toast_noPermissions">You need to grant the application the permission to write to storage</string>
+    <string name="toast_fileChooser">Please install a File Manger!</string>
+    <string name="toast_permissionsGranted">Permissions granted! You can export your plan now!</string>
 </resources>
