@@ -708,7 +708,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }catch (FileNotFoundException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
-            Toast.makeText(context, fileContent.toString(),Toast.LENGTH_LONG).show();
         }catch (IOException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
