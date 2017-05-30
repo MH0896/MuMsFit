@@ -143,17 +143,17 @@
 <i>24</i>&nbsp;
 <b class="nc"><i>25</i>&nbsp;public class AnalyzePlanActivity extends AppCompatActivity{</b>
 <i>26</i>&nbsp;
-<i>27</i>&nbsp;    String namePlan;
-<b class="nc"><i>28</i>&nbsp;    final Context context = this;</b>
+<i>27</i>&nbsp;    public String namePlan;
+<b class="nc"><i>28</i>&nbsp;    public final Context context = this;</b>
 <i>29</i>&nbsp;    private TrainPlanDataSource dataSource;
 <i>30</i>&nbsp;
-<b class="fc"><i>31</i>&nbsp;    static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
-<b class="fc"><i>32</i>&nbsp;    static ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
+<b class="fc"><i>31</i>&nbsp;    public static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
+<b class="fc"><i>32</i>&nbsp;    public static ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
 <i>33</i>&nbsp;
-<i>34</i>&nbsp;    static String current_split;
-<b class="fc"><i>35</i>&nbsp;    static ArrayList&lt;Uebung&gt; split_uebung = new ArrayList&lt;Uebung&gt;();</b>
+<i>34</i>&nbsp;    public static String current_split;
+<b class="fc"><i>35</i>&nbsp;    public static ArrayList&lt;Uebung&gt; split_uebung = new ArrayList&lt;Uebung&gt;();</b>
 <i>36</i>&nbsp;
-<i>37</i>&nbsp;    ArrayAdapter dataAdapter_uebung;
+<i>37</i>&nbsp;    public ArrayAdapter dataAdapter_uebung;
 <i>38</i>&nbsp;
 <i>39</i>&nbsp;    @Override
 <i>40</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
@@ -161,11 +161,11 @@
 <i>42</i>&nbsp;                &quot;MyPrefs&quot;, MODE_PRIVATE);
 <i>43</i>&nbsp;
 <b class="nc"><i>44</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
-<b class="nc"><i>45</i>&nbsp;        if (themeName.equals(&quot;BlackTheme&quot;)) {</b>
+<b class="nc"><i>45</i>&nbsp;        if (&quot;BlackTheme&quot;.equals(themeName)) {</b>
 <b class="nc"><i>46</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
-<b class="nc"><i>47</i>&nbsp;        } else if (themeName.equals(&quot;LightTheme&quot;)) {</b>
+<b class="nc"><i>47</i>&nbsp;        } else if (&quot;LightTheme&quot;.equals(themeName)) {</b>
 <b class="nc"><i>48</i>&nbsp;            setTheme(R.style.LightTheme);</b>
-<b class="nc"><i>49</i>&nbsp;        }else if(themeName.equals(&quot;Default&quot;)){</b>
+<b class="nc"><i>49</i>&nbsp;        }else if(&quot;Default&quot;.equals(themeName)){</b>
 <b class="nc"><i>50</i>&nbsp;            setTheme(R.style.AppTheme);</b>
 <i>51</i>&nbsp;        }
 <i>52</i>&nbsp;
@@ -231,7 +231,7 @@
 <i>112</i>&nbsp;
 <i>113</i>&nbsp;            @Override
 <i>114</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
-<i>115</i>&nbsp;
+<i>115</i>&nbsp;                //wird niemals aufgerufen
 <i>116</i>&nbsp;            }
 <i>117</i>&nbsp;        });
 <i>118</i>&nbsp;
@@ -250,7 +250,7 @@
 <i>131</i>&nbsp;
 <i>132</i>&nbsp;            @Override
 <i>133</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) {
-<i>134</i>&nbsp;
+<i>134</i>&nbsp;                //wird niemals aufgerufen
 <i>135</i>&nbsp;            }
 <i>136</i>&nbsp;        });
 <i>137</i>&nbsp;
@@ -380,7 +380,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-15 21:40</div>
+    <div style="float:right;">generated on 2017-05-30 17:03</div>
 </div>
 </body>
 </html>

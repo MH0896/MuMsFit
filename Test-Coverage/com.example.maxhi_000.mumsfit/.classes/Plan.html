@@ -58,10 +58,10 @@
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    97,5%
   </span>
   <span class="absValue">
-    (29/ 29)
+    (39/ 40)
   </span>
 </td>
 </tr>
@@ -74,77 +74,76 @@
 
 <div class="sourceCode"><i>1</i>&nbsp;package com.example.maxhi_000.mumsfit;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;
-<i>4</i>&nbsp;import android.content.Context;
-<i>5</i>&nbsp;import android.database.Cursor;
-<i>6</i>&nbsp;import android.database.sqlite.SQLiteDatabase;
-<i>7</i>&nbsp;import android.support.v7.app.AppCompatActivity;
-<i>8</i>&nbsp;
-<i>9</i>&nbsp;public class Plan  extends AppCompatActivity {
-<i>10</i>&nbsp;    private int plan_id;
-<i>11</i>&nbsp;    private String name;
-<i>12</i>&nbsp;    private String date_create;
-<i>13</i>&nbsp;    private String date_last;
-<i>14</i>&nbsp;
-<b class="fc"><i>15</i>&nbsp;    public Plan(int plan_id, String name, String date_create, String date_last) {</b>
-<b class="fc"><i>16</i>&nbsp;        this.plan_id = plan_id;</b>
-<b class="fc"><i>17</i>&nbsp;        this.name = name;</b>
-<b class="fc"><i>18</i>&nbsp;        this.date_create = date_create;</b>
-<b class="fc"><i>19</i>&nbsp;        this.date_last = date_last;</b>
-<b class="fc"><i>20</i>&nbsp;    }</b>
-<i>21</i>&nbsp;
-<b class="fc"><i>22</i>&nbsp;    public Plan(String name) {</b>
-<b class="fc"><i>23</i>&nbsp;        this.plan_id = 0;</b>
-<b class="fc"><i>24</i>&nbsp;        this.name = name;</b>
-<b class="fc"><i>25</i>&nbsp;        this.date_create = &quot;default&quot;;</b>
-<b class="fc"><i>26</i>&nbsp;        this.date_last = &quot;default&quot;;</b>
-<b class="fc"><i>27</i>&nbsp;    }</b>
-<i>28</i>&nbsp;
-<b class="fc"><i>29</i>&nbsp;    public Plan(String name, String date_create, String date_last) {</b>
-<b class="fc"><i>30</i>&nbsp;        this.name = name;</b>
-<b class="fc"><i>31</i>&nbsp;        this.date_create = date_create;</b>
-<b class="fc"><i>32</i>&nbsp;        this.date_last = date_last;</b>
-<b class="fc"><i>33</i>&nbsp;    }</b>
-<i>34</i>&nbsp;
-<i>35</i>&nbsp;    public int getPlanID() {
-<b class="fc"><i>36</i>&nbsp;        return plan_id;</b>
-<i>37</i>&nbsp;    }
-<i>38</i>&nbsp;
-<i>39</i>&nbsp;    public void setPlanID(int plan_id) {
-<b class="fc"><i>40</i>&nbsp;        this.plan_id = plan_id;</b>
-<b class="fc"><i>41</i>&nbsp;    }</b>
-<i>42</i>&nbsp;
-<i>43</i>&nbsp;    public String getName() {
-<b class="fc"><i>44</i>&nbsp;        return name;</b>
-<i>45</i>&nbsp;    }
-<i>46</i>&nbsp;
-<i>47</i>&nbsp;    public void setName(String name) {
-<b class="fc"><i>48</i>&nbsp;        this.name = name;</b>
-<b class="fc"><i>49</i>&nbsp;    }</b>
-<i>50</i>&nbsp;
-<i>51</i>&nbsp;    public String getDateCreate() {
-<b class="fc"><i>52</i>&nbsp;        return date_create;</b>
-<i>53</i>&nbsp;    }
-<i>54</i>&nbsp;
-<i>55</i>&nbsp;    public void setDateCreate(String date_create) {
-<b class="fc"><i>56</i>&nbsp;        this.date_create = date_create;</b>
-<b class="fc"><i>57</i>&nbsp;    }</b>
-<i>58</i>&nbsp;
-<i>59</i>&nbsp;    public String getDateLast() {
-<b class="fc"><i>60</i>&nbsp;        return date_last;</b>
-<i>61</i>&nbsp;    }
-<i>62</i>&nbsp;
-<i>63</i>&nbsp;    public void setDateLast(String date_last) {
-<b class="fc"><i>64</i>&nbsp;        this.date_last = date_last;</b>
-<b class="fc"><i>65</i>&nbsp;    }</b>
-<i>66</i>&nbsp;
-<i>67</i>&nbsp;}
+<i>3</i>&nbsp;import android.support.v7.app.AppCompatActivity;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.text.SimpleDateFormat;
+<i>6</i>&nbsp;import java.util.Date;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public class Plan  extends AppCompatActivity {
+<i>9</i>&nbsp;    private int plan_id;
+<i>10</i>&nbsp;    private String name;
+<i>11</i>&nbsp;    private String date_create;
+<i>12</i>&nbsp;    private String date_last;
+<i>13</i>&nbsp;
+<i>14</i>&nbsp;    public Plan(int plan_id, String name, String date_create, String date_last) {
+<b class="fc"><i>15</i>&nbsp;        this.plan_id = plan_id;</b>
+<b class="fc"><i>16</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>17</i>&nbsp;        this.date_create = date_create;</b>
+<b class="fc"><i>18</i>&nbsp;        this.date_last = date_last;</b>
+<b class="fc"><i>19</i>&nbsp;    }</b>
+<b class="fc"><i>20</i>&nbsp;</b>
+<b class="nc"><i>21</i>&nbsp;    public Plan(String name) {</b>
+<b class="fc"><i>22</i>&nbsp;        this.plan_id = 0;</b>
+<b class="fc"><i>23</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>24</i>&nbsp;        this.date_create = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;).format(new Date());</b>
+<b class="fc"><i>25</i>&nbsp;        this.date_last = &quot;-&quot;;</b>
+<b class="fc"><i>26</i>&nbsp;    }</b>
+<b class="fc"><i>27</i>&nbsp;</b>
+<b class="fc"><i>28</i>&nbsp;    public Plan(String name, String date_create, String date_last) {</b>
+<b class="fc"><i>29</i>&nbsp;        this.name = name;</b>
+<b class="fc"><i>30</i>&nbsp;        this.date_create = date_create;</b>
+<b class="fc"><i>31</i>&nbsp;        this.date_last = date_last;</b>
+<b class="fc"><i>32</i>&nbsp;    }</b>
+<b class="fc"><i>33</i>&nbsp;</b>
+<b class="fc"><i>34</i>&nbsp;    public int getPlanID() {</b>
+<i>35</i>&nbsp;        return plan_id;
+<b class="fc"><i>36</i>&nbsp;    }</b>
+<b class="fc"><i>37</i>&nbsp;</b>
+<i>38</i>&nbsp;    public void setPlanID(int plan_id) {
+<i>39</i>&nbsp;        this.plan_id = plan_id;
+<b class="fc"><i>40</i>&nbsp;    }</b>
+<b class="fc"><i>41</i>&nbsp;</b>
+<b class="fc"><i>42</i>&nbsp;    public String getName() {</b>
+<i>43</i>&nbsp;        return name;
+<b class="fc"><i>44</i>&nbsp;    }</b>
+<b class="fc"><i>45</i>&nbsp;</b>
+<i>46</i>&nbsp;    public void setName(String name) {
+<i>47</i>&nbsp;        this.name = name;
+<b class="fc"><i>48</i>&nbsp;    }</b>
+<b class="fc"><i>49</i>&nbsp;</b>
+<b class="fc"><i>50</i>&nbsp;    public String getDateCreate() {</b>
+<i>51</i>&nbsp;        return date_create;
+<b class="fc"><i>52</i>&nbsp;    }</b>
+<b class="fc"><i>53</i>&nbsp;</b>
+<i>54</i>&nbsp;    public void setDateCreate(String date_create) {
+<i>55</i>&nbsp;        this.date_create = date_create;
+<b class="fc"><i>56</i>&nbsp;    }</b>
+<b class="fc"><i>57</i>&nbsp;</b>
+<b class="fc"><i>58</i>&nbsp;    public String getDateLast() {</b>
+<i>59</i>&nbsp;        return date_last;
+<b class="fc"><i>60</i>&nbsp;    }</b>
+<b class="fc"><i>61</i>&nbsp;</b>
+<i>62</i>&nbsp;    public void setDateLast(String date_last) {
+<i>63</i>&nbsp;        this.date_last = date_last;
+<b class="fc"><i>64</i>&nbsp;    }</b>
+<b class="fc"><i>65</i>&nbsp;</b>
+<b class="fc"><i>66</i>&nbsp;}</b>
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-15 21:40</div>
+    <div style="float:right;">generated on 2017-05-30 17:03</div>
 </div>
 </body>
 </html>
