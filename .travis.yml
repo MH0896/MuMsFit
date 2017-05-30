@@ -30,7 +30,6 @@ android:
  - addon-google_apis-google-19 # google play services
  - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API_LEVEL
  - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API_LEVEL
- - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
 
 licenses:
  - android-sdk-preview-license-.+
@@ -52,10 +51,4 @@ before_script:
 - adb shell input keyevent 82 &
 
 script:
-- emulator -avd test -no-skin -no-audio -no-window &
-- android-wait-for-emulator
-- adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-- gradlew createDebugCoverageReport
-
-after_success:
-- bash <(curl -s https://codecov.io/bash)
+- "./gradlew clean build connectedCheck -PdisablePreDex --stacktrace"
