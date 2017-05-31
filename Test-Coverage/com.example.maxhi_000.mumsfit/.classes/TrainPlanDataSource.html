@@ -79,36 +79,36 @@
 <i>5</i>&nbsp;import android.util.Log;
 <i>6</i>&nbsp;
 <i>7</i>&nbsp;public class TrainPlanDataSource {
-<i>8</i>&nbsp;    private final static  String LOG_TAG = TrainPlanDataSource.class.getSimpleName();
+<b class="fc"><i>8</i>&nbsp;    private final static  String LOG_TAG = TrainPlanDataSource.class.getSimpleName();</b>
 <i>9</i>&nbsp;
-<b class="fc"><i>10</i>&nbsp;    private TrainPlanDbHelper dbHelper;</b>
-<i>11</i>&nbsp;    private boolean opened = false;
-<i>12</i>&nbsp;    private boolean closed = false;
+<i>10</i>&nbsp;    private TrainPlanDbHelper dbHelper;
+<b class="fc"><i>11</i>&nbsp;    private boolean opened = false;</b>
+<b class="fc"><i>12</i>&nbsp;    private boolean closed = false;</b>
 <i>13</i>&nbsp;
 <b class="fc"><i>14</i>&nbsp;    public TrainPlanDataSource(Context context) {</b>
 <b class="fc"><i>15</i>&nbsp;        Log.d(LOG_TAG, &quot;Unsere DataSource erzeugt jetzt den dbHelper.&quot;);</b>
-<i>16</i>&nbsp;        dbHelper = new TrainPlanDbHelper(context);
+<b class="fc"><i>16</i>&nbsp;        dbHelper = new TrainPlanDbHelper(context);</b>
 <b class="fc"><i>17</i>&nbsp;    }</b>
-<b class="fc"><i>18</i>&nbsp;</b>
-<b class="fc"><i>19</i>&nbsp;    public void open() {</b>
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    public void open() {
 <b class="fc"><i>20</i>&nbsp;        Log.d(LOG_TAG, &quot;Eine Referenz auf die Datenbank wird jetzt angefragt.&quot;);</b>
-<i>21</i>&nbsp;        dbHelper.getWritableDatabase();
+<b class="fc"><i>21</i>&nbsp;        dbHelper.getWritableDatabase();</b>
 <i>22</i>&nbsp;//        Log.d(LOG_TAG, &quot;Datenbank-Referenz erhalten. Pfad zur Datenbank: &quot; + database.getPath());
 <b class="fc"><i>23</i>&nbsp;        opened = true;</b>
 <b class="fc"><i>24</i>&nbsp;    }</b>
 <i>25</i>&nbsp;
-<b class="fc"><i>26</i>&nbsp;    public void close() {</b>
+<i>26</i>&nbsp;    public void close() {
 <b class="fc"><i>27</i>&nbsp;        dbHelper.close();</b>
-<i>28</i>&nbsp;        Log.d(LOG_TAG, &quot;Datenbank mit Hilfe des DbHelpers geschlossen.&quot;);
-<i>29</i>&nbsp;        closed = true;
+<b class="fc"><i>28</i>&nbsp;        Log.d(LOG_TAG, &quot;Datenbank mit Hilfe des DbHelpers geschlossen.&quot;);</b>
+<b class="fc"><i>29</i>&nbsp;        closed = true;</b>
 <b class="fc"><i>30</i>&nbsp;    }</b>
-<b class="fc"><i>31</i>&nbsp;</b>
-<b class="fc"><i>32</i>&nbsp;    public boolean isOpened() {</b>
+<i>31</i>&nbsp;
+<i>32</i>&nbsp;    public boolean isOpened() {
 <b class="fc"><i>33</i>&nbsp;        return opened;</b>
 <i>34</i>&nbsp;    }
 <i>35</i>&nbsp;
-<b class="fc"><i>36</i>&nbsp;    public boolean isClosed() {</b>
-<i>37</i>&nbsp;        return closed;
+<i>36</i>&nbsp;    public boolean isClosed() {
+<b class="fc"><i>37</i>&nbsp;        return closed;</b>
 <i>38</i>&nbsp;    }
 <i>39</i>&nbsp;}
 </div>
@@ -116,7 +116,7 @@
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-30 17:03</div>
+    <div style="float:right;">generated on 2017-05-31 13:41</div>
 </div>
 </body>
 </html>
