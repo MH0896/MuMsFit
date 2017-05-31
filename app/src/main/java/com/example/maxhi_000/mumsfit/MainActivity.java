@@ -761,12 +761,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (data != null) {
+        if (resultCode == RESULT_OK && data!= null) {
                 // Get the URI of the selected file
                 final Uri uri = data.getData();
                 importFile(uri);
-            }
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
