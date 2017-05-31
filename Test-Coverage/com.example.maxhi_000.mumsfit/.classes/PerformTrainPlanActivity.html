@@ -39,18 +39,18 @@
   <td class="name">PerformTrainPlanActivity</td>
 <td class="coverageStat">
   <span class="percent">
-    33,3%
+    30%
   </span>
   <span class="absValue">
-    (3/ 9)
+    (3/ 10)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    11,5%
+    9,4%
   </span>
   <span class="absValue">
-    (13/ 113)
+    (13/ 138)
   </span>
 </td>
 </tr>
@@ -96,18 +96,18 @@
   <td class="name"><strong>total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    23,1%
+    21,4%
   </span>
   <span class="absValue">
-    (3/ 13)
+    (3/ 14)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    10,7%
+    8,9%
   </span>
   <span class="absValue">
-    (13/ 121)
+    (13/ 146)
   </span>
 </td>
 </tr>
@@ -143,88 +143,88 @@
 <i>24</i>&nbsp;import java.util.Date;
 <i>25</i>&nbsp;import java.util.Locale;
 <i>26</i>&nbsp;
-<i>27</i>&nbsp;public class PerformTrainPlanActivity extends AppCompatActivity implements View.OnClickListener{
+<b class="nc"><i>27</i>&nbsp;public class PerformTrainPlanActivity extends AppCompatActivity implements View.OnClickListener{</b>
 <i>28</i>&nbsp;
 <i>29</i>&nbsp;    public String namePlan;
 <i>30</i>&nbsp;    private TrainPlanDataSource dataSource;
-<i>31</i>&nbsp;    public final Context context = this;
-<b class="nc"><i>32</i>&nbsp;</b>
-<i>33</i>&nbsp;    public static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();
-<i>34</i>&nbsp;    public static ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();
+<b class="nc"><i>31</i>&nbsp;    public final Context context = this;</b>
+<i>32</i>&nbsp;
+<b class="fc"><i>33</i>&nbsp;    public static ArrayList&lt;Uebung&gt; uebung = new ArrayList&lt;Uebung&gt;();</b>
+<b class="fc"><i>34</i>&nbsp;    public static ArrayList&lt;String&gt; splits = new ArrayList&lt;String&gt;();</b>
 <i>35</i>&nbsp;
-<b class="nc"><i>36</i>&nbsp;    public static String current_split;</b>
-<i>37</i>&nbsp;    public static ArrayList&lt;Uebung&gt; split_uebung = new ArrayList&lt;Uebung&gt;();
-<b class="fc"><i>38</i>&nbsp;</b>
-<b class="fc"><i>39</i>&nbsp;    public ArrayAdapter dataAdapter_uebung;</b>
+<i>36</i>&nbsp;    public static String current_split;
+<b class="fc"><i>37</i>&nbsp;    public static ArrayList&lt;Uebung&gt; split_uebung = new ArrayList&lt;Uebung&gt;();</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    public ArrayAdapter dataAdapter_uebung;
 <i>40</i>&nbsp;
 <i>41</i>&nbsp;    @Override
-<b class="fc"><i>42</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {</b>
-<i>43</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(
+<i>42</i>&nbsp;    protected void onCreate(Bundle savedInstanceState) {
+<b class="nc"><i>43</i>&nbsp;        SharedPreferences prefs = getApplicationContext().getSharedPreferences(</b>
 <i>44</i>&nbsp;                    &quot;MyPrefs&quot;, MODE_PRIVATE);
 <i>45</i>&nbsp;
-<i>46</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);
-<i>47</i>&nbsp;        if (&quot;BlackTheme&quot;.equals(themeName)) {
+<b class="nc"><i>46</i>&nbsp;        String themeName = prefs.getString(&quot;Theme&quot;, &quot;Default&quot;);</b>
+<b class="nc"><i>47</i>&nbsp;        if (&quot;BlackTheme&quot;.equals(themeName)) {</b>
 <b class="nc"><i>48</i>&nbsp;            setTheme(R.style.BlackTheme);</b>
-<i>49</i>&nbsp;        } else if (&quot;LightTheme&quot;.equals(themeName)) {
-<i>50</i>&nbsp;            setTheme(R.style.LightTheme);
+<b class="nc"><i>49</i>&nbsp;        } else if (&quot;LightTheme&quot;.equals(themeName)) {</b>
+<b class="nc"><i>50</i>&nbsp;            setTheme(R.style.LightTheme);</b>
 <b class="nc"><i>51</i>&nbsp;        }else if(&quot;Default&quot;.equals(themeName)){</b>
 <b class="nc"><i>52</i>&nbsp;            setTheme(R.style.AppTheme);</b>
-<b class="nc"><i>53</i>&nbsp;        }</b>
-<b class="nc"><i>54</i>&nbsp;</b>
+<i>53</i>&nbsp;        }
+<i>54</i>&nbsp;
 <b class="nc"><i>55</i>&nbsp;        String appLanguage = prefs.getString(&quot;Language&quot;, &quot;en-US&quot;);</b>
 <b class="nc"><i>56</i>&nbsp;        setLocale(appLanguage);</b>
-<b class="nc"><i>57</i>&nbsp;</b>
-<i>58</i>&nbsp;        super.onCreate(savedInstanceState);
+<i>57</i>&nbsp;
+<b class="nc"><i>58</i>&nbsp;        super.onCreate(savedInstanceState);</b>
 <i>59</i>&nbsp;
 <b class="nc"><i>60</i>&nbsp;        setContentView(R.layout.perform_plan);</b>
-<b class="nc"><i>61</i>&nbsp;</b>
-<i>62</i>&nbsp;        Bundle params = getIntent().getExtras();
+<i>61</i>&nbsp;
+<b class="nc"><i>62</i>&nbsp;        Bundle params = getIntent().getExtras();</b>
 <b class="nc"><i>63</i>&nbsp;        this.namePlan = params.getString(&quot;param&quot;);</b>
 <i>64</i>&nbsp;
 <b class="nc"><i>65</i>&nbsp;        setTitle(this.namePlan);</b>
 <i>66</i>&nbsp;
 <b class="nc"><i>67</i>&nbsp;        SQLiteDatabase db = null;</b>
-<b class="nc"><i>68</i>&nbsp;        try {</b>
-<i>69</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);
+<i>68</i>&nbsp;        try {
+<b class="nc"><i>69</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
 <b class="nc"><i>70</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
-<i>71</i>&nbsp;            dataSource.open();
-<b class="nc"><i>72</i>&nbsp;</b>
-<i>73</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT uebung.uebung_id, uebung.plan_id, uebung.name, uebung.reps, uebung.start, uebung.split &quot; +
-<b class="nc"><i>74</i>&nbsp;                    &quot;FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name=&#39;&quot;+</b>
-<b class="nc"><i>75</i>&nbsp;                    this.namePlan+&quot;&#39;&quot;, null);</b>
-<b class="nc"><i>76</i>&nbsp;</b>
-<i>77</i>&nbsp;            if (c.moveToFirst()) {
+<b class="nc"><i>71</i>&nbsp;            dataSource.open();</b>
+<i>72</i>&nbsp;
+<b class="nc"><i>73</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT uebung.uebung_id, uebung.plan_id, uebung.name, uebung.reps, uebung.start, uebung.split &quot; +</b>
+<i>74</i>&nbsp;                    &quot;FROM plan, uebung WHERE plan.plan_id = uebung.plan_id AND plan.name=&#39;&quot;+
+<i>75</i>&nbsp;                    this.namePlan+&quot;&#39;&quot;, null);
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;            if (c.moveToFirst()) {</b>
 <b class="nc"><i>78</i>&nbsp;                while (!c.isAfterLast()) {</b>
-<i>79</i>&nbsp;                    String uid = (c.getString(c.getColumnIndex(&quot;uebung_id&quot;)));
-<i>80</i>&nbsp;                    String pid = (c.getString(c.getColumnIndex(&quot;plan_id&quot;)));
-<i>81</i>&nbsp;                    String name = (c.getString(c.getColumnIndex(&quot;name&quot;)));
+<b class="nc"><i>79</i>&nbsp;                    String uid = (c.getString(c.getColumnIndex(&quot;uebung_id&quot;)));</b>
+<b class="nc"><i>80</i>&nbsp;                    String pid = (c.getString(c.getColumnIndex(&quot;plan_id&quot;)));</b>
+<b class="nc"><i>81</i>&nbsp;                    String name = (c.getString(c.getColumnIndex(&quot;name&quot;)));</b>
 <b class="nc"><i>82</i>&nbsp;                    String reps = (c.getString(c.getColumnIndex(&quot;reps&quot;)));</b>
 <b class="nc"><i>83</i>&nbsp;                    String start = (c.getString(c.getColumnIndex(&quot;start&quot;)));</b>
 <b class="nc"><i>84</i>&nbsp;                    String split = (c.getString(c.getColumnIndex(&quot;split&quot;)));</b>
 <b class="nc"><i>85</i>&nbsp;                    boolean temp = alreadyIn(split, splits);</b>
 <b class="nc"><i>86</i>&nbsp;                    if(!temp){</b>
 <b class="nc"><i>87</i>&nbsp;                        splits.add(split);</b>
-<b class="nc"><i>88</i>&nbsp;                    }</b>
+<i>88</i>&nbsp;                    }
 <b class="nc"><i>89</i>&nbsp;                    uebung.add(new Uebung(Integer.parseInt(uid), Integer.parseInt(pid), name, reps, Double.parseDouble(start), split));</b>
 <b class="nc"><i>90</i>&nbsp;                    c.moveToNext();</b>
 <b class="nc"><i>91</i>&nbsp;                }</b>
-<b class="nc"><i>92</i>&nbsp;            }</b>
-<i>93</i>&nbsp;            dataSource.close();
-<b class="nc"><i>94</i>&nbsp;        }finally {</b>
+<i>92</i>&nbsp;            }
+<b class="nc"><i>93</i>&nbsp;            dataSource.close();</b>
+<i>94</i>&nbsp;        }finally {
 <b class="nc"><i>95</i>&nbsp;            if (db != null)</b>
 <b class="nc"><i>96</i>&nbsp;                db.close();</b>
 <i>97</i>&nbsp;        }
-<b class="nc"><i>98</i>&nbsp;</b>
-<i>99</i>&nbsp;        current_split = splits.get(0);
-<b class="nc"><i>100</i>&nbsp;</b>
+<i>98</i>&nbsp;
+<b class="nc"><i>99</i>&nbsp;        current_split = splits.get(0);</b>
+<i>100</i>&nbsp;
 <b class="nc"><i>101</i>&nbsp;        Spinner spinner_splits = (Spinner) findViewById(R.id.spinner_split);</b>
-<i>102</i>&nbsp;        ArrayAdapter dataAdapter_split = new ArrayAdapter(this,android.R.layout.simple_spinner_item, splits);
-<i>103</i>&nbsp;        dataAdapter_split.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+<b class="nc"><i>102</i>&nbsp;        ArrayAdapter dataAdapter_split = new ArrayAdapter(this,android.R.layout.simple_spinner_item, splits);</b>
+<b class="nc"><i>103</i>&nbsp;        dataAdapter_split.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</b>
 <b class="nc"><i>104</i>&nbsp;        spinner_splits.setAdapter(dataAdapter_split);</b>
 <b class="nc"><i>105</i>&nbsp;        spinner_splits.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
-<b class="nc"><i>106</i>&nbsp;</b>
-<b class="nc"><i>107</i>&nbsp;            @Override</b>
-<b class="nc"><i>108</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {</b>
+<i>106</i>&nbsp;
+<i>107</i>&nbsp;            @Override
+<i>108</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
 <b class="nc"><i>109</i>&nbsp;                String selected = parent.getItemAtPosition(position).toString();</b>
 <b class="nc"><i>110</i>&nbsp;                current_split = selected;</b>
 <b class="nc"><i>111</i>&nbsp;                createSplitUebung();</b>
@@ -236,141 +236,141 @@
 <i>117</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) { /* wird niemals aufgerufen*/ }
 <i>118</i>&nbsp;        });
 <i>119</i>&nbsp;
-<i>120</i>&nbsp;        createSplitUebung();
-<i>121</i>&nbsp;        Spinner spinner_uebung = (Spinner) findViewById(R.id.spinner_uebung);
-<i>122</i>&nbsp;        dataAdapter_uebung = new ArrayAdapter(this,android.R.layout.simple_spinner_item, split_uebung);
-<i>123</i>&nbsp;        dataAdapter_uebung.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-<i>124</i>&nbsp;        spinner_uebung.setAdapter(dataAdapter_uebung);
+<b class="nc"><i>120</i>&nbsp;        createSplitUebung();</b>
+<b class="nc"><i>121</i>&nbsp;        Spinner spinner_uebung = (Spinner) findViewById(R.id.spinner_uebung);</b>
+<b class="nc"><i>122</i>&nbsp;        dataAdapter_uebung = new ArrayAdapter(this,android.R.layout.simple_spinner_item, split_uebung);</b>
+<b class="nc"><i>123</i>&nbsp;        dataAdapter_uebung.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);</b>
+<b class="nc"><i>124</i>&nbsp;        spinner_uebung.setAdapter(dataAdapter_uebung);</b>
 <b class="nc"><i>125</i>&nbsp;        spinner_uebung.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {</b>
 <i>126</i>&nbsp;
 <i>127</i>&nbsp;            @Override
-<b class="nc"><i>128</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {</b>
+<i>128</i>&nbsp;            public void onItemSelected(AdapterView&lt;?&gt; parent, View view, int position, long id) {
 <b class="nc"><i>129</i>&nbsp;                fillGUI();</b>
-<b class="nc"><i>130</i>&nbsp;            }</b>
-<b class="nc"><i>131</i>&nbsp;</b>
-<b class="nc"><i>132</i>&nbsp;            @Override</b>
-<b class="nc"><i>133</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) { /* wird niemals aufgerufen*/ }</b>
+<i>130</i>&nbsp;            }
+<i>131</i>&nbsp;
+<i>132</i>&nbsp;            @Override
+<i>133</i>&nbsp;            public void onNothingSelected(AdapterView&lt;?&gt; parent) { /* wird niemals aufgerufen*/ }
 <i>134</i>&nbsp;        });
 <i>135</i>&nbsp;
-<i>136</i>&nbsp;        Button btn_okay = (Button) findViewById(R.id.button_ok);
-<i>137</i>&nbsp;        btn_okay.setOnClickListener(this);
-<i>138</i>&nbsp;        fillGUI();
-<i>139</i>&nbsp;    }
+<b class="nc"><i>136</i>&nbsp;        Button btn_okay = (Button) findViewById(R.id.button_ok);</b>
+<b class="nc"><i>137</i>&nbsp;        btn_okay.setOnClickListener(this);</b>
+<b class="nc"><i>138</i>&nbsp;        fillGUI();</b>
+<b class="nc"><i>139</i>&nbsp;    }</b>
 <i>140</i>&nbsp;
 <i>141</i>&nbsp;    @Override
 <i>142</i>&nbsp;    public void onClick(View v){
-<i>143</i>&nbsp;        switch(v.getId()){
+<b class="nc"><i>143</i>&nbsp;        switch(v.getId()){</b>
 <i>144</i>&nbsp;            case R.id.button_ok:
-<i>145</i>&nbsp;                EditText input_weight = (EditText) findViewById(R.id.input_weight);
-<b class="nc"><i>146</i>&nbsp;                try {</b>
+<b class="nc"><i>145</i>&nbsp;                EditText input_weight = (EditText) findViewById(R.id.input_weight);</b>
+<i>146</i>&nbsp;                try {
 <b class="nc"><i>147</i>&nbsp;                    double newGewicht = Double.parseDouble(input_weight.getText().toString());</b>
-<i>148</i>&nbsp;                    SQLiteDatabase db = null;
+<b class="nc"><i>148</i>&nbsp;                    SQLiteDatabase db = null;</b>
 <i>149</i>&nbsp;                    try {
-<i>150</i>&nbsp;                        db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);
-<i>151</i>&nbsp;                        dataSource = new TrainPlanDataSource(context);
-<i>152</i>&nbsp;                        dataSource.open();
+<b class="nc"><i>150</i>&nbsp;                        db = openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
+<b class="nc"><i>151</i>&nbsp;                        dataSource = new TrainPlanDataSource(context);</b>
+<b class="nc"><i>152</i>&nbsp;                        dataSource.open();</b>
 <i>153</i>&nbsp;
-<i>154</i>&nbsp;                        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();
+<b class="nc"><i>154</i>&nbsp;                        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();</b>
 <i>155</i>&nbsp;
-<i>156</i>&nbsp;                        db.execSQL(&quot;INSERT INTO gewicht (uebung_id, gewicht)&quot; +
-<i>157</i>&nbsp;                                &quot; VALUES (&#39;&quot;+test.getUebungID()+&quot;&#39;, &#39;&quot;+newGewicht+&quot;&#39;)&quot;);
+<b class="nc"><i>156</i>&nbsp;                        db.execSQL(&quot;INSERT INTO gewicht (uebung_id, gewicht)&quot; +</b>
+<b class="nc"><i>157</i>&nbsp;                                &quot; VALUES (&#39;&quot;+test.getUebungID()+&quot;&#39;, &#39;&quot;+newGewicht+&quot;&#39;)&quot;);</b>
 <i>158</i>&nbsp;
-<i>159</i>&nbsp;                        final String date = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;).format(new Date());
-<i>160</i>&nbsp;                        Cursor c = db.rawQuery(&quot;SELECT plan.plan_id FROM plan, uebung WHERE uebung.uebung_id=&#39;&quot;+test.getUebungID()+&quot;&#39; &quot; +
+<b class="nc"><i>159</i>&nbsp;                        final String date = new SimpleDateFormat(&quot;dd-MM-yyyy&quot;).format(new Date());</b>
+<b class="nc"><i>160</i>&nbsp;                        Cursor c = db.rawQuery(&quot;SELECT plan.plan_id FROM plan, uebung WHERE uebung.uebung_id=&#39;&quot;+test.getUebungID()+&quot;&#39; &quot; +</b>
 <i>161</i>&nbsp;                                &quot;AND plan.plan_id = uebung.plan_id&quot;, null);
-<i>162</i>&nbsp;                        c.moveToFirst();
-<i>163</i>&nbsp;                        int planID = Integer.parseInt(c.getString(c.getColumnIndex(&quot;plan_id&quot;)));
+<b class="nc"><i>162</i>&nbsp;                        c.moveToFirst();</b>
+<b class="nc"><i>163</i>&nbsp;                        int planID = Integer.parseInt(c.getString(c.getColumnIndex(&quot;plan_id&quot;)));</b>
 <i>164</i>&nbsp;
-<i>165</i>&nbsp;                        db.execSQL(&quot;UPDATE plan SET date_last=&#39;&quot;+date+&quot;&#39; WHERE &quot; +
+<b class="nc"><i>165</i>&nbsp;                        db.execSQL(&quot;UPDATE plan SET date_last=&#39;&quot;+date+&quot;&#39; WHERE &quot; +</b>
 <i>166</i>&nbsp;                                &quot;plan_id =&#39;&quot;+planID+&quot;&#39;&quot;);
 <i>167</i>&nbsp;
-<i>168</i>&nbsp;                        dataSource.close();
+<b class="nc"><i>168</i>&nbsp;                        dataSource.close();</b>
 <i>169</i>&nbsp;                    }finally {
-<i>170</i>&nbsp;                        if (db != null)
+<b class="nc"><i>170</i>&nbsp;                        if (db != null)</b>
 <b class="nc"><i>171</i>&nbsp;                            db.close();</b>
-<b class="nc"><i>172</i>&nbsp;                    }</b>
-<i>173</i>&nbsp;                    input_weight.setText(&quot;&quot;);
-<i>174</i>&nbsp;                    fillGUI();
+<i>172</i>&nbsp;                    }
+<b class="nc"><i>173</i>&nbsp;                    input_weight.setText(&quot;&quot;);</b>
+<b class="nc"><i>174</i>&nbsp;                    fillGUI();</b>
 <b class="nc"><i>175</i>&nbsp;                } catch(Exception e){</b>
 <b class="nc"><i>176</i>&nbsp;                    Toast.makeText(context, R.string.toast_errorFillWeight, Toast.LENGTH_SHORT).show();</b>
 <b class="nc"><i>177</i>&nbsp;                }</b>
-<i>178</i>&nbsp;                break;
-<b class="nc"><i>179</i>&nbsp;            default:</b>
-<b class="nc"><i>180</i>&nbsp;                break;</b>
+<b class="nc"><i>178</i>&nbsp;                break;</b>
+<i>179</i>&nbsp;            default:
+<i>180</i>&nbsp;                break;
 <i>181</i>&nbsp;        }
 <b class="nc"><i>182</i>&nbsp;    }</b>
-<b class="nc"><i>183</i>&nbsp;</b>
-<b class="nc"><i>184</i>&nbsp;    public void fillGUI(){</b>
-<i>185</i>&nbsp;        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();
+<i>183</i>&nbsp;
+<i>184</i>&nbsp;    public void fillGUI(){
+<b class="nc"><i>185</i>&nbsp;        Uebung test = (Uebung) ( (Spinner) findViewById(R.id.spinner_uebung) ).getSelectedItem();</b>
 <b class="nc"><i>186</i>&nbsp;        TextView text_reps = (TextView) findViewById(R.id.textView_reps);</b>
 <b class="nc"><i>187</i>&nbsp;        text_reps.setText(getString(R.string.hint_reps) + &quot;: &quot;+ test.getReps());</b>
 <i>188</i>&nbsp;
-<i>189</i>&nbsp;        String gewicht = &quot;&quot;;
+<b class="nc"><i>189</i>&nbsp;        String gewicht = &quot;&quot;;</b>
 <b class="nc"><i>190</i>&nbsp;        SQLiteDatabase db = null;</b>
-<b class="nc"><i>191</i>&nbsp;        try {</b>
-<i>192</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);
+<i>191</i>&nbsp;        try {
+<b class="nc"><i>192</i>&nbsp;            db = this.openOrCreateDatabase(&quot;plans.db&quot;, MODE_PRIVATE, null);</b>
 <b class="nc"><i>193</i>&nbsp;            dataSource = new TrainPlanDataSource(context);</b>
-<i>194</i>&nbsp;            dataSource.open();
-<b class="nc"><i>195</i>&nbsp;</b>
-<i>196</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT gewicht.gewicht FROM plan, gewicht, uebung WHERE &quot; +
+<b class="nc"><i>194</i>&nbsp;            dataSource.open();</b>
+<i>195</i>&nbsp;
+<b class="nc"><i>196</i>&nbsp;            Cursor c = db.rawQuery(&quot;SELECT gewicht.gewicht FROM plan, gewicht, uebung WHERE &quot; +</b>
 <b class="nc"><i>197</i>&nbsp;                    &quot;uebung.name=&#39;&quot;+test.getName()+&quot;&#39; AND uebung.uebung_id=gewicht.uebung_id &quot; +</b>
-<b class="nc"><i>198</i>&nbsp;                    &quot;AND plan.name=&#39;&quot;+this.namePlan+&quot;&#39; AND plan.plan_id=uebung.plan_id&quot;, null);</b>
+<i>198</i>&nbsp;                    &quot;AND plan.name=&#39;&quot;+this.namePlan+&quot;&#39; AND plan.plan_id=uebung.plan_id&quot;, null);
 <i>199</i>&nbsp;
-<i>200</i>&nbsp;            if (c.moveToLast()) {
+<b class="nc"><i>200</i>&nbsp;            if (c.moveToLast()) {</b>
 <b class="nc"><i>201</i>&nbsp;                gewicht = c.getString(c.getColumnIndex(&quot;gewicht&quot;));</b>
-<b class="nc"><i>202</i>&nbsp;            } else{</b>
+<i>202</i>&nbsp;            } else{
 <b class="nc"><i>203</i>&nbsp;                gewicht = test.getStart()+&quot;&quot;;</b>
 <i>204</i>&nbsp;            }
-<i>205</i>&nbsp;            dataSource.close();
+<b class="nc"><i>205</i>&nbsp;            dataSource.close();</b>
 <i>206</i>&nbsp;        }finally {
-<b class="fc"><i>207</i>&nbsp;            if (db != null)</b>
-<b class="fc"><i>208</i>&nbsp;                db.close();</b>
-<b class="nc"><i>209</i>&nbsp;        }</b>
+<b class="nc"><i>207</i>&nbsp;            if (db != null)</b>
+<b class="nc"><i>208</i>&nbsp;                db.close();</b>
+<i>209</i>&nbsp;        }
 <i>210</i>&nbsp;
-<b class="fc"><i>211</i>&nbsp;        EditText input_weight = (EditText) findViewById(R.id.input_weight);</b>
-<b class="fc"><i>212</i>&nbsp;        input_weight.setHint(gewicht);</b>
-<b class="fc"><i>213</i>&nbsp;    }</b>
+<b class="nc"><i>211</i>&nbsp;        EditText input_weight = (EditText) findViewById(R.id.input_weight);</b>
+<b class="nc"><i>212</i>&nbsp;        input_weight.setHint(gewicht);</b>
+<b class="nc"><i>213</i>&nbsp;    }</b>
 <i>214</i>&nbsp;
 <i>215</i>&nbsp;    public static void createSplitUebung() {
 <b class="fc"><i>216</i>&nbsp;        int temp = split_uebung.size();</b>
-<i>217</i>&nbsp;        for(int i = 0; i &lt; temp; i++){
-<i>218</i>&nbsp;            split_uebung.remove(0);
-<b class="fc"><i>219</i>&nbsp;        }</b>
+<b class="fc"><i>217</i>&nbsp;        for(int i = 0; i &lt; temp; i++){</b>
+<b class="nc"><i>218</i>&nbsp;            split_uebung.remove(0);</b>
+<i>219</i>&nbsp;        }
 <b class="fc"><i>220</i>&nbsp;        for(int j = 0; j &lt; uebung.size(); j++){</b>
 <b class="fc"><i>221</i>&nbsp;            if(uebung.get(j).getSplit().equals(current_split)){</b>
-<i>222</i>&nbsp;                split_uebung.add(uebung.get(j));
+<b class="fc"><i>222</i>&nbsp;                split_uebung.add(uebung.get(j));</b>
 <i>223</i>&nbsp;            }
-<b class="fc"><i>224</i>&nbsp;        }</b>
-<i>225</i>&nbsp;    }
+<i>224</i>&nbsp;        }
+<b class="fc"><i>225</i>&nbsp;    }</b>
 <i>226</i>&nbsp;
 <i>227</i>&nbsp;    public static  boolean alreadyIn(String split, ArrayList&lt;String&gt; list){
-<b class="nc"><i>228</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++){</b>
-<b class="nc"><i>229</i>&nbsp;            if(list.get(i).equals(split)){</b>
-<b class="nc"><i>230</i>&nbsp;                return true;</b>
+<b class="fc"><i>228</i>&nbsp;        for(int i = 0; i &lt; list.size(); i++){</b>
+<b class="fc"><i>229</i>&nbsp;            if(list.get(i).equals(split)){</b>
+<b class="fc"><i>230</i>&nbsp;                return true;</b>
 <i>231</i>&nbsp;            }
-<b class="nc"><i>232</i>&nbsp;        }</b>
-<b class="nc"><i>233</i>&nbsp;        return false;</b>
-<b class="nc"><i>234</i>&nbsp;    }</b>
+<i>232</i>&nbsp;        }
+<b class="fc"><i>233</i>&nbsp;        return false;</b>
+<i>234</i>&nbsp;    }
 <i>235</i>&nbsp;
-<b class="nc"><i>236</i>&nbsp;    public static void removeUebungen(){</b>
+<i>236</i>&nbsp;    public static void removeUebungen(){
 <b class="nc"><i>237</i>&nbsp;        int temp = uebung.size();</b>
 <b class="nc"><i>238</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
-<i>239</i>&nbsp;            uebung.remove(0);
-<b class="nc"><i>240</i>&nbsp;        }</b>
-<i>241</i>&nbsp;        temp = splits.size();
-<i>242</i>&nbsp;        for(int i = 0; i&lt;temp; i++){
-<i>243</i>&nbsp;            splits.remove(0);
+<b class="nc"><i>239</i>&nbsp;            uebung.remove(0);</b>
+<i>240</i>&nbsp;        }
+<b class="nc"><i>241</i>&nbsp;        temp = splits.size();</b>
+<b class="nc"><i>242</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
+<b class="nc"><i>243</i>&nbsp;            splits.remove(0);</b>
 <i>244</i>&nbsp;        }
 <b class="nc"><i>245</i>&nbsp;        temp = split_uebung.size();</b>
 <b class="nc"><i>246</i>&nbsp;        for(int i = 0; i&lt;temp; i++){</b>
 <b class="nc"><i>247</i>&nbsp;            split_uebung.remove(0);</b>
-<b class="nc"><i>248</i>&nbsp;        }</b>
+<i>248</i>&nbsp;        }
 <b class="nc"><i>249</i>&nbsp;    }</b>
-<b class="nc"><i>250</i>&nbsp;</b>
-<b class="nc"><i>251</i>&nbsp;    @Override</b>
-<b class="nc"><i>252</i>&nbsp;    public void onBackPressed(){</b>
+<i>250</i>&nbsp;
+<i>251</i>&nbsp;    @Override
+<i>252</i>&nbsp;    public void onBackPressed(){
 <i>253</i>&nbsp;        //super.onBackPressed();
-<i>254</i>&nbsp;        removeUebungen();
+<b class="nc"><i>254</i>&nbsp;        removeUebungen();</b>
 <b class="nc"><i>255</i>&nbsp;        Bundle temp = new Bundle();</b>
 <b class="nc"><i>256</i>&nbsp;        temp.putString(&quot;param&quot;, this.namePlan);</b>
 <b class="nc"><i>257</i>&nbsp;        Intent i = new Intent(PerformTrainPlanActivity.this, ViewPlanActivity.class);</b>
@@ -380,20 +380,20 @@
 <b class="nc"><i>261</i>&nbsp;    }</b>
 <i>262</i>&nbsp;
 <i>263</i>&nbsp;    public void setLocale(String lang){
-<i>264</i>&nbsp;        Locale myLocale = new Locale(lang);
-<i>265</i>&nbsp;        Resources res = getResources();
-<i>266</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();
-<i>267</i>&nbsp;        Configuration config = res.getConfiguration();
-<i>268</i>&nbsp;        config.locale = myLocale;
-<i>269</i>&nbsp;        res.updateConfiguration(config, dm);
-<i>270</i>&nbsp;    }
+<b class="nc"><i>264</i>&nbsp;        Locale myLocale = new Locale(lang);</b>
+<b class="nc"><i>265</i>&nbsp;        Resources res = getResources();</b>
+<b class="nc"><i>266</i>&nbsp;        DisplayMetrics dm = res.getDisplayMetrics();</b>
+<b class="nc"><i>267</i>&nbsp;        Configuration config = res.getConfiguration();</b>
+<b class="nc"><i>268</i>&nbsp;        config.locale = myLocale;</b>
+<b class="nc"><i>269</i>&nbsp;        res.updateConfiguration(config, dm);</b>
+<b class="nc"><i>270</i>&nbsp;    }</b>
 <i>271</i>&nbsp;}
 </div>
 </div>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2017-05-30 17:03</div>
+    <div style="float:right;">generated on 2017-05-31 13:41</div>
 </div>
 </body>
 </html>
