@@ -161,9 +161,9 @@ public class ViewPlanActivity  extends AppCompatActivity {
             }
             TextView exerView = new TextView(this);
             exerView.setPadding(10,2,10,2);
-            String reps = getResources().getString(R.string.hint_reps)+": ";
+            String reps = " " + getResources().getString(R.string.hint_reps)+", ";
             String weight = getResources().getString(R.string.hint_weight)+": ";
-            String toShow = uebung.get(i).getName() + reps + uebung.get(i).getReps()
+            String toShow = uebung.get(i).getName() +": "+ uebung.get(i).getReps()+ reps
                     + weight + uebung.get(i).getStart();
             exerView.setText(toShow);
             ll.addView(exerView);
