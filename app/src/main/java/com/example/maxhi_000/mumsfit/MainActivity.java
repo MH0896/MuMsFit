@@ -22,7 +22,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CustomListAdapter adapter;
 
     private TrainPlanDataSource dataSource;
-
-    private final static  String LOG_TAG = MainActivity.class.getSimpleName();
 
     public int nr = 0;
   
@@ -254,7 +251,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         default:
             break;
         }
-
     }
 
     public boolean enableDisableContextualMenu(int nr, ArrayList<String> arrTblNames, Menu menu){

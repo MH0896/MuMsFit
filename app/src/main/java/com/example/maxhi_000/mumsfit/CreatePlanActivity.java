@@ -331,9 +331,9 @@ public class CreatePlanActivity extends AppCompatActivity implements View.OnClic
                     TextView exerView = new TextView(this);
                     exerView.setPadding(10,2,10,2);
 
-                    String reps = getResources().getString(R.string.hint_reps)+": ";
+                    String reps = " " + getResources().getString(R.string.hint_reps)+", ";
                     String weight = getResources().getString(R.string.hint_weight)+": ";
-                    String toShow = uebungen.get(j).getName() + reps + uebungen.get(j).getReps()
+                    String toShow = uebungen.get(j).getName() +": "+ uebungen.get(j).getReps()+ reps
                             + weight + uebungen.get(j).getStart();
                     exerView.setText(toShow);
                     tempLL.addView(exerView);
