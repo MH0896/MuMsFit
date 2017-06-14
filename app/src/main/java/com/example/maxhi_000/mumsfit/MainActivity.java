@@ -22,6 +22,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +44,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.StringTokenizer;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private CustomListAdapter adapter;
 
     private TrainPlanDataSource dataSource;
+
+    private final static  String LOG_TAG = MainActivity.class.getSimpleName();
 
     public int nr = 0;
   
@@ -705,6 +709,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             createNewPlan(fileContent);
 
+            finish();
+            startActivity(getIntent());
         }catch (FileNotFoundException e){
             e.printStackTrace();
             Toast.makeText(context, e.toString(),Toast.LENGTH_LONG).show();
@@ -731,15 +737,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             c.moveToFirst();
             String id = c.getString(c.getColumnIndex("plan_id"));
 
-            for(int i = 1; i < conts.size(); i++){
-                String[] parts = conts.get(i).toString().split("|");
-                db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split)" +
-                        " VALUES ('"+id+"', '"+parts[0]+
-                        "', '"+parts[1]+"', '"+
-                        parts[2]+"', '"+
-                        parts[3]+"')");
-            }
+            StringTokenizer tokens;
+            String name = "";
+            String reps = "";
+            String weight = "";
+            String split = "";
 
+            for(int i = 1; i < conts.size(); i++){
+                tokens = new StringTokenizer(conts.get(i).toString(), "|");
+                name = tokens.nextToken();
+                reps = tokens.nextToken();
+                weight = tokens.nextToken();
+                split = tokens.nextToken();
+                db.execSQL("INSERT INTO uebung (plan_id, name, reps, start, split)" +
+                        " VALUES ('"+id+"', '"+name+
+                        "', '"+reps+"', '"+
+                        weight+"', '"+
+                        split+"')");
+            }
             dataSource.close();
         }finally {
             if (db != null)
